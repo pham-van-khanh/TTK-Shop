@@ -7,10 +7,11 @@ use Illuminate\Support\Str;
 
 
 class CategoryService{
-
+//
     public  function  getParent(){
         return Category::where('parent_id',0)->get();
     }
+
     public  function create($request){
         try {
             Category::create([

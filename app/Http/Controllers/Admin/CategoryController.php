@@ -34,7 +34,17 @@ class CategoryController extends Controller
     }
     public function store(StorePostRequest $request)
     {
-        $result =  $this->categorySevice->create($request);
+        $this->categorySevice->create($request);
         return redirect()->back();
+    }
+    public function edit(Category $category)
+    {
+            dd($category->all());
+    }
+    public function delete(Request $request,$id)
+    {
+        
+        $request = Category::destroy($id);
+         return redirect()->back();
     }
 }
