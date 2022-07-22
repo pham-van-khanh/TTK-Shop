@@ -14,7 +14,7 @@ class CategoryController extends Controller
     public function __construct(CategoryService $categoryService)
     {
         # code...
-        $this->categorySevice = $categoryService;
+        $this->categoryService = $categoryService;
     }
     public function index()
     {
@@ -28,22 +28,31 @@ class CategoryController extends Controller
     {
         $this->data['errorMsg'] =' Thêm lỗi ';
         return view('admin.categories.add',$this->data,[
-            'categories' => $this->categorySevice->getParent()
+            'categories' => $this->categoryService->getParent()
         ]);
 
     }
+
     public function store(StorePostRequest $request)
     {
-        $this->categorySevice->create($request);
+        $this->categoryService->create($request);
         return redirect()->back();
     }
     public function edit(Category $category)
     {
-            dd($category->all());
+        return view('admin.categories.edit', [
+            'category' => $category
+        ]);
+    }
+
+
+    public function update(StorePostRequest $request,$id)
+    {
+        $this->categoryService->edit($request,$id);
+        return redirect()->back();
     }
     public function delete(Request $request,$id)
     {
-        
         $request = Category::destroy($id);
          return redirect()->back();
     }
