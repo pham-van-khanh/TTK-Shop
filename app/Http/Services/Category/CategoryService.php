@@ -32,12 +32,20 @@ class CategoryService{
             return  true;
 
     }
-    public function edit($request,$id)
+    // public function edit($request,$id)
+    // {
+    //     $category = Category::find($id);
+    //     $category ->fill($request->all());
+    //     $category->save();
+    //     Session::flash('success','Cập Nhật thành công');
+    //     return redirect()->route('category');
+    // }
+    public function update($request,$category)
     {
-        $category = Category::find($id);
-        $category ->fill($request->all());
+        $category = Category::find($category);
+            $category ->fill($request->all());
         $category->save();
-        Session::flash('success','Cập Nhật thành công');
-        return redirect()->route('category');
+            Session::flash('success','Cập Nhật thành công');
+          return redirect()->route('category');
     }
 }

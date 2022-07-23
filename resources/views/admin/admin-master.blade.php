@@ -18,6 +18,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="apple-touch-icon" sizes="76x76" href="{{asset('dist/img/apple-icon.png')}}">
   <link rel="icon" type="image/png" href="{{asset('dist/img/favicon.png')}}">
   <title>
@@ -34,6 +35,8 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
   <link id="pagestyle" href="{{asset('dist/css/material-dashboard.css?v=3.0.2')}}" rel="stylesheet" />
+
+
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
@@ -637,6 +640,7 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="{{asset('dist/js/material-dashboard.min.js?v=3.0.2')}}"></script>
+  <script src="{{asset('dist/admin/js/main.js')}}"></script>
 </body>
 
 </html>

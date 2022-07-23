@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Users\LoginController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\UploadController;
+use \App\Http\Services\UploadService;
 use App\Http\Middleware\Authenticate;
 
 // -------- QUẢN TRỊ ---------
@@ -17,16 +20,25 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [CategoryController::class, 'index'])->name('category');
             Route::get('/add', [CategoryController::class, 'create'])->name('category-add');
             Route::post('add', [CategoryController::class, 'store']);
-            Route::get('edit/{category}', [CategoryController::class, 'edit'])->name('edit');
-            Route::get('update/{category}', [CategoryController::class, 'update'])->name('update');
-            Route::delete('delete/{catgories}', [CategoryController::class, 'delete'])->name('delete');
+            Route::get('edit/{category}', [CategoryController::class, 'edit'])->name('category.edit');
+            Route::post('edit/{category}', [CategoryController::class, 'update']);
+            Route::delete('delete/{catgories}', [CategoryController::class, 'delete'])->name('category-delete');
         });
 
 
         // PRODUCT
-        Route::get('/product', function () {
-            return view('admin.products.index');
-        })->name('product');
+        Route::prefix('product')->group(function () {
+            Route::get('/', [ProductController::class, 'index'])->name('product');
+            Route::get('/add', [ProductController::class, 'create'])->name('product-add');
+            Route::post('add', [ProductController::class, 'store']);
+            Route::get('edit/{product}', [ProductController::class, 'edit'])->name('product-edit');
+            Route::post('edit/{product}', [ProductController::class, 'update']);
+            Route::delete('delete/{product}', [ProductController::class, 'delete'])->name('delete');
+        });
+
+
+//          UPLOAD
+         Route::post('upload/services',[UploadController::class,'store']);
     });
 });
 

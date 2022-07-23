@@ -41,16 +41,20 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         return view('admin.categories.edit', [
+                $category->name,
             'category' => $category
         ]);
     }
 
 
-    public function update(StorePostRequest $request,$id)
+    public function update(StorePostRequest $request,$category)
     {
-        $this->categoryService->edit($request,$id);
+        $this->categoryService->update($request,$category);
         return redirect()->back();
     }
+
+
+
     public function delete(Request $request,$id)
     {
         $request = Category::destroy($id);

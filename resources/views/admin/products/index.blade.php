@@ -1,53 +1,83 @@
 @extends('admin.admin-master')
 @section('content-title','List Products')
+@section('danh-muc','List Products')
 @section('title','List Products')
     @section('content')
     <div>
         </div>
-                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                  <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                    <h6 class="text-white text-capitalize ps-3">Products</h6>
-                  </div>
-                </div>
+
                 <div class="card-body px-0 pb-2">
                   <div class="table-responsive p-0">
                     <table class="table align-items-center mb-0">
                         <thead>
                             <tr>
                               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Price</th>
-                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Amount</th>
+                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Price Old</th>
+                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Price New</th>
+                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Danh Mục</th>
                               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Image</th>
+                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Active</th>
                               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                {{-- <a class="btn btn-primary" style="font-size:10px" href="{{route('product-add')}}"> Add Products</a> --}}
+                                 <a class="btn btn-primary" style="font-size:10px" href="{{route('product-add')}}"> Add Products</a>
                               </th>
                             </tr>
                           </thead>
-                          {{-- <tbody>
+                          <tbody>
                             @foreach ($products as $item)
                             <tr>
                               <td>
                                 {{$item['name']}}
                               </td>
                               <td>
-                                {{$item['price']}}
+                               <del style="color: red">{{$item['price_old']}}</del> 
                               </td>
                               <td>
-                                {{$item['amount']}}
+                                {{$item['price_new']}}
                               </td>
                               <td>
-                                {{$item['img']}}
+                                {{$item->category->name}}
+                              </td>
+                              <td>
+                                
+                              </td>
+                              <td>
+                                <button class="btn btn-info m-0 btn-sm">
+                                  {{$item->avtive = 1 ? 'Publish' :'Private'}}
+                                </button>
                               </td>
                               <td class="align-middle">
-                                <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                  Edit
+                                <a href="{{ route('product-edit', $item->id) }}">
+                                    <button class="btn btn-warning" style="font-size:9px"href="javascript:;"
+                                        class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
+                                        data-original-title="Edit user">
+                                        Sửa
+                                    </button>
                                 </a>
-                              </td>
+                                <form action="{{ route('category-delete', $item->id) }}" method="POST">
+                                    <button class="btn btn-danger"
+                                        onclick="return confirm('Bạn có chắc xóa {{ $item->name }} ?')"
+                                        style="font-size:9px"href="javascript:;"
+                                        class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
+                                        data-original-title="Edit user">
+                                        Xóa
+                                    </button>
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
+                                {{-- form gửi lên id --}}
+                                {{-- <form action="{{route('users.delete', $item->id)}}" method="POST">
+                                  <button class="btn btn-danger" onclick="return confirm('Bạn có chắc xóa {{$item->name}} ?')"  style="font-size:9px"href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                    Xóa
+                                  </button>
+                                 @csrf
+                                 @method('DELETE')
+                                </form> --}}
+                            </td>
                             </tr>
                             @endforeach
-                            
-                          </tbody> --}}
+
+                          </tbody>
                     </table>
                   </div>
-                
+
           @endsection
