@@ -22,7 +22,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('add', [CategoryController::class, 'store']);
             Route::get('edit/{category}', [CategoryController::class, 'edit'])->name('category.edit');
             Route::post('edit/{category}', [CategoryController::class, 'update']);
-            Route::delete('delete/{catgories}', [CategoryController::class, 'delete'])->name('category-delete');
+            Route::delete('delete/{category}', [CategoryController::class, 'delete'])->name('category-delete');
         });
 
 
@@ -31,10 +31,10 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [ProductController::class, 'index'])->name('product');
             Route::get('/add', [ProductController::class, 'create'])->name('product-add');
             Route::post('add', [ProductController::class, 'store']);
-            Route::get('edit/{product}', [ProductController::class, 'edit'])->name('product-edit');
+            Route::get('edit/{product}', [ProductController::class, 'show'])->name('product-edit');
             Route::post('edit/{product}', [ProductController::class, 'update']);
-            Route::delete('delete/{product}', [ProductController::class, 'delete'])->name('delete');
-        });
+            Route::delete('delete/{products}', [ProductController::class, 'destroy'])->name('product-delete');
+        }); 
 
 
 //          UPLOAD

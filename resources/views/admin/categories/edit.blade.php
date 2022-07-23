@@ -37,18 +37,14 @@
                     @enderror
         </div>
         <div class="form-outline mb-4">
-            <label class="form-label" for="form3Example3">Mô Tả </label>
-            <input type="text" id="form3Example3" value="{{ $category->content}}" name="content" class="form-control" />
-        </div>
-        <div class="form-outline mb-4">
             <label class="form-label" for="form3Example3">Image</label>
             <input type="text" value="{{$category->image}}"  id="form3Example3" name="image" class="form-control" />
         </div>
         <div class="form-outline mb-4">
             <label class="form-label" for="form3Example3">Kích Hoạt</label>
             <br>
-            <input type="radio" id="form3Example3" name="active" value="1" {{$category->active == 1 ? 'checked=""':''}}  /> Public
-            <input type="radio" id="form3Example3" name="active" value="0" {{$category->avtive == 0 ? 'checked=""':''}} /> Private
+            <input type="radio" id="form3Example3" name="active" value="1" {{$category->active == 1 ? 'checked="Publish"':''}}  /> Publish
+            <input type="radio" id="form3Example3" name="active" value="0" {{$category->active == 0 ? 'checked="Private"':''}} /> Private
         </div>
         <button type="submit" class="btn btn-danger btn-block mb-4">Cập Nhật</button>
         <!-- Register buttons -->

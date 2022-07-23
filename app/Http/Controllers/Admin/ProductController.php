@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use App\Http\Services\Product\ProductAdminService;
 use Illuminate\Http\Request;
 
@@ -57,11 +58,15 @@ class ProductController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Product $product)
     {
         //
+        return view('admin.products.edit',[
+            'product'=> $product,
+            'categories' => $this->productService->getCate()
+        ]);
     }
 
     /**
@@ -80,11 +85,13 @@ class ProductController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,Product $product)
     {
         //
+        $this->productService->update($request,$product);
+        return redirect()->back();
     }
 
     /**
@@ -93,8 +100,9 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
-        //
+        $request = Product::destroy($id);
+        return redirect()->back();
     }
 }

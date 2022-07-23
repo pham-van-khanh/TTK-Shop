@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Services\Category\CategoryService;
 
@@ -55,9 +56,14 @@ class CategoryController extends Controller
 
 
 
-    public function delete(Request $request,$id)
+    public function delete(Request $request,Category $category)
     {
-        $request = Category::destroy($id);
-         return redirect()->back();
+       if($category){
+        $product = Product::where('category_id', '=', $category->id)->get();
+        $productIds = $product->pluck('id');
+        Product::whereIn('id', $productIds)->update(['category_id' => 0]); // update các post có id trong mảng
+        $category->delete();
+        return redirect()->back();
+       }
     }
 }

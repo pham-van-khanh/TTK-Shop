@@ -30,7 +30,20 @@ public  function create($request){
     return  true;
 }
     public  function getAll(){
-        return Product::with('category')->orderByDesc('id')->paginate(8);
+        return Product::with('category')
+        ->orderByDesc('id')->paginate(5);
     }
-
+    public  function update($request,$product)
+    {
+        try {
+            $product->fill($request->all());
+            $product->save();
+            Session::flash('success', 'Cập Nhật thành công');
+            return redirect()->route('product');
+        } catch (\Exception $err) {
+            Session::flash('error', 'Có lỗi khi cập nhật');
+            return false;
+        }
+        return true;
+    }
 }

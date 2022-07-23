@@ -8,17 +8,17 @@ use Illuminate\Support\Str;
 
 class CategoryService{
 //
-    public  function  getParent(){
-        return Category::where('parent_id',0)->get();
-    }
+    // public  function  getParent(){
+    //     return Category::where('',0)->get();
+    // }
 
     public  function create($request){
         try {
             Category::create([
                     'name' =>(string)$request->input('name'),
-                    'parent_id' =>(int)$request->input('parent_id'),
+                    // 'parent_id' =>(int)$request->input('parent_id'),
                     'description' =>(string)$request->input('description'),
-                    'content' =>(string)$request->input('content'),
+                    // 'content' =>(string)$request->input('content'),
                     'image' =>(string)$request->input('image'),
                     'active' =>(string)$request->input('active'),
                     'slug' => Str::slug($request->input('name'), '-')
@@ -32,20 +32,23 @@ class CategoryService{
             return  true;
 
     }
-    // public function edit($request,$id)
-    // {
-    //     $category = Category::find($id);
-    //     $category ->fill($request->all());
-    //     $category->save();
-    //     Session::flash('success','Cập Nhật thành công');
-    //     return redirect()->route('category');
-    // }
+
     public function update($request,$category)
     {
-        $category = Category::find($category);
+            $category = Category::find($category);
             $category ->fill($request->all());
-        $category->save();
+            $category->save();
             Session::flash('success','Cập Nhật thành công');
-          return redirect()->route('category');
+            return redirect()->route('category');
     }
+//     public function destroy($request){
+//         $category = Category::where('id', $request->input('id'))->first();
+// //        first là lấy 1 thằng trong category
+//         if($category){
+
+//         }
+//         else{
+//             return false;
+//         }
+//     }
 }

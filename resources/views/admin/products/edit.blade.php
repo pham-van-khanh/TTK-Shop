@@ -1,9 +1,9 @@
 @extends('admin.admin-master')
 
-@section('title', 'Add Product')
+@section('title', 'Edit Product')
 
-@section('content-title', 'Add Product')
-@section('danh-muc', 'Add Product')
+@section('content-title', 'Edit Product')
+@section('danh-muc', 'Edit Product')
 @section('content')
 
 
@@ -21,7 +21,7 @@
             <div class="col">
                 <div class="form-outline">
                     <label class="form-label" for="form3Example1">Tên Sản Phẩm</label>
-                    <input type="text" id="form3Example1" name="name" class="form-control" />
+                    <input type="text" id="form3Example1" value="{{ $product->name}}" name="name" class="form-control" />
                     {{-- @error('name')
                         <h6 style="color: rgb(255, 0, 0)">{{ $message }} </h6>
                     @enderror --}}
@@ -31,9 +31,11 @@
                 <div class="form-outline">
                     <label class="form-label" for="form3Example1">Danh Mục</label>
                     <select name="category_id" class="form-control" id="">
-                        @foreach ($categories as $item)
-                            <option value="{{$item->id}}"> {{$item->name}} </option>
-                        @endforeach
+                        @foreach($categories as $menu)
+                                <option value="{{ $menu->id }}" {{ $product->category_id == $menu->id ? 'selected' : '' }}>
+                                    {{ $menu->name }}
+                                </option>
+                            @endforeach
                     </select>
                 </div>
             </div>
@@ -42,21 +44,21 @@
             <div class="col">
                 <div class="form-outline">
                     <label class="form-label" for="form3Example1">Giá Cũ</label>
-                    <input type="text" id="form3Example1" name="price_old" class="form-control" />
+                    <input type="text" value="{{ $product->price_old}}" id="form3Example1" name="price_old" class="form-control" />
 
                 </div>
             </div>
             <div class="col">
                 <div class="form-outline">
                     <label class="form-label" for="form3Example1">Giá Sale</label>
-                    <input type="text" id="form3Example1" name="price_new" class="form-control" />
+                    <input type="text" value="{{ $product->price_new}}" id="form3Example1" name="price_new" class="form-control" />
                     
                 </div>
             </div>
         </div>
         <div class="form-outline mb-4">
             <label class="form-label" for="form3Example3">Mô Tả Ngắn</label>
-            <textarea type="text" id="form3Example3" name="description" class="form-control" /></textarea>
+            <textarea type="text" id="form3Example3"  name="description" class="form-control" />{{ $product->description }}</textarea>
         </div>
         <div class="form-outline mb-4">
             <label class="form-label" for="form3Example3">Image</label>
@@ -65,10 +67,10 @@
         <div class="form-outline mb-4">
             <label class="form-label" for="form3Example3">Kích Hoạt</label>
             <br>
-            <input type="radio" id="form3Example3" name="active" value="1" /> Public
-            <input type="radio" id="form3Example3" name="active" value="0" /> Private
+            <input type="radio" id="form3Example3" name="active" value="1" {{$product->active == 1 ? 'checked="Publish"':''}}  /> Publish
+            <input type="radio" id="form3Example3" name="active" value="0" {{$product->active == 0 ? 'checked="Private"':''}} /> Private
         </div>
-        <button type="submit" class="btn btn-danger btn-block mb-4">Tạo mới</button>
+        <button type="submit" class="btn btn-danger btn-block mb-4">Cập Nhật</button>
         <!-- Register buttons -->
         <button type="reset" class="btn btn-warning btn-block mb-4">Nhập lại</button>
 
