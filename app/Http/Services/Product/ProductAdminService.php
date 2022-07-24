@@ -12,22 +12,30 @@ public  function getCate(){
 }
 public  function create($request){
     try {
-        Product::create([
-            'name' =>(string)$request->input('name'),
-            'category_id' =>(integer)$request->input('category_id'),
-            'description' =>(string)$request->input('description'),
-            'price_old' =>(integer)$request->input('price_old'),
-            'price_new' =>(integer)$request->input('price_new'),
-            'image' =>(string)$request->input('image'),
-            'active' =>(integer)$request->input('active'),
-        ]);
-//             tạo thông báo khi create thành công
-        Session::flash('success','Tạo mới thành công');
+        $product = new Product();
+        $product->fill($request->all());
+        if ($product) {
+            if ($product->image != null) {
+                if ($request->hasFile('image')) {
+                    // 2.1 Xử lý tên file
+                    $image = $request->image;
+                    $imageName = $image->hashName();
+                    $imageName = $request->name . '_' . $imageName;
+        
+                    $product->image = $image->storeAs('images/products', $imageName);
+                } else {
+                    $product->image = '';
+                }
+            }
+        }
+        $product->save();
+        Session::flash('success', 'Tạo mới thành công');
+        return redirect()->route('product');
     } catch (\Exception $err){
         Session::flash('error',$err->getMessage());
         return false;
     }
-    return  true;
+    return true;
 }
     public  function getAll(){
         return Product::with('category')
@@ -37,6 +45,14 @@ public  function create($request){
     {
         try {
             $product->fill($request->all());
+            if ($request->hasFile('image')) {
+                $image = $request->image;
+                $imageName = $image->hashName();
+                $imageName = $request->name . '_' . $imageName;
+                $product->image = $image->storeAs('images/products', $imageName);
+            } else {
+                $product->image = '';
+            }
             $product->save();
             Session::flash('success', 'Cập Nhật thành công');
             return redirect()->route('product');

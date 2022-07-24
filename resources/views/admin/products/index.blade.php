@@ -39,7 +39,7 @@
                                 {{ $item->category->name }}
                             </td>
                             <td>
-
+                                <img src="{{asset($item->image)}}" width="100" alt="">
                             </td>
                             <td>
                                 <button class="btn btn-info m-0 btn-sm">

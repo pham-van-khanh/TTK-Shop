@@ -60,7 +60,7 @@
         </div>
         <div class="form-outline mb-4">
             <label class="form-label" for="form3Example3">Image</label>
-            <input type="text"  id="image" name="image" class="form-control" />
+            <input type="file"  id="image" name="image" class="form-control" />
         </div>
         <div class="form-outline mb-4">
             <label class="form-label" for="form3Example3">Kích Hoạt</label>

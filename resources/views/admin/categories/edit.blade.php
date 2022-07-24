@@ -38,7 +38,8 @@
         </div>
         <div class="form-outline mb-4">
             <label class="form-label" for="form3Example3">Image</label>
-            <input type="text" value="{{$category->image}}"  id="form3Example3" name="image" class="form-control" />
+            <input type="file" value=""  id="form3Example3" name="image" class="form-control" />
+            <img src="{{asset($category->image) }}" width="150" alt="">
         </div>
         <div class="form-outline mb-4">
             <label class="form-label" for="form3Example3">Kích Hoạt</label>

@@ -641,6 +641,7 @@
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="{{asset('dist/js/material-dashboard.min.js?v=3.0.2')}}"></script>
   <script src="{{asset('dist/admin/js/main.js')}}"></script>
+  
 </body>
 
 </html>

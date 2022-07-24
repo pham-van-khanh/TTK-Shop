@@ -21,15 +21,13 @@ class CategoryController extends Controller
     {
 
         $catePaginate = Category::select('id', 'name', 'image', 'description', 'active')
-            // ->cursorPaginate(5);
-            ->paginate(5);
+            ->paginate(3);
         return view('admin.categories.index',['category'=> $catePaginate]);
     }
     public function create()
     {
         $this->data['errorMsg'] =' Thêm lỗi ';
         return view('admin.categories.add',$this->data,[
-            'categories' => $this->categoryService->getParent()
         ]);
 
     }

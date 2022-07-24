@@ -13,9 +13,8 @@
                 <thead>
                     <tr>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Price</th>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Amount</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Image</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                             <a class="btn btn-primary" style="font-size:10px" href="{{ route('category-add') }}"> Add
                                 Category</a>
@@ -29,13 +28,12 @@
                                 {{ $item['name'] }}
                             </td>
                             <td>
-                                <img src="{{ $item['image'] }}" width="300" alt="">
+                                <img src="{{asset($item->image) }}" width="150" alt="">
                             </td>
                             <td>
-                                {{-- {{$item['description']}} --}}
-                            </td>
-                            <td>
-                                {{ $item['active'] }}
+                             <button class="btn btn-info btn-sm">
+                                {{$item->active = 1?'Publish':'Private'}}
+                             </button>
                             </td>
                             <td class="align-middle">
                                 <a href="{{ route('category.edit', $item->id) }}">
@@ -71,5 +69,5 @@
                 </tbody>
             </table>
         </div>
-
+        <div>{{$category->links()}}</div>
     @endsection
