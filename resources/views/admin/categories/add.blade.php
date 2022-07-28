@@ -15,6 +15,7 @@
                  <h5 style="color: red"> {{ $errorMsg }}</h5>
             @endif
         </div>
+        
         <div class="row mb-4">
             <div class="col">
                 <div class="form-outline">
@@ -32,12 +33,15 @@
             <textarea type="text" id="form3Example3" name="description" class="form-control" /></textarea>
             @error('description')
                         <h6 style="color: rgb(255, 0, 0)">{{ $message }} </h6>
-                    @enderror
+            @enderror
         </div>
         
         <div class="form-outline mb-4">
             <label class="form-label" for="form3Example3">Image</label>
             <input type="file" id="form3Example3" name="image" class="form-control" />
+            @error('image')
+                        <h6 style="color: rgb(255, 0, 0)">{{ $message }} </h6>
+                @enderror
         </div>
         <div class="form-outline mb-4">
             <label class="form-label" for="form3Example3">Kích Hoạt</label>

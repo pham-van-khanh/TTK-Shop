@@ -23,7 +23,9 @@
 
     <!-- Libraries Stylesheet -->
     <link href="{{asset('dist/lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
-
+    <link href="{{asset('dist/css/lightslider.css')}}" rel="stylesheet" />
+    <link href="{{asset('dist/css/lightsgallery.min.css')}}" rel="stylesheet" />
+    <link href="{{asset('dist/css/prettify.css')}}" rel="stylesheet" />
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{asset('dist/css/style.css')}}" rel="stylesheet">
     <style>
@@ -67,6 +69,28 @@
     <script src="{{asset('dist/mail/jqBootstrapValidation.min.js')}}"></script>
     <script src="{{asset('dist/mail/contact.js')}}"></script>
 
+    <script src="{{asset('dist/js/lightslider.js')}}"></script>
+    <script src="{{asset('dist/js/lightgallery-all.min.js')}}"></script>
+    <script src="{{asset('dist/js/prettify.js')}}"></script>
+
+    <script>
+        $(document).ready(function() {
+        $('#imageGallery').lightSlider({
+            gallery:true,
+            item:1,
+            loop:true,
+            thumbItem:9,
+            slideMargin:0,
+            enableDrag: false,
+            currentPagerPosition:'left',
+            onSliderLoad: function(el) {
+                el.lightGallery({
+                    selector: '#imageGallery .lslide'
+                });
+            }   
+        });  
+      });
+    </script>
     <!-- Template Javascript -->
     <script src="{{asset('dist/js/main.js')}}"></script>
 </body>

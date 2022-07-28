@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\Users\LoginController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\UploadController;
 use \App\Http\Services\UploadService;
 use App\Http\Middleware\Authenticate;
@@ -13,8 +14,6 @@ use App\Http\Middleware\Authenticate;
 Route::middleware(['auth'])->group(function () {
     Route::prefix('admin')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('admin');
-
-
         // CATEGORY
         Route::prefix('category')->group(function () {
             Route::get('/', [CategoryController::class, 'index'])->name('category');
@@ -24,8 +23,6 @@ Route::middleware(['auth'])->group(function () {
             Route::post('edit/{category}', [CategoryController::class, 'update']);
             Route::delete('delete/{category}', [CategoryController::class, 'delete'])->name('category-delete');
         });
-
-
         // PRODUCT
         Route::prefix('product')->group(function () {
             Route::get('/', [ProductController::class, 'index'])->name('product');
@@ -34,8 +31,11 @@ Route::middleware(['auth'])->group(function () {
             Route::get('edit/{product}', [ProductController::class, 'show'])->name('product-edit');
             Route::post('edit/{product}', [ProductController::class, 'update']);
             Route::delete('delete/{products}', [ProductController::class, 'destroy'])->name('product-delete');
-        }); 
 
+        });
+
+        Route::get('/gallery/add/{product}', [GalleryController::class, 'addGallery'])->name('gallery-add');
+    
 
 //          UPLOAD
          Route::post('upload/services',[UploadController::class,'store']);
@@ -49,7 +49,7 @@ Route::middleware(['auth'])->group(function () {
 
 // ------- ĐĂNG NHẬP ------
 Route::prefix('/login')->group(function () {
-    Route::get('/', [LoginController::class, 'index'])->name('login');
+    Route::get('/', [LoginController::class, 'index'])->name('login-form');
     Route::post('/store', [LoginController::class, 'store'])->name('store');
 });
 

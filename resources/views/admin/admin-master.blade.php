@@ -18,7 +18,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+{{--    <meta name="csrf-token" content="{{ csrf_token() }}">--}}
   <link rel="apple-touch-icon" sizes="76x76" href="{{asset('dist/img/apple-icon.png')}}">
   <link rel="icon" type="image/png" href="{{asset('dist/img/favicon.png')}}">
   <title>
@@ -29,18 +29,18 @@
   <!-- Nucleo Icons -->
   <link href="{{asset('dist/css/nucleo-icons.css')}}" rel="stylesheet" />
   <link href="{{asset('dist/css/nucleo-svg.css')}}" rel="stylesheet" />
+  
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
   <link id="pagestyle" href="{{asset('dist/css/material-dashboard.css?v=3.0.2')}}" rel="stylesheet" />
-
-
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
-  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
+
+<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard " target="_blank">
@@ -640,8 +640,8 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="{{asset('dist/js/material-dashboard.min.js?v=3.0.2')}}"></script>
-  <script src="{{asset('dist/admin/js/main.js')}}"></script>
   
+
 </body>
 
 </html>

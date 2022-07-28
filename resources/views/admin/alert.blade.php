@@ -8,7 +8,7 @@
 
 @if (Session::has('success'))
 <div class="alert alert-success">
-  <span style="color: rgb(134, 203, 246)">{{Session::get('success')}}</span>
+  <span style="color: white">{{Session::get('success')}}</span>
 </div>
 @endif
 

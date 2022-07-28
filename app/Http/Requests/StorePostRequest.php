@@ -27,6 +27,7 @@ class StorePostRequest extends FormRequest
         return [
             'name' => 'required',
             'description' => 'required',
+            'image' => 'required',
         ];
     }
     public function messages()
@@ -35,6 +36,7 @@ class StorePostRequest extends FormRequest
         return [
             'name.required'=> 'Tên danh mục trống !!!',
             'description.required'=>'Description trống !!!',
+            'image.required'=>'Ảnh trống !!!',
         ];
     }
 }

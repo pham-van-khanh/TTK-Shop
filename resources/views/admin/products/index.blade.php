@@ -16,6 +16,7 @@
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Price New</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Danh Mục</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Image</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Gallery Image</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Active</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                             <a class="btn btn-primary" style="font-size:10px" href="{{ route('product-add') }}"> Add
@@ -27,19 +28,27 @@
                     @foreach ($products as $item)
                         <tr>
                             <td>
-                                {{ $item['name'] }}
+                                {{ $item->name }}
                             </td>
                             <td>
-                                <del style="color: red">{{ $item['price_old'] }}</del>
+                                <del style="color: red">{{ number_format($item->price_old, 0, ',', '.') }}</del>
                             </td>
                             <td>
-                                {{ $item['price_new'] }}
+                                {{ number_format($item->price_new, 0, ',', '.') }}
+
                             </td>
                             <td>
-                                {{ $item->category->name }}
+                                {{-- {{ $item->category->name }} --}}
                             </td>
                             <td>
                                 <img src="{{asset($item->image)}}" width="100" alt="">
+                            </td>
+                            <td>
+                                <a href="{{route('gallery-add',$item->id)}}">
+                                    <button class="btn btn-primary m-0 btn-sm">
+                                       Thêm
+                                    </button>
+                                </a>
                             </td>
                             <td>
                                 <button class="btn btn-info m-0 btn-sm">

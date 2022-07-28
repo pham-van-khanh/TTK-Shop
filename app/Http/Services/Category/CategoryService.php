@@ -15,18 +15,11 @@ class CategoryService
     public function create($request)
     {
         $category = new Category();
-        // $user->name = $request->name;
-        // 1. Nhập các trường dữ liệu gửi lên vào $user
-        // Chú ý đặt tên cho name === tên thuộc tính
         $category->fill($request->all());
-
-        // 2. Kiểm tra file và lưu
         if ($request->hasFile('image')) {
-            // 2.1 Xử lý tên file
             $image = $request->image;
             $imageName = $image->hashName();
             $imageName = $request->name . '_' . $imageName;
-
             $category->image = $image->storeAs('images/category', $imageName);
         } else {
             $category->image = '';
@@ -39,23 +32,21 @@ class CategoryService
 
     public function update($request, $category)
     {
+        
         $category = Category::find($category);
         $category->fill($request->all());
-        if ($category) {
-            if ($category->image != null) {
-                if ($request->hasFile('image')) {
-                    // 2.1 Xử lý tên file
-                    $image = $request->image;
-                    $imageName = $image->hashName();
-                    $imageName = $request->name . '_' . $imageName;
+        // if ($category) {
+        //     if ($category->image != null) {
+        //         if ($request->hasFile('image')) {
+        //             $image = $request->image;
+        //             $imageName = $image->hashName();
+        //             $imageName = $request->name . '_' . $imageName;
+        //             $category->image = $image->storeAs('images/category', $imageName);
+        //         } 
+        //     }
+        // }
+        dd($category);
         
-                    $category->image = $image->storeAs('images/category', $imageName);
-                } else {
-                    $category->image = '';
-                }
-            }
-        }
-
         $category->save();
         Session::flash('success', 'Cập Nhật thành công');
         return redirect()->route('category');

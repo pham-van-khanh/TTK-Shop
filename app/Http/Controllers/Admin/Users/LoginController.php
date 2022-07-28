@@ -20,6 +20,7 @@ class LoginController extends Controller
     public function store(Request $request)
     {
         # code...
+
         if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password'), 'role' => 1], $request->input('remember'))) {
             return redirect()->route('admin');
         } elseif (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password'), 'role' => 0], $request->input('remember'))) {
@@ -29,3 +30,27 @@ class LoginController extends Controller
         return redirect()->back();
     }
 }
+// public function getLogin(Request $request)
+//     {
+//         $email = $request->email;
+//         $password = $request->password;
+
+//         // dd(Auth::attempt(['email' => $email, 'password' => $password]));
+//         if (Auth::attempt(['email' => $email, 'password' => $password])) {
+//             $auth = Auth::user();
+//             if($auth->role == 0) {
+//                 return redirect()->route('admin.dashboard');
+//             } else {
+//                 return redirect($request->url);
+//             }
+
+// if ($auth->role === 0) {
+//                 return redirect()->route('admin.users.list');
+//             } elseif ($auth->role === 1 && $auth->status === 0) {
+//                 return redirect()->route('page.home');
+//             } else {
+//                 session()->flash('error', 'Tài khoản của bạn chưa được kích hoạt!');
+//                 return redirect()->route('auth.login');
+//             }
+
+// Auth::user() để lấy thông tin người dùng

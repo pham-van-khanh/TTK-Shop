@@ -55,7 +55,7 @@
                         </div>
                         <a href="{{route('contact')}}" class="nav-item nav-link">Contact</a>
                         <a href="{{route('check-out')}}" class="nav-item nav-link">Checkout</a>
-                        <a href="{{route('login')}}" class="nav-item nav-link">Login</a>
+                        <a href="{{route('login-form')}}" class="nav-item nav-link">Login</a>
                         <a href="{{route('register-form')}}" class="nav-item nav-link">Register</a>
                     </div>
                     {{-- <div class="navbar-nav ml-auto py-0" style="margin-left:700px">

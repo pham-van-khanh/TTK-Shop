@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Category;
 use App\Http\Services\Product\ProductAdminService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+use App\Http\Requests\StoreProductRequest;
 
 class ProductController extends Controller
 {
@@ -22,10 +26,18 @@ class ProductController extends Controller
 
     public function index()
     {
-        return view('admin.products.index',[
-         'products' => $this->productService->getAll(),
-
-        ]);
+        // $products = DB::table('products')
+        // ->join('categories', 'products.category_id', '=', 'categories.id')
+            
+        // // ->join('sizes', 'products.size_id', '=', 'sizes.id')
+        // ->where('categories.active', '=', 1)
+            
+        // ->select('products.*', 'categories.name')
+        // ->orderBy('products.id', 'ASC')->Paginate(6);
+        // // dd($products);
+        // return view('admin.products.index',[
+        //  'products' => $products,
+        // ]);
     }
 
     /**
@@ -33,9 +45,10 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function create()
+    public function create(Product $product)
     {
         return view('admin.products.add',[
+            'products' => $product,
             'categories' => $this->productService->getCate()
         ]);
     }
@@ -46,7 +59,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
         //
         $this->productService->create($request);

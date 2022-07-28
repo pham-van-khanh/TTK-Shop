@@ -15,7 +15,9 @@ class Product extends Model
         'price_old',
         'price_new',
         'active',
-        'image'
+        'image',
+        'size',
+        'tag'
     ];
 
     public function category(): \Illuminate\Database\Eloquent\Relations\HasOne
