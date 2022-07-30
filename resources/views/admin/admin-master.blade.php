@@ -129,9 +129,10 @@
       </ul>
     </div>
     <div class="sidenav-footer position-absolute w-100 bottom-0 ">
-      <div class="mx-3">
-        <a class="btn bg-gradient-primary mt-4 w-100" href="https://www.creative-tim.com/product/material-dashboard-pro?ref=sidebarfree" type="button">Upgrade to pro</a>
+         <div class="mx-3">
+        <a class="btn bg-gradient-primary mt-4 w-100" href="{{route('logOut')}}" type="submit">Log Out</a>
       </div>
+     
     </div>
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
@@ -156,7 +157,11 @@
             <li class="nav-item d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">Sign In</span>
+                <span class="d-sm-inline d-none"> Hi 
+                 
+                      {{Auth::check() ? Auth::user()->name :''}}
+                  
+                </span>
               </a>
             </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">

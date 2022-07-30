@@ -117,7 +117,7 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active  
   transform: scale(0.95);
 }
 
-input[type=email] {
+input[type=text] {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;
@@ -138,12 +138,12 @@ input[type=email] {
   border-radius: 5px 5px 5px 5px;
 }
 
-input[type=email]:focus {
+input[type=text]:focus {
   background-color: #fff;
   border-bottom: 2px solid #5fbae9;
 }
 
-input[type=email]:placeholder {
+input[type=text]:placeholder {
   color: #cccccc;
 }
 
@@ -310,7 +310,11 @@ input[type=password]:placeholder {
     <form action="{{route('store')}}" method="post" >
       @include('admin.alert')
       @csrf
-      <input type="email" id="login" class="fadeIn second" name="email" placeholder="Email">
+       @if ($errors->any())
+                 <h5 style="color: red"> {{ $errorMsg }}</h5>
+            @endif
+            {{-- <input type="hidden" name="url"  value="{{$url}}" > --}}
+      <input type="text" id="login" class="fadeIn second" name="email" placeholder="Email">
       @error('email')
                     <h6 style="color: rgb(255, 0, 0)">{{ $message }} </h6>
       @enderror

@@ -16,12 +16,11 @@
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Price New</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Danh Mục</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Image</th>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Gallery Image</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Active</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                             <a class="btn btn-primary" style="font-size:10px" href="{{ route('product-add') }}"> Add
                                 Products</a>
-                        </th>
+                </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,22 +37,33 @@
 
                             </td>
                             <td>
-                                {{-- {{ $item->category->name }} --}}
+                                {{-- @foreach ($category as $item) --}}
+                                    {{$item->category->name}}
+                                {{-- @endforeach --}}
                             </td>
                             <td>
                                 <img src="{{asset($item->image)}}" width="100" alt="">
                             </td>
+                            
                             <td>
-                                <a href="{{route('gallery-add',$item->id)}}">
-                                    <button class="btn btn-primary m-0 btn-sm">
-                                       Thêm
-                                    </button>
-                                </a>
-                            </td>
-                            <td>
-                                <button class="btn btn-info m-0 btn-sm">
-                                    {{ $item->avtive = 1 ? 'Publish' : 'Private' }}
-                                </button>
+                                <form action="{{route('product-status', $item->id)}}" method="POST">
+                                    
+                                    @if ($item->active == 1)
+                                    <button class="btn btn-light"  style="font-size:11px"href="javascript:;" 
+                                    class="text-secondary font-weight-bold text-xs" 
+                                    data-toggle="tooltip" 
+                                    data-original-title="Edit user"> Publish
+                                      </button>
+                                      @else 
+                                      <button class="btn btn-dark"  style="font-size:11px"href="javascript:;" 
+                                    class="text-secondary font-weight-bold text-xs" 
+                                    data-toggle="tooltip" 
+                                    data-original-title="Edit user"> Private
+                                      </button>
+                                    @endif
+                                      
+                                 @csrf
+                                </form>
                             </td>
                             <td class="align-middle">
                                 <a href="{{ route('product-edit', $item->id) }}">

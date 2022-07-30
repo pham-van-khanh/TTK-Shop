@@ -31,9 +31,24 @@
                                 <img src="{{asset($item->image) }}" width="150" alt="">
                             </td>
                             <td>
-                             <button class="btn btn-info btn-sm">
-                                {{$item->active = 1?'Publish':'Private'}}
-                             </button>
+                                <form action="{{route('category-status', $item->id)}}" method="POST">
+                                    
+                                      @if ($item->active == 1)
+                                      <button class="btn btn-light"  style="font-size:11px"href="javascript:;" 
+                                      class="text-secondary font-weight-bold text-xs" 
+                                      data-toggle="tooltip" 
+                                      data-original-title="Edit user"> Publish
+                                        </button>
+                                        @else 
+                                        <button class="btn btn-dark"  style="font-size:11px"href="javascript:;" 
+                                      class="text-secondary font-weight-bold text-xs" 
+                                      data-toggle="tooltip" 
+                                      data-original-title="Edit user"> Private
+                                        </button>
+                                      @endif
+                                        
+                                   @csrf
+                                  </form>
                             </td>
                             <td class="align-middle">
                                 <a href="{{ route('category.edit', $item->id) }}">

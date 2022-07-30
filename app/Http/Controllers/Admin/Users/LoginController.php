@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Users;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePostRequest;
 use Illuminate\Support\Facades\Session;
@@ -14,22 +15,48 @@ class LoginController extends Controller
     public function index()
     {
         # code...
-        $this->data['errorMsg'] = 'Thêm lỗi';
-        return view('page.login', ['title' => 'Đăng Nhập'], $this->data);
+        $this->data['errorMsg'] = 'Đăng nhập lỗi';
+        return view(
+            'page.login',
+            [
+                'title' => 'Đăng Nhập',
+                // 'url' =>$_SERVER['HTTP_REFERER']
+            ],
+            $this->data,
+        );
     }
-    public function store(Request $request)
+    public function store(LoginRequest $request)
     {
         # code...
 
-        if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password'), 'role' => 1], $request->input('remember'))) {
-            return redirect()->route('admin');
-        } elseif (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password'), 'role' => 0], $request->input('remember'))) {
-            return redirect()->route('home-page');
+        if (Auth::attempt(
+                [
+                    'email' => $request->input('email'),
+                     'password' => $request->input('password'),],
+                $request->input('remember'),)) {
+            $auth = Auth::user();
+                    if ($auth->role == 1) {
+                        return redirect()->route('admin');
+                    } else {
+                        return redirect()->route('home-page');
+                    }
         }
         Session::flash('error', 'Email hoặc Password không chính xác');
         return redirect()->back();
     }
+
+    public function logOut(Request $request)
+    {
+        // xóa session user đã đăng nhập
+        Auth::logout();
+        // hủy toàn bộ session đi
+        $request->session()->invalidate();
+        // tạo token mới
+        $request->session()->regenerateToken();
+        return redirect()->route('login');
+    }
 }
+
 // public function getLogin(Request $request)
 //     {
 //         $email = $request->email;

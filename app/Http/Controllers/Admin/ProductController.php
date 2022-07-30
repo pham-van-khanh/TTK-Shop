@@ -26,18 +26,18 @@ class ProductController extends Controller
 
     public function index()
     {
-        // $products = DB::table('products')
-        // ->join('categories', 'products.category_id', '=', 'categories.id')
+        $products = Product::with('category')
+        ->join('categories', 'products.category_id', '=', 'categories.id')
             
-        // // ->join('sizes', 'products.size_id', '=', 'sizes.id')
-        // ->where('categories.active', '=', 1)
+        // ->join('sizes', 'products.size_id', '=', 'sizes.id')
+        ->where('categories.active', '=', 1)
             
-        // ->select('products.*', 'categories.name')
-        // ->orderBy('products.id', 'ASC')->Paginate(6);
-        // // dd($products);
-        // return view('admin.products.index',[
-        //  'products' => $products,
-        // ]);
+        ->select('products.*')
+        ->orderBy('products.id', 'ASC')->Paginate(6);
+        // dd($products);
+        return view('admin.products.index',[
+         'products' => $products, 
+        ]);
     }
 
     /**
@@ -75,7 +75,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        dd($product);
         return view('admin.products.edit',[
             'product'=> $product,
             'categories' => $this->productService->getCate()
@@ -117,5 +117,19 @@ class ProductController extends Controller
     {
         $request = Product::destroy($id);
         return redirect()->back();
+    }
+    public function changeStatus($product)
+    {
+        # code...
+        $product = Product::find($product);
+        if($product->active == 1){
+            $product->active = 0;
+        }else {
+            # code...
+            $product->active = 1;
+
+        }
+        $product->save();
+        return redirect()->route('product');
     }
 }

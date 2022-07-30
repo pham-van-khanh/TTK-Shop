@@ -7,16 +7,20 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\UploadController;
+use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\ShopController;
 use \App\Http\Services\UploadService;
 use App\Http\Middleware\Authenticate;
 
 // -------- QUẢN TRỊ ---------
 Route::middleware(['auth'])->group(function () {
-    Route::prefix('admin')->group(function () {
+    Route::middleware(['auth.admin'])->prefix('admin')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('admin');
         // CATEGORY
         Route::prefix('category')->group(function () {
             Route::get('/', [CategoryController::class, 'index'])->name('category');
+            Route::post('changeStatus/{category}', [CategoryController::class, 'changeStatus'])->name('category-status');
+
             Route::get('/add', [CategoryController::class, 'create'])->name('category-add');
             Route::post('add', [CategoryController::class, 'store']);
             Route::get('edit/{category}', [CategoryController::class, 'edit'])->name('category.edit');
@@ -26,6 +30,8 @@ Route::middleware(['auth'])->group(function () {
         // PRODUCT
         Route::prefix('product')->group(function () {
             Route::get('/', [ProductController::class, 'index'])->name('product');
+            Route::post('changeStatus/{product}', [ProductController::class, 'changeStatus'])->name('product-status');
+
             Route::get('/add', [ProductController::class, 'create'])->name('product-add');
             Route::post('add', [ProductController::class, 'store']);
             Route::get('edit/{product}', [ProductController::class, 'show'])->name('product-edit');
@@ -48,24 +54,46 @@ Route::middleware(['auth'])->group(function () {
 
 
 // ------- ĐĂNG NHẬP ------
-Route::prefix('/login')->group(function () {
-    Route::get('/', [LoginController::class, 'index'])->name('login-form');
+Route::middleware('guest')->prefix('/login')->group(function () {
+    Route::get('/', [LoginController::class, 'index'])->name('login');
     Route::post('/store', [LoginController::class, 'store'])->name('store');
+    
 });
+Route::get('login/logout', [LoginController::class, 'logOut'])->name('logOut');
 
+
+
+
+
+// ================== TRANG KHACH ==============
 Route::prefix('/')->group(function () {
-    Route::get('/trang-chu', function () {
-        return view('page.homepage');
-    })->name('home-page');
-    Route::get('/san-pham', function () {
-        return view('page.shop');
-    })->name('shop');
-    Route::get('/san-pham/detail', function () {
-        return view('page.product-detail');
-    })->name('detail');
+    Route::prefix('/trang-chu')->group(function () {
+        Route::get('/',[HomepageController::class,'getCate'] )->name('home-page');
+        
+    });
+
+
+    Route::prefix('/san-pham')->group(function () {
+        Route::get('/', [ShopController::class,'getProduct'])->name('shop');
+        Route::get('/detail/{product}',[ShopController::class,'productDetail'])->name('detail');
+    });
+    Route::prefix('/danh-muc')->group(function () {
+        Route::get('/{category}',[ShopController::class,'getCateDetail'])->name('getCateDetail');
+        Route::get('/',[ShopController::class,'getCate'])->name('getCate'); 
+        
+    });
+   
+
+
+
+    
+
+
     Route::get('/lien-he', function () {
         return view('page.contact');
     })->name('contact');
+
+
     Route::get('/gio-hang', function () {
         return view('page.cart');
     })->name('cart');

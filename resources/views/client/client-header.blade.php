@@ -46,17 +46,24 @@
                     <div class="ml-auto navbar-nav">
                         <a href="{{route('home-page')}}" class="nav-item nav-link">Home</a>
                         <a href="{{route('shop')}}" class="nav-item nav-link">Shop</a>
-                        <div class="nav-item dropdown">
+                        {{-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Category</a>
-                            <div class="dropdown-menu rounded-3 m-0">
-                                <a href="cart.html" style="font-size: 130%" class="dropdown-item">Sofa</a>
-                                
+                            @foreach ($category as $item)
+                                 <div class="dropdown-menu rounded-3 m-0">
+                                <a href="cart.html" style="font-size: 130%" class="dropdown-item">{{$item->name}}</a>  
                             </div>
-                        </div>
+                            @endforeach
+                           
+                        </div> --}}
                         <a href="{{route('contact')}}" class="nav-item nav-link">Contact</a>
                         <a href="{{route('check-out')}}" class="nav-item nav-link">Checkout</a>
-                        <a href="{{route('login-form')}}" class="nav-item nav-link">Login</a>
+                        @if (empty(Auth::user()))
+                        <a href="{{route('login')}}" class="nav-item nav-link">Login</a>
                         <a href="{{route('register-form')}}" class="nav-item nav-link">Register</a>
+                        @elseif (Auth::user())
+                      <a href="" class="nav-item nav-link"> Hi . {{Auth::user()->name}}</a>
+                      <a href="{{route('logOut')}}" class="nav-item nav-link">Logout</a>
+                        @endif
                     </div>
                     {{-- <div class="navbar-nav ml-auto py-0" style="margin-left:700px">
                         

@@ -53,14 +53,11 @@ class ProductAdminService
         }
         return true;
     }
-    // public function getAll()
-    // {
-    //     return Product::
-    //     with('category')
-    //     ->where('categories.active','=',1)
-    //         ->orderByDesc('id')
-    //         ->paginate(5);
-    // }
+//     public function getAll()
+//     {
+//         return Product::
+// with('category')
+//     }
     public function update($request, $product)
     {
         try {

@@ -11,26 +11,29 @@
                     }
                 </style>
                 <ul id="imageGallery">
-                    <li data-thumb="{{ asset('images/products/Bàn làm việc Maxine_GSHlNFcwQOcVNTDK2URGDc4VSAWelvdp0SpgwoD7.jpg') }}"
-                        data-src="{{ asset('images/products/Bàn làm việc Maxine_GSHlNFcwQOcVNTDK2URGDc4VSAWelvdp0SpgwoD7.jpg') }}">
-                        <img
-                            src="{{ asset('images/products/Bàn làm việc Maxine_GSHlNFcwQOcVNTDK2URGDc4VSAWelvdp0SpgwoD7.jpg') }}" />
-                    </li>
-                    <li data-thumb="{{ asset('images/products/Bàn làm việc Maxine_GSHlNFcwQOcVNTDK2URGDc4VSAWelvdp0SpgwoD7.jpg') }}"
-                        data-src="{{ asset('images/products/Bàn làm việc Maxine_GSHlNFcwQOcVNTDK2URGDc4VSAWelvdp0SpgwoD7.jpg') }}">
-                        <img
-                            src="{{ asset('images/products/Bàn làm việc Maxine_GSHlNFcwQOcVNTDK2URGDc4VSAWelvdp0SpgwoD7.jpg') }}" />
-                    </li>
-                    <li data-thumb="{{ asset('images/products/Bàn làm việc Maxine_GSHlNFcwQOcVNTDK2URGDc4VSAWelvdp0SpgwoD7.jpg') }}"
-                        data-src="{{ asset('images/products/Bàn làm việc Maxine_GSHlNFcwQOcVNTDK2URGDc4VSAWelvdp0SpgwoD7.jpg') }}">
-                        <img
-                            src="{{ asset('images/products/Bàn làm việc Maxine_GSHlNFcwQOcVNTDK2URGDc4VSAWelvdp0SpgwoD7.jpg') }}" />
-                    </li>
+                    {{-- @dd($images); --}}
+                    @foreach ($images as $image)
+                         
+                        <li  data-thumb="{{asset('/images/products/'.$image->gallery)}}"
+                            data-src="{{asset('/images/products/'.$image->gallery)}}">
+                           
+                            <img alt="{{$product->name}}" src="{{asset('/images/products/'.$image->gallery)}}" />
+                        </li>
+                        
+                       @endforeach  
+                    
+                       
+                    
+                       
+                    
+                    
+                   
+                  
                 </ul>
             </div>
 
             <div class="col-lg-3 pb-5">
-                <h3 class="font-weight-semi-bold">Colorful Stylish Shirt</h3>
+                <h3 class="font-weight-semi-bold">{{$product->name}}</h3>
                 <div class="d-flex mb-3">
                     <div class="text-primary mr-2">
                         <small class="fas fa-star"></small>
@@ -43,7 +46,7 @@
                 </div>
                 <h3 class="font-weight-semi-bold mb-4">$150.00</h3>
                 <p class="mb-4">
-                    amet at lorem et eirmod ipsum diam et rebum kasd rebum.</p>
+                    {{$product->description}}</p>
                 <div class="d-flex mb-3">
                     <p class="text-dark font-weight-medium mb-0 mr-3">Sizes:</p>
                     {{-- for each ra id của cate --}}

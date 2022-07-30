@@ -17,7 +17,10 @@ class CheckLogin
      */
     public function handle(Request $request, Closure $next)
     {
-        // dd(Auth::user());
-        return $next($request);
+        if (Auth::check() && Auth::user()->role == 1) {
+            return $next($request);
+        }
+        abort(404);
+        
     }
 }

@@ -44,7 +44,20 @@ class CategoryController extends Controller
         ]);
     }
 
+    public function changeStatus($category)
+    {
+        # code...
+        $category = Category::find($category);
+        if($category->active == 1){
+            $category->active = 0;
+        }else {
+            # code...
+            $category->active = 1;
 
+        }
+        $category->save();
+        return redirect()->route('category');
+    }
     public function update(StorePostRequest $request,$category)
     {
         $this->categoryService->update($request,$category);

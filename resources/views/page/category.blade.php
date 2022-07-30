@@ -1,5 +1,5 @@
 @extends('client.client-master')
-@section('title','Sản Phẩm')
+@section('title','Danh Mục')
 @section('content-client')
     
     <!-- Page Header Start -->
@@ -9,7 +9,7 @@
             <div class="d-inline-flex">
                 <p class="m-0"><a href="">Home</a></p>
                 <p class="m-0 px-2">/</p>
-                <p class="m-0">Shop</p>
+                <p class="m-0">Danh Mục Sản Phẩm</p>
             </div>
         </div>
     </div>
@@ -63,13 +63,6 @@
                 <div class="border-bottom mb-4 pb-4">
                     <h5 class="font-weight-semi-bold mb-4">Category</h5>
                     <form>
-                        {{-- <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Category</a>
-                            @foreach ($category as $item)
-                                 <div class="dropdown-menu rounded-3 m-0">
-                                <a href="cart.html" style="font-size: 130%" class="dropdown-item">{{$item->name}}</a>  
-                            </div>
-                            @endforeach --}}
                          @foreach ($category as $item)
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                             <input type="checkbox" class="custom-control-input" checked id="color-all">
@@ -150,34 +143,34 @@
                         </div>
                     </div>
                     
-                   @foreach ($products as $item)
-                        <div data-filter="[{{$item->id}}]" class="col-lg-4 col-md-6 col-sm-12 pb-1">
-                        <div class="card product-item border-0 mb-4">
-                            <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                <img class="img-fluid w-100" src="{{asset($item->image)}}" alt="">
-                            </div>
-                            <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                                <h6 style="font-size: 110%" class="text-truncate mb-3">{{$item->name}}</h6>
-                                <div class="d-flex justify-content-center">
-                                    <h5>{{ number_format($item->price_new, 0, ',', '.') }}</h5><h5 class="text-muted ml-2"><del style="color: red">{{ number_format($item->price_old, 0, ',', '.') }}</del></h5>
-                                </div>
-                            </div>
-                            <div class="card-footer d-flex justify-content-between bg-light border">
-                                <a style="font-size: 80%" href="{{route('detail',$item->id)}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                                <a  style="font-size: 80%" href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                            </div>
-                        </div>
-                    </div>
-                   @endforeach
-                   
                     
-                    <div class="col col-6 pb-1">
+                   <!-- Categories Start -->
+    <div class="container-fluid pt-1">
+    <div class="row px-xl-5 pb-3">
+       @foreach ($category as $item)
+            <div class="col-lg-4 col-md-6 pb-1">
+            <div  class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+                <p class="text-right">{{$item->products->count()}} sản phẩm </p>
+                <a href="{{route('getCateDetail' ,$item->id)}}" style="font-size: 270px" class="cat-img position-relative overflow-hidden mb-3">
+                    <img class="img-fluid" src="{{asset($item->image)}}" alt="">
+                </a>
+                <h5 class="font-weight-semi-bold m-0">{{$item->name}}</h5>
+            </div>
+        </div>
+       @endforeach
+       
+       
+    </div>
+</div>
+<!-- Categories End -->
+                    
+                    {{-- <div class="col col-6 pb-1">
                         <div class="col-6">
                             <nav aria-label="Page navigation">
-                                {{$products->links()}}
+                                {{$category->links()}}
                             </nav>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             <!-- Shop Product End -->
