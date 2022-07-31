@@ -22,9 +22,11 @@ Route::middleware(['auth'])->group(function () {
             Route::post('changeStatus/{category}', [CategoryController::class, 'changeStatus'])->name('category-status');
 
             Route::get('/add', [CategoryController::class, 'create'])->name('category-add');
-            Route::post('add', [CategoryController::class, 'store']);
-            Route::get('edit/{category}', [CategoryController::class, 'edit'])->name('category.edit');
-            Route::post('edit/{category}', [CategoryController::class, 'update']);
+            Route::post('/add', [CategoryController::class, 'store']);
+
+            Route::get('/edit/{category}', [CategoryController::class, 'edit'])->name('category-edit');
+            Route::PUT('/update/{category}', [CategoryController::class, 'update'])->name('category-update');
+
             Route::delete('delete/{category}', [CategoryController::class, 'delete'])->name('category-delete');
         });
         // PRODUCT
@@ -34,8 +36,10 @@ Route::middleware(['auth'])->group(function () {
 
             Route::get('/add', [ProductController::class, 'create'])->name('product-add');
             Route::post('add', [ProductController::class, 'store']);
+
             Route::get('edit/{product}', [ProductController::class, 'show'])->name('product-edit');
             Route::post('edit/{product}', [ProductController::class, 'update']);
+
             Route::delete('delete/{products}', [ProductController::class, 'destroy'])->name('product-delete');
 
         });
@@ -76,12 +80,13 @@ Route::prefix('/')->group(function () {
     Route::prefix('/san-pham')->group(function () {
         Route::get('/', [ShopController::class,'getProduct'])->name('shop');
         Route::get('/detail/{product}',[ShopController::class,'productDetail'])->name('detail');
+        Route::get('/detail',[ShopController::class,'getProductBottom'])->name('');
     });
     Route::prefix('/danh-muc')->group(function () {
         Route::get('/{category}',[ShopController::class,'getCateDetail'])->name('getCateDetail');
-        Route::get('/',[ShopController::class,'getCate'])->name('getCate'); 
-        
+         Route::get('/',[ShopController::class,'getCate'])->name('getCate'); 
     });
+   
    
 
 

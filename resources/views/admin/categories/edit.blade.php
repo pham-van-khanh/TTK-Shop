@@ -1,14 +1,15 @@
 @extends('admin.admin-master')
 
-@section('title', 'Edit Category')
+@section('title', 'Cập nhật ' . $category->name)
 
 @section('content-title', 'Edit Category')
 @section('danh-muc', 'Edit Category')
 @section('content')
 
-
-    <form action="" method="POST" enctype="multipart/form-data">
-        <br>
+       
+    <form action="{{route('category-update', $category->id)}}" method="POST" enctype="multipart/form-data">
+       
+       @method('PUT') <br>
         @csrf
         @include('admin.alert')
         <div class="form-outline">
@@ -16,6 +17,7 @@
                  <h5 style="color: red"> {{ $errors }}</h5>
             @endif --}}
         </div>
+        <input type="hidden" name="id" value="{{$category->id}}">
         <div class="row mb-4">
             <div class="col">
                 <div class="form-outline">

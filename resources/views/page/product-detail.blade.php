@@ -1,4 +1,5 @@
 @extends('client.client-master')
+@section('title',$product->name)
 @section('content-client')
     <div class="container-fluid py-5">
         <div class="row px-xl-5">
@@ -17,7 +18,7 @@
                         <li  data-thumb="{{asset('/images/products/'.$image->gallery)}}"
                             data-src="{{asset('/images/products/'.$image->gallery)}}">
                            
-                            <img alt="{{$product->name}}" src="{{asset('/images/products/'.$image->gallery)}}" />
+                            <img width="820" alt="{{$product->name}}" src="{{asset('/images/products/'.$image->gallery)}}" />
                         </li>
                         
                        @endforeach  
@@ -32,8 +33,8 @@
                 </ul>
             </div>
 
-            <div class="col-lg-3 pb-5">
-                <h3 class="font-weight-semi-bold">{{$product->name}}</h3>
+            <div class="col-lg-5 pb-5">
+                <h1 class="font-weight-semi-bold">{{$product->name}}</h1>
                 <div class="d-flex mb-3">
                     <div class="text-primary mr-2">
                         <small class="fas fa-star"></small>
@@ -44,7 +45,8 @@
                     </div>
                     <small class="pt-1">(50 Reviews)</small>
                 </div>
-                <h3 class="font-weight-semi-bold mb-4">$150.00</h3>
+                <h1>{{ number_format($product->price_new, 0, ',', '.').' VNĐ' }}</h1><h2 class="text-muted ml-2"><del style="color: red">{{ number_format($product->price_old, 0, ',', '.').' VNĐ' }}</del></h2>
+
                 <p class="mb-4">
                     {{$product->description}}</p>
                 <div class="d-flex mb-3">
@@ -272,5 +274,43 @@
 
 
         </div>
+        
+        {{-- danh sách sản phẩm --}}
+        
+                  
     </div>
+    <div class="container-fluid py-5">
+        <div class="row px-xl-5">
+          <div class="col-lg-5 pb-2">
+            
+          </div>
+          <div class="col-lg-5 pb-2">
+            <h1>CÓ THỂ BẠN CŨNG BIẾT</h1>
+            @include('')
+            {{-- @foreach ($products as $item)
+                        <div data-filter="[{{$item->id}}]" class="col-lg-4 col-md-6 col-sm-12 pb-1">
+                        <div class="card product-item border-0 mb-4">
+                            <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                <img class="img-fluid w-100" src="{{asset($item->image)}}" alt="">
+                            </div>
+                            <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                <h6 style="font-size: 110%" class="text-truncate mb-3">{{$item->name}}</h6>
+                                <div class="d-flex justify-content-center">
+                                    <h5>{{ number_format($item->price_new, 0, ',', '.') }}</h5><h5 class="text-muted ml-2"><del style="color: red">{{ number_format($item->price_old, 0, ',', '.') }}</del></h5>
+                                </div>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between bg-light border">
+                                <a style="font-size: 80%" href="{{route('detail',$item->id)}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+                                <a  style="font-size: 80%" href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                            </div>
+                        </div>
+                    </div>
+            @endforeach --}}
+            {{-- in ra danh sách sản phẩm --}}
+          </div>
+          <div class="col-lg-7 pb-2">
+            
+          </div>
+        </div>
+      </div>
 @endsection

@@ -37,12 +37,35 @@ class CategoryController extends Controller
         $this->categoryService->create($request);
         return redirect()->back();
     }
+
+    
     public function edit(Category $category)
     {
+        // dd($category);
         return view('admin.categories.edit', [
             'category' => $category
         ]);
     }
+
+    public function update(StorePostRequest $request, $id)
+    {
+        $category = Category::find($id);
+        $category->fill($request->all());
+        if ($category) {
+            if ($category->image != null) {
+                if ($request->hasFile('image')) {
+                    $image = $request->image;
+                    $imageName = $image->hashName();
+                    $imageName = $request->name . '_' . $imageName;
+                    $category->image = $image->storeAs('images/category', $imageName);
+                } 
+            }
+        }
+        $category->save();
+        Session::flash('success', 'Cập Nhật thành công');
+        return redirect()->route('category');
+    }
+
 
     public function changeStatus($category)
     {
@@ -58,12 +81,7 @@ class CategoryController extends Controller
         $category->save();
         return redirect()->route('category');
     }
-    public function update(StorePostRequest $request,$category)
-    {
-        $this->categoryService->update($request,$category);
-        return redirect()->back();
-    }
-
+    
 
 
     public function delete(Request $request,Category $category)

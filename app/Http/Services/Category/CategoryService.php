@@ -30,23 +30,20 @@ class CategoryService
         return redirect()->route('category');
     }
 
-    public function update($request, $category)
+    public function edit($request, $id)
     {
-        
-        $category = Category::find($category);
+        $category = Category::find($id);
         $category->fill($request->all());
-        // if ($category) {
-        //     if ($category->image != null) {
-        //         if ($request->hasFile('image')) {
-        //             $image = $request->image;
-        //             $imageName = $image->hashName();
-        //             $imageName = $request->name . '_' . $imageName;
-        //             $category->image = $image->storeAs('images/category', $imageName);
-        //         } 
-        //     }
-        // }
-        dd($category);
-        
+        if ($category) {
+            if ($category->image != null) {
+                if ($request->hasFile('image')) {
+                    $image = $request->image;
+                    $imageName = $image->hashName();
+                    $imageName = $request->name . '_' . $imageName;
+                    $category->image = $image->storeAs('images/category', $imageName);
+                } 
+            }
+        }
         $category->save();
         Session::flash('success', 'Cập Nhật thành công');
         return redirect()->route('category');

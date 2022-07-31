@@ -24,6 +24,7 @@ class HomepageController extends Controller
          'products' => $products, 'category' => $category,  
         ]);
     }
+
     public function getCate()
     {
 

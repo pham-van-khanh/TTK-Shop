@@ -51,7 +51,7 @@
                                   </form>
                             </td>
                             <td class="align-middle">
-                                <a href="{{ route('category.edit', $item->id) }}">
+                                <a href="{{ route('category-edit', $item->id) }}">
                                     <button class="btn btn-info" style="font-size:9px"href="javascript:;"
                                         class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
                                         data-original-title="Edit user">

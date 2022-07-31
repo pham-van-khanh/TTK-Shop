@@ -9,7 +9,7 @@
             <div class="d-inline-flex">
                 <p class="m-0"><a href="">Home</a></p>
                 <p class="m-0 px-2">/</p>
-                <p class="m-0">Danh Mục Sản Phẩm</p>
+                <p class="m-0"><a href="{{route('getCate')}}">Danh Mục Sản Phẩm</a></p>
                 <p class="m-0 px-2">/</p>
                 <p class="m-0">
                     @foreach ($product as $item)

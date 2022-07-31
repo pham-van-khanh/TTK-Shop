@@ -9,7 +9,7 @@
             <div class="d-inline-flex">
                 <p class="m-0"><a href="">Home</a></p>
                 <p class="m-0 px-2">/</p>
-                <p class="m-0">Danh Mục Sản Phẩm</p>
+                <p class="m-0"><a href="{{route('getCate')}}">Danh Mục Sản Phẩm</a></p>
             </div>
         </div>
     </div>
@@ -164,13 +164,13 @@
 </div>
 <!-- Categories End -->
                     
-                    {{-- <div class="col col-6 pb-1">
+                    <div class="col col-6 pb-1">
                         <div class="col-6">
                             <nav aria-label="Page navigation">
                                 {{$category->links()}}
                             </nav>
                         </div>
-                    </div> --}}
+                    </div>
                 </div>
             </div>
             <!-- Shop Product End -->
