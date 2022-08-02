@@ -39,8 +39,8 @@ class ShopController extends Controller
     }
     public function productDetail(Product $product,Gallery $images )
     {
-            $images = Gallery::where('product_id', $product->id)->get();
-            $category = Category::where('active', 1)->get();
+        $images = Gallery::where('product_id', $product->id)->get();
+        $category = Category::where('active', 1)->get();
         return view('page.product-detail',[
             'product'=> $product,
             'categories' => $category,

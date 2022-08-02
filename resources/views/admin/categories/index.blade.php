@@ -5,7 +5,7 @@
 @section('content')
     <div>
     </div>
-        
+
 
     <div class="card-body px-0 pb-2">
         <div class="table-responsive p-0">
@@ -14,10 +14,12 @@
                     <tr>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Image</th>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                            <a class="btn btn-primary" style="font-size:10px" href="{{ route('category-add') }}"> Add
-                                Category</a>
+                        @if (Auth::user()->status == 0)
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                <a class="btn btn-primary" style="font-size:10px" href="{{ route('category-add') }}"> Add
+                                    Category</a>
+                        @endif
                         </th>
                     </tr>
                 </thead>
@@ -28,61 +30,53 @@
                                 {{ $item['name'] }}
                             </td>
                             <td>
-                                <img src="{{asset($item->image) }}" width="150" alt="">
+                                <img src="{{ asset($item->image) }}" width="150" alt="">
                             </td>
-                            <td>
-                                <form action="{{route('category-status', $item->id)}}" method="POST">
-                                    
-                                      @if ($item->active == 1)
-                                      <button class="btn btn-light"  style="font-size:11px"href="javascript:;" 
-                                      class="text-secondary font-weight-bold text-xs" 
-                                      data-toggle="tooltip" 
-                                      data-original-title="Edit user"> Publish
+                            @if (Auth::user()->status == 0)
+                                <td>
+                                    <form action="{{ route('category-status', $item->id) }}" method="POST">
+
+                                        @if ($item->active == 1)
+                                            <button class="btn btn-light" style="font-size:11px"href="javascript:;"
+                                                class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
+                                                data-original-title="Edit user"> Publish
+                                            </button>
+                                        @else
+                                            <button class="btn btn-dark" style="font-size:11px"href="javascript:;"
+                                                class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
+                                                data-original-title="Edit user"> Private
+                                            </button>
+                                        @endif
+
+                                        @csrf
+                                    </form>
+                                </td>
+                                <td class="align-middle">
+                                    <a href="{{ route('category-edit', $item->id) }}">
+                                        <button class="btn btn-info" style="font-size:9px"href="javascript:;"
+                                            class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
+                                            data-original-title="Edit user">
+                                            Sửa
                                         </button>
-                                        @else 
-                                        <button class="btn btn-dark"  style="font-size:11px"href="javascript:;" 
-                                      class="text-secondary font-weight-bold text-xs" 
-                                      data-toggle="tooltip" 
-                                      data-original-title="Edit user"> Private
+                                    </a>
+                                    <form action="{{ route('category-delete', $item->id) }}" method="POST">
+                                        <button class="btn btn-danger"
+                                            onclick="return confirm('Bạn có chắc xóa {{ $item->name }} ?')"
+                                            style="font-size:9px"href="javascript:;"
+                                            class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
+                                            data-original-title="Edit user">
+                                            Xóa
                                         </button>
-                                      @endif
-                                        
-                                   @csrf
-                                  </form>
-                            </td>
-                            <td class="align-middle">
-                                <a href="{{ route('category-edit', $item->id) }}">
-                                    <button class="btn btn-info" style="font-size:9px"href="javascript:;"
-                                        class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                                        data-original-title="Edit user">
-                                        Sửa
-                                    </button>
-                                </a>
-                                <form action="{{ route('category-delete', $item->id) }}" method="POST">
-                                    <button class="btn btn-danger"
-                                        onclick="return confirm('Bạn có chắc xóa {{ $item->name }} ?')"
-                                        style="font-size:9px"href="javascript:;"
-                                        class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                                        data-original-title="Edit user">
-                                        Xóa
-                                    </button>
-                                    @csrf
-                                    @method('DELETE')
-                                </form>
-                                {{-- form gửi lên id --}}
-                                {{-- <form action="{{route('users.delete', $item->id)}}" method="POST">
-                                  <button class="btn btn-danger" onclick="return confirm('Bạn có chắc xóa {{$item->name}} ?')"  style="font-size:9px"href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                    Xóa
-                                  </button>
-                                 @csrf
-                                 @method('DELETE')
-                                </form> --}}
-                            </td>
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
+                                </td>
+                            @endif
                         </tr>
                     @endforeach
 
                 </tbody>
             </table>
         </div>
-        <div>{{$category->links()}}</div>
+        <div>{{ $category->links() }}</div>
     @endsection

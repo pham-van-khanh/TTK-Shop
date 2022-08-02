@@ -69,10 +69,6 @@
                 <h6 style="color: rgb(255, 0, 0)">{{ $message }} </h6>
             @enderror
         </div>
-       
-           
-             
-
         <div class="form-outline mb-4">
             <label class="form-label" for="form3Example3">Image</label>
             <input type="file" id="image" name="image" class="form-control" />
@@ -84,7 +80,14 @@
             <label class="form-label" for="form3Example3">Gallery Image</label>
             <input type="file" id="image" name="gallery[]" multiple class="form-control" />
         </div>
-        
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form3Example3">size</label>
+            <input type="hidden" value="1" id="size" name="size" multiple class="form-control" />
+        </div>
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form3Example3">tag</label>
+            <input type="hidden" value="1" id="t" name="tag" multiple class="form-control" />
+        </div>
         <div class="form-outline mb-4">
             <label class="form-label" for="form3Example3">Kích Hoạt</label>
             <br>
@@ -101,9 +104,4 @@
             $('.money').simpleMoneyFormat();
         </script>
     </form>
-    
-    {{-- MODAL --}}
-    
-
-    
 @endsection

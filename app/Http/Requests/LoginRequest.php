@@ -24,19 +24,26 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email',
-            'password'=>'required|min:2'
-           
+            'email'=> 'required|email|min:6|max:32',
+            'password'=> 'required',
+            'name'=> 'required|min:8',
+            'username'=> 'required|min:8',
+            'code'=> 'required',
         ];
     }
     public function messages(Type $var = null)
     {
         # code...
         return [
-            'email.required' =>'Bắt buộc nhập email',
-            'email.email' =>'Phải là email',
-            'password.required'=>'Bắt buộc nhập password',
-            'password.min'=>'Password phải trên 2 ký tự'
+            'email.required'=> 'Email không để trống',
+            'username.required'=> 'Username  không để trống',
+            'email.min'=> 'Email min 6 kí tự',
+            'email.max'=> 'Email max 32 kí tự',
+            'email.email'=> 'Định dạng email',
+            'password.required'=> 'Password không để trống',
+            'name.required'=> 'Name không để trống',
+            'code.required'=> 'Code không để trống',
+            'name.min'=> 'name min 8 kí tự',
         ];
     }
 }

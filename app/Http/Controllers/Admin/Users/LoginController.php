@@ -8,41 +8,68 @@ use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePostRequest;
 use Illuminate\Support\Facades\Session;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+
 class LoginController extends Controller
 {
     //
 
     public function index()
     {
-        # code...
         $this->data['errorMsg'] = 'Đăng nhập lỗi';
-        return view(
-            'page.login',
-            [
-                'title' => 'Đăng Nhập',
-                // 'url' =>$_SERVER['HTTP_REFERER']
-            ],
-            $this->data,
-        );
+        return view('page.login', ['title' => 'Đăng Nhập'], $this->data);
     }
-    public function store(LoginRequest $request)
+    public function store(Request $request)
     {
-        # code...
+        $email = $request->input('email');
+        $password = $request->input('password');
 
-        if (Auth::attempt(
-                [
-                    'email' => $request->input('email'),
-                     'password' => $request->input('password'),],
-                $request->input('remember'),)) {
+        if (Auth::attempt(['email' => $email, 'password' => $password])) {
             $auth = Auth::user();
-                    if ($auth->role == 1) {
-                        return redirect()->route('admin');
-                    } else {
-                        return redirect()->route('home-page');
-                    }
+            if ($auth->status == 1) {
+                if ($auth->role == 1) {
+                    return redirect()->route('admin');
+                } else {
+                    return redirect()->route('home-page');
+                }
+            }
+            else {
+                Session::flash('error', 'Tài khoản của bạn đã bị khóa');
+                Auth::logout();
+                return redirect()->back()
+                // ->with('error',$error)
+                ;
+                
+            }
+        } 
+        else {
+            Session::flash('error', 'Email hoặc Password không chính xác');
+            return redirect()->back();
         }
-        Session::flash('error', 'Email hoặc Password không chính xác');
-        return redirect()->back();
+    }
+
+    public function register()
+    {
+        $this->data['errorMsg'] = 'Đăng ký lỗi';
+        return view('page.register', $this->data);
+    }
+    public function handleRegister(LoginRequest $request, User $users)
+    {
+        if ($request->input('re_password') == $request->input('password')) {
+            $users = new User();
+            $password = $request->input('password');
+            $users->fill($request->all());
+            $users->password = Hash::make($password);
+    
+            $users->save();
+        }
+        else {
+            Session::flash('error', 'Password Confirm không chính xác');
+            return redirect()->back();
+        }
+        Auth::user($users);
+        return redirect()->route('home-page');
     }
 
     public function logOut(Request $request)
@@ -54,6 +81,38 @@ class LoginController extends Controller
         // tạo token mới
         $request->session()->regenerateToken();
         return redirect()->route('login');
+    }
+    public function list()
+    {
+        $users = User::select('id', 'name', 'username', 'role', 'status')->paginate(3);
+        return view('admin.users.index', ['users' => $users]);
+    }
+
+    public function changeRol($user)
+    {
+        $user = User::find($user);
+        if ($user->role == 1) {
+            $user->role = 0;
+        } else {
+            # code...
+            $user->role = 1;
+        }
+        $user->save();
+        Session::flash('success', 'Cấp quyền thành công');
+        return redirect()->route('users');
+    }
+    public function changeStt($user)
+    {
+        $user = User::find($user);
+        if ($user->status == 1) {
+            $user->status = 0;
+        } else {
+            # code...
+            $user->status = 1;
+        }
+        $user->save();
+        Session::flash('success', 'Cập nhật trạng thái thành công');
+        return redirect()->route('users');
     }
 }
 

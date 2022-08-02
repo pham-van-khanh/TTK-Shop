@@ -62,13 +62,15 @@ class ProductAdminService
     {
         try {
             $product->fill($request->all());
-            if ($request->hasFile('image')) {
-                $image = $request->image;
-                $imageName = $image->hashName();
-                $imageName = $request->name . '_' . $imageName;
-                $product->image = $image->storeAs('images/products', $imageName);
-            } else {
-                $product->image = '';
+            if ($product) {
+                if ($product->image != null) {
+                    if ($request->hasFile('image')) {
+                        $image = $request->image;
+                        $imageName = $image->hashName();
+                        $imageName = $request->name . '_' . $imageName;
+                        $product->image = $image->storeAs('images/product', $imageName);
+                    } 
+                }
             }
             $product->save();
             Session::flash('success', 'Cập Nhật thành công');

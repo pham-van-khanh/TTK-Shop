@@ -27,4 +27,5 @@ class Product extends Model
             'category_id')
             ->withDefault(['name' => '']);
     }
+    
 }

@@ -7,10 +7,13 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\UploadController;
+use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\CartController;
 use \App\Http\Services\UploadService;
 use App\Http\Middleware\Authenticate;
+use  App\Models\Attributes;
 
 // -------- QUẢN TRỊ ---------
 Route::middleware(['auth'])->group(function () {
@@ -43,9 +46,17 @@ Route::middleware(['auth'])->group(function () {
             Route::delete('delete/{products}', [ProductController::class, 'destroy'])->name('product-delete');
 
         });
-
+        Route::get('/list-user', [LoginController::class, 'list'])->name('users');
+        Route::post('/changeRol/{user}', [LoginController::class, 'changeRol'])->name('admin-role');
+        Route::post('/changeStt/{user}', [LoginController::class, 'changeStt'])->name('admin-status');
         Route::get('/gallery/add/{product}', [GalleryController::class, 'addGallery'])->name('gallery-add');
-    
+        
+
+
+        // ATTRIBUTE
+        Route::prefix('attribute')->group(function () {
+            Route::get('/', [AttributeController::class, 'index'])->name('att-list');
+        });
 
 //          UPLOAD
          Route::post('upload/services',[UploadController::class,'store']);
@@ -58,19 +69,27 @@ Route::middleware(['auth'])->group(function () {
 
 
 // ------- ĐĂNG NHẬP ------
-Route::middleware('guest')->prefix('/login')->group(function () {
-    Route::get('/', [LoginController::class, 'index'])->name('login');
-    Route::post('/store', [LoginController::class, 'store'])->name('store');
-    
+Route::middleware('guest')->group(function () {
+    Route::middleware(['auth.login'])->prefix('login')->group(function () {
+        Route::get('/', [LoginController::class, 'index'])->name('login');
+        Route::post('/store', [LoginController::class, 'store'])->name('login-store');
+        Route::get('/register', [LoginController::class,'register'])->name('register-form');
+        Route::post('/register', [LoginController::class,'handleRegister'])->name('register');
+        
+    });
 });
 Route::get('login/logout', [LoginController::class, 'logOut'])->name('logOut');
 
 
-
+// Route::get('/attr', function () {
+//     $shop = Attributes::find(1);
+//     $shop->products()->attach(1);
+//     return view('welcome');
+// });
 
 
 // ================== TRANG KHACH ==============
-Route::prefix('/')->group(function () {
+Route::middleware(['auth.login'])->prefix('/')->group(function () {
     Route::prefix('/trang-chu')->group(function () {
         Route::get('/',[HomepageController::class,'getCate'] )->name('home-page');
         
@@ -80,14 +99,15 @@ Route::prefix('/')->group(function () {
     Route::prefix('/san-pham')->group(function () {
         Route::get('/', [ShopController::class,'getProduct'])->name('shop');
         Route::get('/detail/{product}',[ShopController::class,'productDetail'])->name('detail');
-        Route::get('/detail',[ShopController::class,'getProductBottom'])->name('');
+        Route::get('/detail',[ShopController::class,'getProductBottom']);
+        Route::get('/add-to-cart/{product}',[CartController::class,'addToCart'])->name('addToCart');
     });
     Route::prefix('/danh-muc')->group(function () {
         Route::get('/{category}',[ShopController::class,'getCateDetail'])->name('getCateDetail');
          Route::get('/',[ShopController::class,'getCate'])->name('getCate'); 
     });
    
-   
+    
 
 
 
@@ -109,7 +129,5 @@ Route::prefix('/')->group(function () {
     })->name('check-out');
 
     // đăng ký
-    Route::get('/register', function () {
-        return view('page.register');
-    })->name('register-form');
+    
 });
