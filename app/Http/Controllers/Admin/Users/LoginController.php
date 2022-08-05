@@ -121,31 +121,31 @@ class LoginController extends Controller
         ]);
         
     }
-    public function update(LoginRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        try {
-            $users = User::find($id);
-            $users->fill($request->all());
-            dd($users);
-            if ($users) {
-                if ($users->avatar != null) {
-                    if ($request->hasFile('avatar')) {
-                        $image = $request->avatar;
-                        $imageName = $image->hashName();
-                        $imageName = $request->code . '_' . $imageName;
-                        $users->avatar = $image->storeAs('images/users', $imageName);
-                    } 
+        $users = User::find($id);
+        $users->fill($request->all());
+        if ($users) {
+            if ($users->avatar != null) {
+                if ($request->hasFile('avatar')) {
+                    $image = $request->avatar;
+                    $imageName = $image->hashName();
+                    $imageName = $request->code . '_' . $imageName;
+                    $users->avatar = $image->storeAs('images/users', $imageName);
+                } else {
+                    $users->avatar = '';
                 }
             }
-            $users->save();
-            Session::flash('success', 'Cập Nhật thành công');
-            return redirect()->route('users');
-        } 
-        catch (\Exception $err) {
-            Session::flash('error', 'Có lỗi khi cập nhật');
-            return false;
         }
-        return true;
+        $users->save();
+        Session::flash('success', 'Cập nhật thành công');
+        return redirect()->route('users');
+        // } 
+        // catch (\Exception $err) {
+        //     Session::flash('error', 'Có lỗi khi cập nhật');
+        //     return false;
+        // }
+        // return true;
     }
     public function destroy(Request $request,$id)
     {

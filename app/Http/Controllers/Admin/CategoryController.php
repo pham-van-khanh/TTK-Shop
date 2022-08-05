@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use Illuminate\Support\Facades\Session;
+
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Services\Category\CategoryService;
@@ -46,7 +48,7 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function update(StorePostRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $category = Category::find($id);
         $category->fill($request->all());

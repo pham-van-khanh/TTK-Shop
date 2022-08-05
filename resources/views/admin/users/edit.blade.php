@@ -46,6 +46,11 @@
             </div>
         </div>
         <div class="form-outline mb-4">
+            <label class="form-label" for="form3Example3">Code</label>
+            <input type="text"  id="avatar" value="{{ $users->code}}" name="code" class="form-control" />
+
+        </div>
+        <div class="form-outline mb-4">
             <label class="form-label" for="form3Example3">Ảnh đại diện</label>
             <input type="file"  id="avatar" name="avatar" class="form-control" />
             <img src="{{asset($users->avatar)}}" width="100" alt="">
@@ -54,8 +59,8 @@
         <div class="form-outline mb-4">
             <label class="form-label" for="form3Example3">Kích Hoạt</label>
             <br>
-            <input type="radio" id="form3Example3" name="active" value="1" {{$users->active == 1 ? 'checked="Publish"':''}}  /> Publish
-            <input type="radio" id="form3Example3" name="active" value="0" {{$users->active == 0 ? 'checked="Private"':''}} /> Private
+            <input type="radio" id="form3Example3" name="active" value="1" {{$users->active == 1 ? 'checked="Private"':''}}  /> Private
+            <input type="radio" id="form3Example3" name="active" value="0" {{$users->active == 0 ? 'checked="Publish"':''}} /> Publish
         </div>
         <button type="submit" class="btn btn-danger btn-block mb-4">Cập Nhật</button>
         <!-- Register buttons -->
