@@ -18,9 +18,8 @@
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Image</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Active</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                            @if (Auth::user()->status == 0) 
                              <a class="btn btn-primary" style="font-size:10px" href="{{ route('product-add') }}"> Add
-                                Products</a> @endif 
+                                Products</a> 
                 </th>
                     </tr>
                 </thead>
@@ -38,14 +37,11 @@
 
                             </td>
                             <td>
-                                {{-- @foreach ($category as $item) --}}
                                     {{$item->category->name}}
-                                {{-- @endforeach --}}
                             </td>
                             <td>
                                 <img src="{{asset($item->image)}}" width="100" alt="">
                             </td>
-                            @if (Auth::user()->status == 0)
                             <td>
                                 
                                 <form action="{{route('product-status', $item->id)}}" method="POST"> 
@@ -87,7 +83,6 @@
                                     @method('DELETE')
                                 </form>
                             </td>
-                            @endif
                         </tr>
                     @endforeach
 

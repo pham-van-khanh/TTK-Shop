@@ -24,11 +24,10 @@ class CategoryController extends Controller
             ->paginate(3);
         return view('admin.categories.index',['category'=> $catePaginate]);
     }
-    public function create()
+    public function create(Category $category)
     {
         $this->data['errorMsg'] =' Thêm lỗi ';
-        return view('admin.categories.add',$this->data,[
-        ]);
+        return view('admin.categories.add',$this->data,compact('category'));
 
     }
 

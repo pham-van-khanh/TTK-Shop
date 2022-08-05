@@ -100,7 +100,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request,Product $product)
+    public function update(StoreProductRequest $request,Product $product)
     {
         //
         $this->productService->update($request,$product);

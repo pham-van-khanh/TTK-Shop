@@ -27,7 +27,9 @@ class StoreProductRequest extends FormRequest
             'name' =>  'required',
             'description' =>'required',
             'price_old'=>'required|min:6',
-            'price_new'=>'required',
+            'price_new'=>'required', 
+            'image' => 'required',
+            
         ];
     }
     public function messages()
@@ -38,6 +40,7 @@ class StoreProductRequest extends FormRequest
             'price_old.required'=>'Giá cũ trống !!!',
             'price_old.min'=>'Giá cũ phải trên 6 chữ số !!!',
             'price_new.required'=>'Giá mới trống !!!',
+            'image.required'=>'Image trống !!!',
         ];
     }
 }

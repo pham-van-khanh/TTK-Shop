@@ -1,13 +1,13 @@
 @extends('admin.admin-master')
 
-@section('title', 'Edit Product')
+@section('title', $users->name)
 
-@section('content-title', 'Edit Product')
-@section('danh-muc', 'Edit Product')
+@section('content-title', 'Edit User')
+@section('danh-muc', 'Edit User')
 @section('content')
 
-
-    <form action="" method="POST" enctype="multipart/form-data">
+  
+    <form action="{{route('admin-update',$users->id)}}" method="POST" enctype="multipart/form-data">
 
         <br>
         @csrf
@@ -20,57 +20,42 @@
         <div class="row mb-4">
             <div class="col">
                 <div class="form-outline">
-                    <label class="form-label" for="form3Example1">Tên Sản Phẩm</label>
-                    <input type="text" id="form3Example1" value="{{ $product->name}}" name="name" class="form-control" />
+                    <label class="form-label" for="form3Example1">Họ và tên</label>
+                    <input type="text" id="form3Example1" value="{{ $users->name }}" name="name" class="form-control" />
                     {{-- @error('name')
                         <h6 style="color: rgb(255, 0, 0)">{{ $message }} </h6>
                     @enderror --}}
                 </div>
             </div>
-            <div class="col">
-                <div class="form-outline">
-                    <label class="form-label" for="form3Example1">Danh Mục</label>
-                    <select name="category_id" class="form-control" id="">
-                        @foreach($categories as $menu)
-                                <option value="{{ $menu->id }}" {{ $product->category_id == $menu->id ? 'selected' : '' }}>
-                                    {{ $menu->name }}
-                                </option>
-                            @endforeach
-                    </select>
-                </div>
-            </div>
+           
         </div>
         <div class="row mb-4">
             <div class="col">
                 <div class="form-outline">
-                    <label class="form-label" for="form3Example1">Giá Cũ</label>
-                    <input type="text" value="{{ $product->price_old}}" id="form3Example1" name="price_old" class="form-control" />
+                    <label class="form-label" for="form3Example1">Username</label>
+                    <input type="text" value="{{ $users->username}}" id="form3Example1" name="username" class="form-control" />
 
                 </div>
             </div>
             <div class="col">
                 <div class="form-outline">
-                    <label class="form-label" for="form3Example1">Giá Sale</label>
-                    <input type="text" value="{{ $product->price_new}}" id="form3Example1" name="price_new" class="form-control" />
+                    <label class="form-label" for="form3Example1">Email</label>
+                    <input type="text" value="{{ $users->email}}" id="form3Example1" name="email" class="form-control" />
                     
                 </div>
             </div>
         </div>
         <div class="form-outline mb-4">
-            <label class="form-label" for="form3Example3">Mô Tả Ngắn</label>
-            <textarea type="text" id="form3Example3"  name="description" class="form-control" />{{ $product->description }}</textarea>
-        </div>
-        <div class="form-outline mb-4">
-            <label class="form-label" for="form3Example3">Image</label>
-            <input type="file"  id="image" name="image" class="form-control" />
-            <img src="{{asset($product->image)}}" width="100" alt="">
+            <label class="form-label" for="form3Example3">Ảnh đại diện</label>
+            <input type="file"  id="avatar" name="avatar" class="form-control" />
+            <img src="{{asset($users->avatar)}}" width="100" alt="">
 
         </div>
         <div class="form-outline mb-4">
             <label class="form-label" for="form3Example3">Kích Hoạt</label>
             <br>
-            <input type="radio" id="form3Example3" name="active" value="1" {{$product->active == 1 ? 'checked="Publish"':''}}  /> Publish
-            <input type="radio" id="form3Example3" name="active" value="0" {{$product->active == 0 ? 'checked="Private"':''}} /> Private
+            <input type="radio" id="form3Example3" name="active" value="1" {{$users->active == 1 ? 'checked="Publish"':''}}  /> Publish
+            <input type="radio" id="form3Example3" name="active" value="0" {{$users->active == 0 ? 'checked="Private"':''}} /> Private
         </div>
         <button type="submit" class="btn btn-danger btn-block mb-4">Cập Nhật</button>
         <!-- Register buttons -->

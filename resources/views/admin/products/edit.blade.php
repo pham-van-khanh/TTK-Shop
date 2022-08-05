@@ -13,7 +13,7 @@
         @csrf
         @include('admin.alert')
         <div class="form-outline">
-            {{-- @if ($errors->any())
+           {{-- @if ($errors->any())
                  <h5 style="color: red"> {{ $errorMsg }}</h5>
             @endif --}}
         </div>
@@ -22,9 +22,9 @@
                 <div class="form-outline">
                     <label class="form-label" for="form3Example1">Tên Sản Phẩm</label>
                     <input type="text" id="form3Example1" value="{{ $product->name}}" name="name" class="form-control" />
-                    {{-- @error('name')
+                    @error('name')
                         <h6 style="color: rgb(255, 0, 0)">{{ $message }} </h6>
-                    @enderror --}}
+                    @enderror
                 </div>
             </div>
             <div class="col">
@@ -45,26 +45,33 @@
                 <div class="form-outline">
                     <label class="form-label" for="form3Example1">Giá Cũ</label>
                     <input type="text" value="{{ $product->price_old}}" id="form3Example1" name="price_old" class="form-control" />
-
+                    @error('price_old')
+                    <h6 style="color: rgb(255, 0, 0)">{{ $message }} </h6>
+                    @enderror
                 </div>
             </div>
             <div class="col">
                 <div class="form-outline">
                     <label class="form-label" for="form3Example1">Giá Sale</label>
                     <input type="text" value="{{ $product->price_new}}" id="form3Example1" name="price_new" class="form-control" />
-                    
+                    @error('price_new')
+                    <h6 style="color: rgb(255, 0, 0)">{{ $message }} </h6>
+                    @enderror
                 </div>
             </div>
         </div>
         <div class="form-outline mb-4">
             <label class="form-label" for="form3Example3">Mô Tả Ngắn</label>
             <textarea type="text" id="form3Example3"  name="description" class="form-control" />{{ $product->description }}</textarea>
+            @error('description')
+                    <h6 style="color: rgb(255, 0, 0)">{{ $message }} </h6>
+                    @enderror
         </div>
         <div class="form-outline mb-4">
             <label class="form-label" for="form3Example3">Image</label>
             <input type="file"  id="image" name="image" class="form-control" />
             <img src="{{asset($product->image)}}" width="100" alt="">
-
+            
         </div>
         <div class="form-outline mb-4">
             <label class="form-label" for="form3Example3">Kích Hoạt</label>

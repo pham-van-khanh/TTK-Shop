@@ -14,12 +14,10 @@
                     <tr>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Image</th>
-                        @if (Auth::user()->status == 0)
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                 <a class="btn btn-primary" style="font-size:10px" href="{{ route('category-add') }}"> Add
                                     Category</a>
-                        @endif
                         </th>
                     </tr>
                 </thead>
@@ -32,7 +30,6 @@
                             <td>
                                 <img src="{{ asset($item->image) }}" width="150" alt="">
                             </td>
-                            @if (Auth::user()->status == 0)
                                 <td>
                                     <form action="{{ route('category-status', $item->id) }}" method="POST">
 
@@ -71,7 +68,6 @@
                                         @method('DELETE')
                                     </form>
                                 </td>
-                            @endif
                         </tr>
                     @endforeach
 

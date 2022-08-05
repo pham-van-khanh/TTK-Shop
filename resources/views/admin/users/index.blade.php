@@ -12,6 +12,7 @@
                     <tr>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">User Name</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Avatar</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Quyền</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Active</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -21,6 +22,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    
                     @foreach ($users as $item)
                         <tr>
                             <td>
@@ -29,7 +31,9 @@
                             <td>
                                 {{ $item->username }}
                             </td>
-                            
+                            <td>
+                                <img src="{{asset($item->avatar)}}" width="120" alt="">
+                            </td>
                             <td>
                                 <form action="{{route('admin-role', $item->id)}}" method="POST">
                                     
@@ -71,14 +75,14 @@
                                 </form>
                             </td>
                             <td class="align-middle">
-                                <a href="{{ route('product-edit', $item->id) }}">
+                                <a href="{{ route('admin-edit', $item->id) }}">
                                     <button class="btn btn-warning" style="font-size:9px"href="javascript:;"
                                         class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
                                         data-original-title="Edit user">
                                         Sửa
                                     </button>
                                 </a>
-                                <form action="{{ route('product-delete', $item->id) }}" method="POST">
+                                <form action="{{ route('admin-delete', $item->id) }}" method="POST">
                                     <button class="btn btn-danger"
                                         onclick="return confirm('Bạn có chắc xóa {{ $item->name }} ?')"
                                         style="font-size:9px"href="javascript:;"

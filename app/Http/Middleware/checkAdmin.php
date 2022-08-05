@@ -17,12 +17,7 @@ class checkAdmin
     public function handle(Request $request, Closure $next)
     {
          
-        // if (Auth::check() && empty(Auth::user()->status == 1)) {
-        //     return $next($request);
-        // }
-        // else {
             return $next($request);
-        // }
-        // abort(404);
+        
     }
 }

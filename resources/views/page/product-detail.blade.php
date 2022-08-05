@@ -1,5 +1,5 @@
 @extends('client.client-master')
-@section('title',$product->name)
+@section('title', $product->name)
 @section('content-client')
     <div class="container-fluid py-5">
         <div class="row px-xl-5">
@@ -14,27 +14,26 @@
                 <ul id="imageGallery">
                     {{-- @dd($images); --}}
                     @foreach ($images as $image)
-                         
-                        <li  data-thumb="{{asset('/images/products/'.$image->gallery)}}"
-                            data-src="{{asset('/images/products/'.$image->gallery)}}">
-                           
-                            <img width="820" alt="{{$product->name}}" src="{{asset('/images/products/'.$image->gallery)}}" />
+                        <li data-thumb="{{ asset('/images/products/' . $image->gallery) }}"
+                            data-src="{{ asset('/images/products/' . $image->gallery) }}">
+
+                            <img width="820" alt="{{ $product->name }}"
+                                src="{{ asset('/images/products/' . $image->gallery) }}" />
                         </li>
-                        
-                       @endforeach  
-                    
-                       
-                    
-                       
-                    
-                    
-                   
-                  
+                    @endforeach
+
+
+
+
+
+
+
+
                 </ul>
             </div>
 
             <div class="col-lg-5 pb-5">
-                <h1 class="font-weight-semi-bold">{{$product->name}}</h1>
+                <h1 class="font-weight-semi-bold">{{ $product->name }}</h1>
                 <div class="d-flex mb-3">
                     <div class="text-primary mr-2">
                         <small class="fas fa-star"></small>
@@ -45,20 +44,22 @@
                     </div>
                     <small class="pt-1">(50 Reviews)</small>
                 </div>
-                <h1>{{ number_format($product->price_new, 0, ',', '.').' VNĐ' }}</h1><h2 class="text-muted ml-2"><del style="color: red">{{ number_format($product->price_old, 0, ',', '.').' VNĐ' }}</del></h2>
+                <h1>{{ number_format($product->price_new, 0, ',', '.') . ' VNĐ' }}</h1>
+                <h2 class="text-muted ml-2"><del
+                        style="color: red">{{ number_format($product->price_old, 0, ',', '.') . ' VNĐ' }}</del></h2>
 
                 <p class="mb-4">
-                    {{$product->description}}</p>
+                    {{ $product->description }}</p>
                 <div class="d-flex mb-3">
                     <p class="text-dark font-weight-medium mb-0 mr-3">Sizes:</p>
                     {{-- for each ra id của cate --}}
                     {{-- ->id ra của cate data-filter=[cate->id] --}}
                     <form>
-                        for 
+                        for
                         <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio"  class="custom-control-input" id="size-1" name="size">
-                             {{-- for each ra id của product --}}
-                    {{-- ->id ra của product data-filter=[product->id] --}}
+                            <input type="radio" class="custom-control-input" id="size-1" name="size">
+                            {{-- for each ra id của product --}}
+                            {{-- ->id ra của product data-filter=[product->id] --}}
                             <label class="custom-control-label" for="size-1">XS</label>
                         </div>
                         <div class="custom-control custom-radio custom-control-inline">
@@ -161,13 +162,13 @@
                             </li>
                         </ul>
                         <div class="tab-content">
+                            {{-- @if (Auth::user()) --}}
                             <div class="tab-pane active" id="comments-logout">
                                 <ul class="media-list">
                                     <li class="media">
                                         <a class="pull-left" href="#">
-                                            <img class="media-object img-circle"
-                                                src="https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg"
-                                                alt="profile">
+                                            <img class="media-object img-circle" viewBox="0 0 30 30" width="40"
+                                                height="40" {{-- src="{{asset(Auth::user()->avatar)}}" --}} alt="profile">
                                         </a>
                                         <div class="media-body">
                                             <div class="well well-lg">
@@ -245,27 +246,38 @@
                                     </li>
                                 </ul>
                             </div>
+                            {{-- @endif --}}
                             <br>
+
                             <div class="tab-pane" id="add-comment">
-
-                                <form action="#" method="post" class="form-horizontal" id="commentForm"
-                                    role="form">
-                                    <div class="form-group">
-                                        <label for="email" class="col-sm-2 control-label">Comment</label>
-                                        <div class="col-sm-10">
-                                            <textarea class="form-control" name="addComment" id="addComment" rows="5"></textarea>
+                                @if (Auth::user())
+                                    <form action="#" method="post" class="form-horizontal" id="commentForm"
+                                        role="form">
+                                        <div class="form-group">
+                                            <label for="email" class="col-sm-2 control-label">Comment</label>
+                                            <div class="col-sm-10">
+                                                <textarea class="form-control" name="addComment" id="addComment" rows="5"></textarea>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
-                                            <button class="btn btn-success btn-circle text-uppercase" type="submit"
-                                                id="submitComment"><span class="glyphicon glyphicon-send"></span> Summit
-                                                comment</button>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-10">
+                                                <button class="btn btn-success btn-circle text-uppercase" type="submit"
+                                                    id="submitComment"><span class="glyphicon glyphicon-send"></span>
+                                                    Summit
+                                                    comment</button>
+                                            </div>
                                         </div>
+                                    </form>
+                                @else
+                                    <div class="tab-pane" id="add-comment">
+                                       <a href="{{route('login')}}"> 
+                                        <button class="btn btn-danger btn-circle text-uppercase">Bạn cần đăng nhập</button>
+                                    </a>
                                     </div>
-                                </form>
+                                @endif
                             </div>
+
 
                         </div>
                     </div>
@@ -274,19 +286,19 @@
 
 
         </div>
-        
+
         {{-- danh sách sản phẩm --}}
-        
-                  
+
+
     </div>
     <div class="container-fluid py-5">
         <div class="row px-xl-5">
-          <div class="col-lg-5 pb-2">
-            
-          </div>
-          <div class="col-lg-5 pb-2">
-            <h1>CÓ THỂ BẠN CŨNG BIẾT</h1>
-            {{-- @foreach ($products as $item)
+            <div class="col-lg-5 pb-2">
+
+            </div>
+            <div class="col-lg-5 pb-2">
+                <h1>CÓ THỂ BẠN CŨNG BIẾT</h1>
+                {{-- @foreach ($products as $item)
                         <div data-filter="[{{$item->id}}]" class="col-lg-4 col-md-6 col-sm-12 pb-1">
                         <div class="card product-item border-0 mb-4">
                             <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
@@ -305,11 +317,11 @@
                         </div>
                     </div>
             @endforeach --}}
-            {{-- in ra danh sách sản phẩm --}}
-          </div>
-          <div class="col-lg-7 pb-2">
-            
-          </div>
+                {{-- in ra danh sách sản phẩm --}}
+            </div>
+            <div class="col-lg-7 pb-2">
+
+            </div>
         </div>
-      </div>
+    </div>
 @endsection

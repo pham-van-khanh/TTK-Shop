@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Gallery;
+use App\Models\User;
 use App\Models\Product;
 class HomepageController extends Controller
 {
@@ -35,7 +36,12 @@ class HomepageController extends Controller
           'category' => $category,  
         ]);
     }
+    public function getUserDetail(User $users)
+    {
+        // dd($users);  
+        return view('page.user',['users' =>$users]);
 
+    }
 
    
    

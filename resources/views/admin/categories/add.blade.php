@@ -20,7 +20,7 @@
             <div class="col">
                 <div class="form-outline">
                     <label class="form-label" for="form3Example1">Tên Danh Mục</label>
-                    <input type="text" id="form3Example1" name="name" class="form-control" />
+                    <input type="text" id="form3Example1" value="{{ old('name', $category->name) }}" name="name" class="form-control" />
                     @error('name')
                         <h6 style="color: rgb(255, 0, 0)">{{ $message }} </h6>
                     @enderror
@@ -30,7 +30,9 @@
         </div>
         <div class="form-outline mb-4">
             <label class="form-label" for="form3Example3">Mô Tả Ngắn</label>
-            <textarea type="text" id="form3Example3" name="description" class="form-control" /></textarea>
+            <textarea type="text" value="{{ old('description', $category->description) }}" id="form3Example3" name="description" class="form-control" />
+        
+            </textarea>
             @error('description')
                         <h6 style="color: rgb(255, 0, 0)">{{ $message }} </h6>
             @enderror

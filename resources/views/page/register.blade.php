@@ -2,13 +2,13 @@
 @section('title', 'Đăng Ký')
 @section('function', 'Đăng Ký Tài Khoản')
 @section('content')
-    <form action="{{ route('register') }}" method="POST">
+    <form action="{{ route('register') }}" enctype="multipart/form-data" method="POST">
         @csrf
         @include('admin.alert')
         @if ($errors->any())
             <h5 style="color: red"> {{ $errorMsg }}</h5>
         @endif
-        <input type="text" class="fadeIn second" name="name" placeholder="Name">
+        <input type="text" class="fadeIn second" name="name" value="{{ old('name', $users->name) }}" placeholder="Name">
         @error('name')
             <h6 style="color: rgb(255, 0, 0)">{{ $message }} </h6>
         @enderror
@@ -21,11 +21,13 @@
             <h6 style="color: rgb(255, 0, 0)">{{ $message }} </h6>
         @enderror
         <input type="text" class="fadeIn second" name="code" placeholder="Code">
+        <br>
+        <label class="fadeIn second"> Ảnh đại diện </label>
+        <input type="file" class="fadeIn second" name="avatar" placeholder="Ảnh đại diện">
         @error('code')
         <h6 style="color: rgb(255, 0, 0)">{{ $message }} </h6>
         @enderror
         <input type="hidden" value="0" class="fadeIn second" name="role" placeholder="">
-        <input type="hidden" value="0" class="fadeIn second" name="status" placeholder="Email">
 
         <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
         @error('password')

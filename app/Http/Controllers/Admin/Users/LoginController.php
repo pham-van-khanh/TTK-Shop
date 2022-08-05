@@ -33,26 +33,21 @@ class LoginController extends Controller
                 } else {
                     return redirect()->route('home-page');
                 }
-            }
-            else {
+            } else {
                 Session::flash('error', 'Tài khoản của bạn đã bị khóa');
                 Auth::logout();
-                return redirect()->back()
-                // ->with('error',$error)
-                ;
-                
+                return redirect()->back();
             }
-        } 
-        else {
+        } else {
             Session::flash('error', 'Email hoặc Password không chính xác');
             return redirect()->back();
         }
     }
 
-    public function register()
+    public function register(User $users)
     {
         $this->data['errorMsg'] = 'Đăng ký lỗi';
-        return view('page.register', $this->data);
+        return view('page.register', $this->data, compact('users'));
     }
     public function handleRegister(LoginRequest $request, User $users)
     {
@@ -60,11 +55,18 @@ class LoginController extends Controller
             $users = new User();
             $password = $request->input('password');
             $users->fill($request->all());
+            if ($request->hasFile('avatar')) {
+                $image = $request->avatar;
+                $imageName = $image->hashName();
+                $imageName = $request->code . '_' . $imageName;
+                $users->avatar = $image->storeAs('images/users', $imageName);
+            } else {
+                $users->avatar = '';
+            }
             $users->password = Hash::make($password);
-    
+            $users->status = 1;
             $users->save();
-        }
-        else {
+        } else {
             Session::flash('error', 'Password Confirm không chính xác');
             return redirect()->back();
         }
@@ -84,7 +86,7 @@ class LoginController extends Controller
     }
     public function list()
     {
-        $users = User::select('id', 'name', 'username', 'role', 'status')->paginate(3);
+        $users = User::select('id', 'name', 'username', 'role', 'status', 'avatar')->paginate(3);
         return view('admin.users.index', ['users' => $users]);
     }
 
@@ -94,7 +96,6 @@ class LoginController extends Controller
         if ($user->role == 1) {
             $user->role = 0;
         } else {
-            # code...
             $user->role = 1;
         }
         $user->save();
@@ -107,14 +108,68 @@ class LoginController extends Controller
         if ($user->status == 1) {
             $user->status = 0;
         } else {
-            # code...
             $user->status = 1;
         }
         $user->save();
         Session::flash('success', 'Cập nhật trạng thái thành công');
         return redirect()->route('users');
     }
+    public function show(User $users)
+    {
+        return view('admin.users.edit',[
+            'users' =>$users
+        ]);
+        
+    }
+    public function update(LoginRequest $request, $id)
+    {
+        try {
+            $users = User::find($id);
+            $users->fill($request->all());
+            dd($users);
+            if ($users) {
+                if ($users->avatar != null) {
+                    if ($request->hasFile('avatar')) {
+                        $image = $request->avatar;
+                        $imageName = $image->hashName();
+                        $imageName = $request->code . '_' . $imageName;
+                        $users->avatar = $image->storeAs('images/users', $imageName);
+                    } 
+                }
+            }
+            $users->save();
+            Session::flash('success', 'Cập Nhật thành công');
+            return redirect()->route('users');
+        } 
+        catch (\Exception $err) {
+            Session::flash('error', 'Có lỗi khi cập nhật');
+            return false;
+        }
+        return true;
+    }
+    public function destroy(Request $request,$id)
+    {
+        $request = User::destroy($id);
+        return redirect()->back();
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // public function getLogin(Request $request)
 //     {

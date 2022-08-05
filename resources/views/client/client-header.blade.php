@@ -32,6 +32,7 @@
         </div>
     </div>
 </div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div class="container-fluid mb-5" style="margin-left:-65px">
     <div class="row border-top px-xl-5">
         
@@ -58,11 +59,16 @@
                         <a href="{{route('contact')}}" class="nav-item nav-link">Contact</a>
                         <a href="{{route('check-out')}}" class="nav-item nav-link">Checkout</a>
                         @if (empty(Auth::user()))
+                        
                         <a href="{{route('login')}}" class="nav-item nav-link">Login</a>
                         <a href="{{route('register-form')}}" class="nav-item nav-link">Register</a>
                         @elseif (Auth::user())
-                      <a href="" class="nav-item nav-link"> Hi . {{Auth::user()->name}}</a>
-                      <a href="{{route('logOut')}}" class="nav-item nav-link">Logout</a>
+                        {{-- <form action="{{route('user-detail', Auth::user()->id)}}" method="post"> --}}
+                            <a href="{{route('user-detail', Auth::user()->id)}}" class="nav-item nav-link"> Hi . {{Auth::user()->name}}</a>
+                        {{-- </form> --}}
+                      <a href="{{route('logOut')}}" class="nav-item nav-link">
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                        </a>
                         @endif
                     </div>
                     {{-- <div class="navbar-nav ml-auto py-0" style="margin-left:700px">
