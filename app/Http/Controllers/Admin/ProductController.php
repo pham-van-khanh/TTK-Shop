@@ -28,13 +28,9 @@ class ProductController extends Controller
     {
         $products = Product::with('category')
         ->join('categories', 'products.category_id', '=', 'categories.id')
-            
-        // ->join('sizes', 'products.size_id', '=', 'sizes.id')
         ->where('categories.active', '=', 1)
-            
         ->select('products.*')
         ->orderBy('products.id', 'ASC')->Paginate(6);
-        // dd($products);
         return view('admin.products.index',[
          'products' => $products, 
         ]);

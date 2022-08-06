@@ -12,7 +12,6 @@
                     }
                 </style>
                 <ul id="imageGallery">
-                    {{-- @dd($images); --}}
                     @foreach ($images as $image)
                         <li data-thumb="{{ asset('/images/products/' . $image->gallery) }}"
                             data-src="{{ asset('/images/products/' . $image->gallery) }}">
@@ -271,7 +270,7 @@
                                     </form>
                                 @else
                                     <div class="tab-pane" id="add-comment">
-                                       <a href="{{route('login')}}"> 
+                                       <a href="{{route('login')}}">
                                         <button class="btn btn-danger btn-circle text-uppercase">Bạn cần đăng nhập</button>
                                     </a>
                                     </div>
@@ -293,12 +292,14 @@
     </div>
     <div class="container-fluid py-5">
         <div class="row px-xl-5">
-            <div class="col-lg-5 pb-2">
+            <div class="col-lg pb-2">
 
             </div>
-            <div class="col-lg-5 pb-2">
-                <h1>CÓ THỂ BẠN CŨNG BIẾT</h1>
-                {{-- @foreach ($products as $item)
+            <div class="col-lg-11 pb-2">
+               <center><h1>CÓ THỂ BẠN CŨNG BIẾT</h1></center> 
+               <br>
+                {{-- @dd($products); --}}
+                 @foreach ($products as $item)
                         <div data-filter="[{{$item->id}}]" class="col-lg-4 col-md-6 col-sm-12 pb-1">
                         <div class="card product-item border-0 mb-4">
                             <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
@@ -316,10 +317,10 @@
                             </div>
                         </div>
                     </div>
-            @endforeach --}}
-                {{-- in ra danh sách sản phẩm --}}
+            @endforeach
+               
             </div>
-            <div class="col-lg-7 pb-2">
+            <div class="col-lg" pb-2">
 
             </div>
         </div>

@@ -8,21 +8,21 @@ use App\Models\Gallery;
 use App\Models\Product;
 class ShopController extends Controller
 {
-    
+
     public function getProduct()
     {
         $products = Product::with('category')
         ->join('categories', 'products.category_id', '=', 'categories.id')
-            
+
         // ->join('sizes', 'products.size_id', '=', 'sizes.id')
         ->where('categories.active', '=', 1)
         ->where('products.active', '=', 1)
         ->select('products.*')
         ->orderBy('products.id', 'ASC')->Paginate(6);
         $category = Category::where('active', 1)->get();
-       
+
         return view('page.shop',[
-         'products' => $products, 'category' => $category,  
+         'products' => $products, 'category' => $category,
         ]);
         // lấy ra các sản phẩm
     }
@@ -34,18 +34,27 @@ class ShopController extends Controller
         ->get();
         $category = Category::where('active', 1)->get();
         return view('page.categoryDetail',
-        ['product'=>$product,'category'=>$category]);   
+        ['product'=>$product,'category'=>$category]);
          //lấy ra danh sách các product thuộc 1 cate
     }
     public function productDetail(Product $product,Gallery $images )
     {
         $images = Gallery::where('product_id', $product->id)->get();
+        $products = Product::with('category')
+        ->join('categories', 'products.category_id', '=', 'categories.id')
+        ->where('categories.active', '=', 1)
+        ->select('products.*')
+        ->orderBy('products.id', 'ASC')->Paginate(3);
+        
         $category = Category::where('active', 1)->get();
         return view('page.product-detail',[
+            'products'=> $products,
             'product'=> $product,
             'categories' => $category,
             'images'=> $images
         ]);
+
+        
         // lấy ra detail 1 sản phẩm
     }
     public function getCate()
@@ -55,23 +64,15 @@ class ShopController extends Controller
         ->with('products')
             ->paginate(3);
         return view('page.category',[
-          'category' => $category,  
+          'category' => $category,
         ]);
     }
-    public function getProductBottom()
-    {
-        $products = Product::with('category')
-        ->join('categories', 'products.category_id', '=', 'categories.id')
-            
-        // ->join('sizes', 'products.size_id', '=', 'sizes.id')
-        ->where('categories.active', '=', 1)
-        ->where('products.active', '=', 1)
-        ->select('products.*')
-        ->orderBy('products.id', 'ASC')->Paginate(6);
-        $category = Category::where('active', 1)->get();
-        return view('page.shop',[
-         'products' => $products, 'category' => $category,  
-        ]);
-        // lấy ra các sản phẩm
-    }
+    // public function getProductBottom(Product $product)
+    // {
+        
+    //     return view('page.shop',[
+    //         'products' => $products, 'category' => $category,
+    //     ]);
+    //     // lấy ra các sản phẩm
+    // }
 }
