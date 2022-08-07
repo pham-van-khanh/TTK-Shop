@@ -27,7 +27,13 @@
             </a>
             <a style="font-size: 100%" href="{{route('cart')}}" class="btn border">
                 <i class="fas fa-shopping-cart text-primary"></i>
-                <span style="font-size: 70%" class="badge">0</span>
+                <span style="font-size: 70%" class="badge">
+                @if(is_null(Session::get('carts')))
+                  0 
+                  @else
+                  {{count(Session::get('carts'))}} 
+                @endif
+                </span>
             </a>
         </div>
     </div>

@@ -30,7 +30,7 @@ class ProductController extends Controller
         ->join('categories', 'products.category_id', '=', 'categories.id')
         ->where('categories.active', '=', 1)
         ->select('products.*')
-        ->orderBy('products.id', 'ASC')->Paginate(6);
+        ->orderBy('products.id', 'ASC')->Paginate(4);
         return view('admin.products.index',[
          'products' => $products, 
         ]);

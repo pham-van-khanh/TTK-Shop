@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CheckoutController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Users\LoginController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -7,10 +8,11 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\UploadController;
+use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\ShopController;
-use App\Http\Controllers\CartController;
+use App\Http\Controllers\Admin\CartController;
 use App\Http\Services\UploadService;
 use App\Http\Middleware\Authenticate;
 use App\Models\Attributes;
@@ -47,6 +49,7 @@ Route::middleware(['auth'])->group(function () {
 
                 Route::delete('delete/{products}', [ProductController::class, 'destroy'])->name('product-delete');
             });
+            // quản lý user
             Route::prefix('list-user')->group(function () {
                 Route::get('/', [LoginController::class, 'list'])->name('users');
                 Route::post('/changeRol/{user}', [LoginController::class, 'changeRol'])->name('admin-role');
@@ -55,8 +58,17 @@ Route::middleware(['auth'])->group(function () {
                 Route::post('/edit/{users}', [LoginController::class, 'update'])->name('admin-update');
                 Route::delete('/edit/{users}', [LoginController::class, 'destroy'])->name('admin-delete');
             });
+            // Quản lý đơn hàng
 
-            // Route::get('/gallery/add/{product}', [GalleryController::class, 'addGallery'])->name('gallery-add');
+            Route::prefix('customer')->group(function () {
+                Route::get('/', [CustomerController::class, 'index'])->name('customers');
+                Route::post('/changeStt/{customers}', [CustomerController::class, 'cancelOrd'])->name('changeOrdStt');
+                Route::post('/DaXuLy/{customers}', [CustomerController::class, 'DaXuLy'])->name('DaXuLy');
+                Route::post('/DangVanChuyen/{customers}', [CustomerController::class, 'DangVanChuyen'])->name('DangVanChuyen');
+                Route::post('/ThanhCong/{customers}', [CustomerController::class, 'ThanhCong'])->name('ThanhCong');
+                Route::post('/HuyDon/{customers}', [CustomerController::class, 'HuyDon'])->name('HuyDon');
+                Route::get('/cart/{customers}', [CustomerController::class, 'cartDetail'])->name('customer-cart');
+            });
 
             // ATTRIBUTE
             Route::prefix('attribute')->group(function () {
@@ -64,7 +76,6 @@ Route::middleware(['auth'])->group(function () {
             });
 
             //          UPLOAD
-            Route::post('upload/services', [UploadController::class, 'store']);
         });
 });
 
@@ -100,28 +111,37 @@ Route::middleware(['auth.login'])
             Route::get('/', [ShopController::class, 'getProduct'])->name('shop');
             Route::get('/detail/{product}', [ShopController::class, 'productDetail'])->name('detail');
             Route::get('/detail', [ShopController::class, 'getProductBottom']);
-            Route::get('/add-to-cart/{product}', [CartController::class, 'addToCart'])->name('addToCart');
+            // Route::post('/add-to-cart', [CartController::class, 'index'])->name('index');
         });
         Route::prefix('/danh-muc')->group(function () {
             Route::get('/{category}', [ShopController::class, 'getCateDetail'])->name('getCateDetail');
             Route::get('/', [ShopController::class, 'getCate'])->name('getCate');
         });
         Route::prefix('trang-ca-nhan')->group(function () {
-            Route::get('/{users}', [HomepageController::class, 'getUserDetail'])->name('user-detail');
+            Route::get('/{customers}', [CustomerController::class, 'getUserDetail'])->name('user-detail');
         });
 
         Route::get('/lien-he', function () {
             return view('page.contact');
         })->name('contact');
 
-        Route::get('/gio-hang', function () {
-            return view('page.cart');
-        })->name('cart');
+        // Gio Hang
+        Route::prefix('/gio-hang')->group(function () {
+            Route::get('/', [CartController::class, 'showCart'])->name('cart');
+            Route::post('/add-cart', [CartController::class, 'addToCart'])->name('add-cart');
+            Route::post('/update-cart', [CartController::class, 'updateCart'])->name('update-cart');
+            Route::get('/delete/{id}', [CartController::class, 'deleteCart'])->name('delete-cart');
+        });
 
         // thanh toán
-        Route::get('/thanh-toan', function () {
-            return view('page.check-out');
-        })->name('check-out');
 
+        Route::prefix('/thanh-toan')->group(function () {
+            Route::get('/', [CheckoutController::class, 'index'])->name('check-out');
+            Route::get('/pay', [CheckoutController::class, 'checkout'])->name('checkout');
+            Route::post('/addCustomer', [CheckoutController::class, 'addCustomer'])->name('addCustomer');
+            Route::post('/order', [CheckoutController::class, 'order'])->name('order');
+        });
         // đăng ký
     });
+
+// Route::get('/carts', [CartController::class, 'showCart'])->name('show-cart');t'])->name('show-cart');

@@ -104,22 +104,37 @@
                         </div>
                     </form>
                 </div>
+                
+
+
+                <form action="{{route('add-cart')}}" method="post">
                 <div class="d-flex align-items-center mb-4 pt-2">
-                    <div class="input-group quantity mr-3" style="width: 130px;">
-                        <div class="input-group-btn">
-                            <button class="btn btn-primary btn-minus">
-                                <i class="fa fa-minus"></i>
-                            </button>
+                    
+                        <div class="input-group quantity mr-3" style="width: 130px;">
+                            <div class="input-group-btn">
+                                <button class="btn btn-primary btn-minus">
+                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <input type="text" name="num_product" class="form-control bg-secondary text-center"
+                                value="1">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-primary btn-plus">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
                         </div>
-                        <input type="text" class="form-control bg-secondary text-center" value="1">
-                        <div class="input-group-btn">
-                            <button class="btn btn-primary btn-plus">
-                                <i class="fa fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
-                </div>
+                        @csrf
+                        <button type="submit" class="btn btn-primary px-3">
+                            <i class="fa fa-shopping-cart mr-1"></i>
+                            Add To Cart
+                        </button>
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                    </div> 
+                        </form>
+
+
+
                 <div class="d-flex pt-2">
                     <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>
                     <div class="d-inline-flex">
@@ -270,9 +285,10 @@
                                     </form>
                                 @else
                                     <div class="tab-pane" id="add-comment">
-                                       <a href="{{route('login')}}">
-                                        <button class="btn btn-danger btn-circle text-uppercase">Bạn cần đăng nhập</button>
-                                    </a>
+                                        <a href="{{ route('login') }}">
+                                            <button class="btn btn-danger btn-circle text-uppercase">Bạn cần đăng
+                                                nhập</button>
+                                        </a>
                                     </div>
                                 @endif
                             </div>
@@ -296,29 +312,40 @@
 
             </div>
             <div class="col-lg-11 pb-2">
-               <center><h1>CÓ THỂ BẠN CŨNG BIẾT</h1></center> 
-               <br>
+                <center>
+                    <h1>CÓ THỂ BẠN CŨNG BIẾT</h1>
+                </center>
+                <br>
                 {{-- @dd($products); --}}
-                 @foreach ($products as $item)
-                        <div data-filter="[{{$item->id}}]" class="col-lg-4 col-md-6 col-sm-12 pb-1">
+                @foreach ($products as $item)
+                    <div data-filter="[{{ $item->id }}]" class="col-lg-4 col-md-6 col-sm-12 pb-1">
                         <div class="card product-item border-0 mb-4">
-                            <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                <img class="img-fluid w-100" src="{{asset($item->image)}}" alt="">
+                            <div
+                                class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                <img class="img-fluid w-100" src="{{ asset($item->image) }}" alt="">
                             </div>
                             <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                                <h6 style="font-size: 110%" class="text-truncate mb-3">{{$item->name}}</h6>
+                                <h6 style="font-size: 110%" class="text-truncate mb-3">{{ $item->name }}</h6>
                                 <div class="d-flex justify-content-center">
-                                    <h5>{{ number_format($item->price_new, 0, ',', '.') }}</h5><h5 class="text-muted ml-2"><del style="color: red">{{ number_format($item->price_old, 0, ',', '.') }}</del></h5>
+                                    <h5>{{ number_format($item->price_new, 0, ',', '.') }}</h5>
+                                    <h5 class="text-muted ml-2"><del
+                                            style="color: red">{{ number_format($item->price_old, 0, ',', '.') }}</del>
+                                    </h5>
                                 </div>
                             </div>
                             <div class="card-footer d-flex justify-content-between bg-light border">
-                                <a style="font-size: 80%" href="{{route('detail',$item->id)}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                                <a  style="font-size: 80%" href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                                <a style="font-size: 80%" href="{{ route('detail', $item->id) }}"
+                                    class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View
+                                    Detail</a>
+                                <a style="font-size: 80%" href="" class="btn btn-sm text-dark p-0">
+                                    <i class="fas fa-shopping-cart text-primary mr-1"></i>
+                                    Add To Cart
+                                </a>
                             </div>
                         </div>
                     </div>
-            @endforeach
-               
+                @endforeach
+
             </div>
             <div class="col-lg" pb-2">
 
