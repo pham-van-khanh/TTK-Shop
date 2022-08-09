@@ -68,6 +68,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::post('/ThanhCong/{customers}', [CustomerController::class, 'ThanhCong'])->name('ThanhCong');
                 Route::post('/HuyDon/{customers}', [CustomerController::class, 'HuyDon'])->name('HuyDon');
                 Route::get('/cart/{customers}', [CustomerController::class, 'cartDetail'])->name('customer-cart');
+                // Route::get('/bill/{customers}', [CustomerController::class, 'cartDetail'])->name('customer-cart');
             });
 
             // ATTRIBUTE
@@ -93,11 +94,6 @@ Route::middleware('guest')->group(function () {
 
 Route::get('login/logout', [LoginController::class, 'logOut'])->name('logOut');
 
-// Route::get('/attr', function () {
-//     $shop = Attributes::find(1);
-//     $shop->products()->attach(1);
-//     return view('welcome');
-// });
 
 // ================== TRANG KHACH ==============
 Route::middleware(['auth.login'])
@@ -111,14 +107,14 @@ Route::middleware(['auth.login'])
             Route::get('/', [ShopController::class, 'getProduct'])->name('shop');
             Route::get('/detail/{product}', [ShopController::class, 'productDetail'])->name('detail');
             Route::get('/detail', [ShopController::class, 'getProductBottom']);
-            // Route::post('/add-to-cart', [CartController::class, 'index'])->name('index');
         });
         Route::prefix('/danh-muc')->group(function () {
             Route::get('/{category}', [ShopController::class, 'getCateDetail'])->name('getCateDetail');
             Route::get('/', [ShopController::class, 'getCate'])->name('getCate');
         });
-        Route::prefix('trang-ca-nhan')->group(function () {
-            Route::get('/{customers}', [CustomerController::class, 'getUserDetail'])->name('user-detail');
+        Route::prefix('information')->group(function () {
+            Route::get('/', [CustomerController::class, 'getUserDetail'])->name('user-detail');
+            Route::get('/bill/{customers}', [CustomerController::class, 'billDetail'])->name('billDetail');
         });
 
         Route::get('/lien-he', function () {
@@ -141,7 +137,5 @@ Route::middleware(['auth.login'])
             Route::post('/addCustomer', [CheckoutController::class, 'addCustomer'])->name('addCustomer');
             Route::post('/order', [CheckoutController::class, 'order'])->name('order');
         });
-        // đăng ký
     });
 
-// Route::get('/carts', [CartController::class, 'showCart'])->name('show-cart');t'])->name('show-cart');

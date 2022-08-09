@@ -15,9 +15,8 @@
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Phone</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Address</th>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-
-                        </th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -62,18 +61,6 @@
                                         Xem chi tiết
                                     </button>
                                 </a>
-
-                                <form action="{{ route('product-delete', $item->id) }}" method="POST">
-                                    <button class="btn btn-danger"
-                                        onclick="return confirm('Bạn có chắc xóa {{ $item->name }} ?')"
-                                        style="font-size:9px"href="javascript:;"
-                                        class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                                        data-original-title="Edit user">
-                                        Xóa
-                                    </button>
-                                    @csrf
-                                    @method('DELETE')
-                                </form>
                             </td>
                         </tr>
                     @endforeach

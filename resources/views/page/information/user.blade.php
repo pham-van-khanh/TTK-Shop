@@ -580,17 +580,21 @@
                                     <table class="table align-items-center mb-0">
                                         <thead>
                                             <tr>
-                                                <th class="text-uppercase text-black text-xxs font-weight-bolder ">Tên sản
-                                                    phẩm</th>
-                                                <th class="text-uppercase text-black text-xxs font-weight-bolder  ps-2">Ảnh
+                                                <th class="text-uppercase text-black text-xxs font-weight-bolder ">
+                                                    STT
                                                 </th>
-                                                <th class="text-uppercase text-black text-xxs font-weight-bolder  ps-2">Giá
+                                                <th class="text-uppercase text-black text-xxs font-weight-bolder  ps-2">
+                                                    Người nhận
                                                 </th>
                                                 <th class="text-uppercase text-black text-xxs font-weight-bolder  ps-2">Số
-                                                    lượng</th>
-                                                <th class="text-uppercase text-black text-xxs font-weight-bolder  ps-2">
-                                                    Thành tiền</th>
+                                                    điện thoại
                                                 </th>
+                                                <th class="text-uppercase text-black text-xxs font-weight-bolder  ps-2">
+                                                    Địa chỉ</th>
+                                                <th class="text-uppercase text-black text-xxs font-weight-bolder  ps-2">
+                                                    Tình trạng</th>
+                                                <th class="text-uppercase text-black text-xxs font-weight-bolder  ps-2">
+                                                    </th>
                                             </tr>
                                         </thead>
                                         <style>
@@ -604,7 +608,55 @@
                                             }
                                         </style>
                                         <tbody>
-                                            @foreach ($orders as $item)
+                                            @foreach ($customers as $index => $item)
+                                                <tr>
+                                                    <td>
+                                                        {{ $index + 1 }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $item->name }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $item->phone }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $item->address }}
+                                                    </td>
+                                                    <td>
+                                                        
+                                                            @if ($item->status == 0)
+                                                            <sub style="color:rgb(250, 188, 102)"> Đang xử lý </sub>
+                                                                    <form method="POST"
+                                                                    action="{{ route('changeOrdStt', $item->id) }}">
+                                                                   @csrf
+                                                                   <br>
+                                                                    <button class="btn btn-danger btn-sm"> Hủy đơn</button>
+                                                            </form>
+                                                            @elseif($item->status == 1)
+                                                                <sub style="color:rgb(246, 168, 60)"> Đã xử lý</sub>
+                                                            @elseif($item->status == 2)
+                                                                <sub style="color:rgb(168, 222, 52)"> Đang vận chuyển</sub>
+                                                            @elseif($item->status == 3)
+                                                                <sub style="color:green">Thành công</sub>
+                                                            @elseif($item->status == 4)
+                                                                <sub style="color:rgb(252, 0, 8)"> Đơn hàng đã bị hủy </sub>
+                                                            @elseif($item->status == 5)
+                                                                <sub style="color:rgb(255, 4, 4)"> Đã hủy đơn
+                                                                    hàng</sub>
+                                                            @endif
+                                                       
+                                                    </td>
+                                                    
+                                                    <td>
+                                                        <a href="{{ route('billDetail', $item->id) }}">
+                                                            <i class="fa fa-eye" style="font-size:28px;color:	#50EBEC"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+
+
+                                            {{-- @foreach ($orders as $item)
                                                 @php
                                                     $price = $item->price * $item->quantity;
                                                     $totalPrice += $price;
@@ -663,7 +715,7 @@
                                                         Đang giao hàng
                                                     @endif
                                                 </span>
-                                            </div>
+                                            </div> --}}
 
                                         </tbody>
 
@@ -677,3 +729,48 @@
                 </div>
     </body>
 @endsection
+<style>
+    .gg-eye-alt {
+    position: relative;
+    display: block;
+    transform: scale(var(--ggs,1));
+    width: 24px;
+    height: 18px;
+    border-bottom-right-radius: 100px;
+    border-bottom-left-radius: 100px;
+    overflow: hidden;
+    box-sizing: border-box
+}
+.gg-eye-alt::after,
+.gg-eye-alt::before {
+    content: "";
+    display: block;
+    border-radius: 100px;
+    position: absolute;
+    box-sizing: border-box
+}
+.gg-eye-alt::after {
+    top: 2px;
+    box-shadow:
+        inset 0 -8px 0 2px,
+        inset 0 0 0 2px;
+    width: 24px;
+    height: 24px
+}
+.gg-eye-alt::before {
+    width: 8px;
+    height: 8px;
+    border: 2px solid transparent;
+    box-shadow:
+        inset 0 0 0 6px,
+        0 0 0 4px,
+        6px 0 0 0,
+        -6px 0 0 0 ;
+    bottom: 4px;
+    left: 8px
+}
+</style>
+<link href='https://css.gg/eye-alt.css' rel='stylesheet'>
+<script>
+    
+</script>

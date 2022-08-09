@@ -16,8 +16,8 @@
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Quyền</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Active</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                            <a class="btn btn-primary" style="font-size:10px" href="{{ route('product-add') }}"> Add
-                                Users</a>
+                            {{-- <a class="btn btn-primary" style="font-size:10px" href="{{ route('product-add') }}"> Add
+                                Users</a> --}}
                 </th>
                     </tr>
                 </thead>
@@ -74,7 +74,7 @@
                                  @csrf
                                 </form>
                             </td>
-                            <td class="align-middle">
+                            {{-- <td class="align-middle">
                                 <a href="{{ route('admin-edit', $item->id) }}">
                                     <button class="btn btn-warning" style="font-size:9px"href="javascript:;"
                                         class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
@@ -82,18 +82,8 @@
                                         Sửa
                                     </button>
                                 </a>
-                                <form action="{{ route('admin-delete', $item->id) }}" method="POST">
-                                    <button class="btn btn-danger"
-                                        onclick="return confirm('Bạn có chắc xóa {{ $item->name }} ?')"
-                                        style="font-size:9px"href="javascript:;"
-                                        class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                                        data-original-title="Edit user">
-                                        Xóa
-                                    </button>
-                                    @csrf
-                                    @method('DELETE')
-                                </form>
-                            </td>
+                                
+                            </td> --}}
                         </tr>
                     @endforeach
 

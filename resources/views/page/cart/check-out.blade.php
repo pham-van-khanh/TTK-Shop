@@ -16,24 +16,39 @@
                             <div class="col-md-6 form-group">
                                 <label>Họ và tên</label>
                                 <input class="form-control" type="text" name="name" value="{{Auth::user()->name}}">
+                               @error('name')
+                                   <h5 class="text-danger"> {{$message}} </h5>
+                               @enderror
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>Email</label>
                                 <input class="form-control" type="text" name="email" value="{{Auth::user()->email}}" placeholder="example@email.com">
+                                @error('email')
+                                   <h5 class="text-danger"> {{$message}} </h5>
+                               @enderror
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>Số điện thoại</label>
-                                <input class="form-control" name="phone" type="text" placeholder="+123 456 789">
+                                <input class="form-control" name="phone" type="text" placeholder="0987 654 321">
+                                @error('phone')
+                                   <h5 class="text-danger"> {{$message}} </h5>
+                               @enderror
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>Địa chỉ</label>
                                 <input class="form-control" name="address" type="text" placeholder="123 Street">
+                                @error('address')
+                                <h5 class="text-danger"> {{$message}} </h5>
+                                @enderror
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>Ghi Chú</label>
                                 <textarea name="note" id="" cols="112" rows="5">
     
                                 </textarea>
+                                @error('note')
+                                <h5 class="text-danger"> {{$message}} </h5>
+                                @enderror
                             </div>
                            
                         </div>
@@ -78,7 +93,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card border-secondary mb-5">
+                {{-- <div class="card border-secondary mb-5">
                     <div class="card-header bg-secondary border-0">
                         <h4 class="font-weight-semi-bold m-0">Payment</h4>
                     </div>
@@ -107,7 +122,7 @@
                                 Thanh toán
                         </a></button>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

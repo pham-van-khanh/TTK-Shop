@@ -29,7 +29,7 @@
                     @elseif($customers->status == 5)
                         <div style="color:rgb(255, 4, 4)"> <b> Khách hàng đã hủy đơn hàng</b></div>
                     @endif
-                @if ($customers->status == 4 || $customers->status == 5)
+                @if ($customers->status == 4 || $customers->status == 5 )
                 @else
                     <br>
                     Thay đổi trạng thái:
@@ -47,7 +47,7 @@
                     </form>
                     <form method="POST" action="{{ route('HuyDon', $customers->id) }}">
                         @csrf
-                        <button class="btn btn-danger btn-sm"> Hủy đơn hàng </button>
+                        <button class="btn btn-danger btn-sm" onclick="return confirm('bạn có muốn hủy đơn hàng này không ?')" > Hủy đơn hàng </button>
                     </form>
                 @endif
                 <br>
@@ -58,10 +58,6 @@
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Giá tiền</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Số lượng</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Thành tiền
-                        </th>
-
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-
                         </th>
                     </tr>
                 </thead>

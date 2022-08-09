@@ -33,7 +33,7 @@
         @error('password')
             <h6 style="color: rgb(255, 0, 0)">{{ $message }} </h6>
         @enderror
-        <input type="text" id="password" 
+        <input type="password" id="password" 
     class="fadeIn third" name="re_password" placeholder="Password Confirm">
         <input type="submit" class="fadeIn fourth" value="Đăng Ký">
     </form>

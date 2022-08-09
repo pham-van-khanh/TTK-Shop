@@ -5,13 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Customer extends Model
+class Comments extends Model
 {
     use HasFactory;
-
-    public function orders()
-    {
-        return $this->hasMany(Order::class,'customer_id','id');
-    }
+    protected $fillable = [
+        'product_id',
+        'user_id',
+        'content',
+        'status',
+    ];
     
 }

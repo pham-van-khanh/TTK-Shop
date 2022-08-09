@@ -18,7 +18,7 @@ class LoginController extends Controller
     public function index()
     {
         $this->data['errorMsg'] = 'Đăng nhập lỗi';
-        return view('page.login', ['title' => 'Đăng Nhập'], $this->data);
+        return view('page.login.login', ['title' => 'Đăng Nhập'], $this->data);
     }
     public function store(Request $request)
     {
@@ -47,7 +47,7 @@ class LoginController extends Controller
     public function register(User $users)
     {
         $this->data['errorMsg'] = 'Đăng ký lỗi';
-        return view('page.register', $this->data, compact('users'));
+        return view('page.login.register', $this->data, compact('users'));
     }
     public function handleRegister(LoginRequest $request, User $users)
     {

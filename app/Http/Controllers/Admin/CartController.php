@@ -40,7 +40,7 @@ class CartController extends Controller
             ->whereIn('id',$productId)
             ->get();
 
-        return view('page.cart',
+        return view('page.cart.cart',
         [
 
             'productsCart'=>$productsCart,
