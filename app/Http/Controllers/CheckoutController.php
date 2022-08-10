@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Http\Requests\CustomerRequest;
+use App\Jobs\PayEmail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Product;
@@ -49,6 +50,7 @@ class CheckoutController extends Controller
         $data['note'] = $request->note;
         $data['status'] = 0;
         $customer_id = DB::table('customers')->insertGetId($data);
+        PayEmail::dispatch($data['email'])->delay(now()->addSeconds(2));
         Session::put('customer_id', $customer_id);
         if (empty(Auth::user())) {
             Session::flash('error', 'Bạn cần phải đăng nhập ');
@@ -70,6 +72,7 @@ class CheckoutController extends Controller
             ]);
         }
     }
+//    tiến hàng thanh toán
     public function checkout()
     {
         if (empty(Auth::user())) {
@@ -128,6 +131,7 @@ class CheckoutController extends Controller
         Session::forget('carts');
         return redirect()->route('cart');
     }
+
     public function showCartClient()
     {
         $orders = DB::table('orders')->select('id', 'customer_id', 'total');

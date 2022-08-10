@@ -27,5 +27,16 @@ class Product extends Model
             'category_id')
             ->withDefault(['name' => '']);
     }
-    
+    public function comments()
+    {
+        # code... Nếu đã tạo đúng định dạng khóa ngoại
+        # và khóa chính thì có thể bỏ qua 2 tham số đằng sau
+        return $this->hasMany(Comment::class,'product_id','id');
+    }
+    public function orders()
+    {
+       return $this->hasMany(Product::class,'product_id','id');
+    }
+
+
 }

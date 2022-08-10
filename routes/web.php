@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\UploadController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\AttributeController;
@@ -47,7 +48,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('edit/{product}', [ProductController::class, 'show'])->name('product-edit');
                 Route::post('edit/{product}', [ProductController::class, 'update']);
 
-                Route::delete('delete/{products}', [ProductController::class, 'destroy'])->name('product-delete');
+                Route::delete('delete/{product}', [ProductController::class, 'destroy'])->name('product-delete');
             });
             // quản lý user
             Route::prefix('list-user')->group(function () {
@@ -107,6 +108,7 @@ Route::middleware(['auth.login'])
             Route::get('/', [ShopController::class, 'getProduct'])->name('shop');
             Route::get('/detail/{product}', [ShopController::class, 'productDetail'])->name('detail');
             Route::get('/detail', [ShopController::class, 'getProductBottom']);
+            route::post('/comments/{product}',[CommentController::class,'comments'])->name('comments');
         });
         Route::prefix('/danh-muc')->group(function () {
             Route::get('/{category}', [ShopController::class, 'getCateDetail'])->name('getCateDetail');
@@ -128,7 +130,7 @@ Route::middleware(['auth.login'])
             Route::post('/update-cart', [CartController::class, 'updateCart'])->name('update-cart');
             Route::get('/delete/{id}', [CartController::class, 'deleteCart'])->name('delete-cart');
         });
-
+        
         // thanh toán
 
         Route::prefix('/thanh-toan')->group(function () {

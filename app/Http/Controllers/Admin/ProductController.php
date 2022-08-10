@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Order;
 use App\Models\Category;
 use App\Http\Services\Product\ProductAdminService;
 use Illuminate\Http\Request;
@@ -109,11 +110,34 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request,$id)
+    public function destroy(Request $request, $products)
     {
-        $request = Product::destroy($id);
-        return redirect()->back();
+        // $request = Product::destroy($id);
+        // return redirect()->back();
+        // dd($products);
+        if($products){
+            $order = Order::where('product_id', '=', $products)->get();
+            $productIds = $products->pluck('id');
+            Order::whereIn('id', $productIds)->update(['product_id' => 0]); // update các post có id trong mảng
+            $product->delete();
+            
+            return redirect()->back();
+           }
+
+        
     }
+
+    // public function delete(Request $request,Category $category)
+    // {
+    //    if($category){
+    //     $product = Product::where('category_id', '=', $category->id)->get();
+    //     $productIds = $product->pluck('id');
+    //     Product::whereIn('id', $productIds)->update(['category_id' => 0]); // update các post có id trong mảng
+    //     $category->delete();
+    //     return redirect()->back();
+    //    }
+    // }
+
     public function changeStatus($product)
     {
         # code...
