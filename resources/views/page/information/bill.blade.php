@@ -60,6 +60,18 @@
                                 </tr>
                                 <tr class="border-top border-bottom">
                                     <td>
+                                        <div class="text-left"> <span class="text-muted">Email</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="text-right"> <span class="text-muted">
+                                                {{ $customers->email }}
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="border-top border-bottom">
+                                    <td>
                                         <div class="text-left"> <span class="text-muted">Số điện thoại</span>
                                         </div>
                                     </td>
@@ -88,7 +100,7 @@
                                         <div class="text-left"> <span class="text-muted">Tổng tiền</span> </div>
                                     </td>
                                     <td>
-                                        <div class="text-right"> <span class="text-danger">
+                                        <div class="text-right"> <span class="text-info">
                                                 {{ number_format($totalPrice, 0, ',', '.') . ' VNĐ' }}
                                             </span>
                                         </div>

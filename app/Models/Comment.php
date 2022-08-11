@@ -13,18 +13,15 @@ class Comment
         'content',
         'status',
     ];
-   public function users()
-   {
-       return $this->belongsTo(User::class,'user_id','id');
-       # code...
-   }public function products()
-   {
-       return $this->belongsTo(Product::class,'product_id','id');
-       # code...
-   }
-   public function updateById($id, $data = array())
-    {
-        return DB::table('comments')->update($data);
-    }
+
+//    public function users()
+//    {
+//        return $this->belongsTo(User::class,'user_id','id');
+//        # code...
+//    }public function products()
+//    {
+//        return $this->belongsTo(Product::class,'product_id','id');
+//        # code...
+//    }
 
 }

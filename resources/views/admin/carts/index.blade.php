@@ -8,7 +8,9 @@
     @php
     $totalPrice = 0;
     @endphp
+    
     <div class="card-body px-0 pb-2">
+        <a href="{{route('customers')}}" class="btn btn-info btn-sm"> Quay lại</a>
         <div class="table-responsive p-0">
             <table class="table align-items-center mb-0">
                 Giỏ hàng của khách hàng : <b>{{ $customers->name }}</b> <br>

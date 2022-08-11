@@ -1,1 +1,3 @@
-<h1> Bạn có một đơn đặt hàng Từ TTK-Shop </h1>
+<h3>
+    Bạn có một đơn hàng mới từ TTK-Shop
+</h3>

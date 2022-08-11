@@ -4190,7 +4190,9 @@ input[type="button"].btn-block {
     display: none;
   }
 }
-
+.moving-tab .position-absolute .nav-link{
+  background-color: #fff;
+}
 @media (max-width: 1199.98px) {
   .navbar-expand-xl > .container,
   .navbar-expand-xl > .container-fluid, .navbar-expand-xl > .container-sm, .navbar-expand-xl > .container-md, .navbar-expand-xl > .container-lg, .navbar-expand-xl > .container-xl {

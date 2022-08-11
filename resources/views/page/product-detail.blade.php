@@ -34,14 +34,14 @@
             <div class="col-lg-5 pb-5">
                 <h1 class="font-weight-semi-bold">{{ $product->name }}</h1>
                 <div class="d-flex mb-3">
-                    <div class="text-primary mr-2">
+                    {{-- <div class="text-primary mr-2">
                         <small class="fas fa-star"></small>
                         <small class="fas fa-star"></small>
                         <small class="fas fa-star"></small>
                         <small class="fas fa-star-half-alt"></small>
                         <small class="far fa-star"></small>
-                    </div>
-                    <small class="pt-1">(50 Reviews)</small>
+                    </div> --}}
+                    <small class="pt-1"> Đã bán {{$orders->count()}}</small> 
                 </div>
                 <h1>{{ number_format($product->price_new, 0, ',', '.') . ' VNĐ' }}</h1>
                 <h2 class="text-muted ml-2"><del
@@ -178,22 +178,22 @@
                         <div class="tab-content">
                             {{-- @if (Auth::user()) --}}
                             <div class="tab-pane active" id="comments-logout">
+                                @foreach ($comments as $item)
                                 <ul class="media-list">
                                     <li class="media">
                                         <a class="pull-left" href="#">
                                             <img class="media-object img-circle" viewBox="0 0 30 30" width="40"
-                                                height="40" {{-- src="{{asset(Auth::user()->avatar)}}" --}} alt="profile">
+                                                height="40" src="{{asset($item->users->avatar)}}" alt="profile">
                                         </a>
                                         <div class="media-body">
                                             <div class="well well-lg">
-                                                <h4 class="media-heading text-uppercase reviews">Marco </h4>
+                                                <h4 class="media-heading text-uppercase reviews">{{$item->users->name}} </h4>
                                                 <ul class="media-date text-uppercase reviews list-inline">
-                                                    <li class="dd">22</li>
-                                                    <li class="mm">09</li>
-                                                    <li class="aaaa">2014</li>
+                                                    <li class="dd">{{$item->created_at}}</li>
+                                                   
                                                 </ul>
                                                 <p class="media-comment">
-                                                    Great snippet! Thanks for sharing.
+                                                   {{$item->content}}
                                                 </p>
                                                 <a class="btn btn-info btn-circle text-uppercase" href="#"
                                                     id="reply"><span class="glyphicon glyphicon-share-alt"></span>
@@ -259,6 +259,7 @@
                                         </div>
                                     </li>
                                 </ul>
+                                @endforeach
                             </div>
                             {{-- @endif --}}
                             <br>

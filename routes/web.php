@@ -7,7 +7,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\GalleryController;
-use App\Http\Controllers\Admin\CommentController;
+use App\Http\Controllers\Admin\RemarkController;
 use App\Http\Controllers\Admin\UploadController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\AttributeController;
@@ -15,6 +15,7 @@ use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\Admin\CartController;
 use App\Http\Services\UploadService;
+use Illuminate\Support\Facades\App;
 use App\Http\Middleware\Authenticate;
 use App\Models\Attributes;
 
@@ -63,13 +64,14 @@ Route::middleware(['auth'])->group(function () {
 
             Route::prefix('customer')->group(function () {
                 Route::get('/', [CustomerController::class, 'index'])->name('customers');
+
                 Route::post('/changeStt/{customers}', [CustomerController::class, 'cancelOrd'])->name('changeOrdStt');
                 Route::post('/DaXuLy/{customers}', [CustomerController::class, 'DaXuLy'])->name('DaXuLy');
                 Route::post('/DangVanChuyen/{customers}', [CustomerController::class, 'DangVanChuyen'])->name('DangVanChuyen');
                 Route::post('/ThanhCong/{customers}', [CustomerController::class, 'ThanhCong'])->name('ThanhCong');
                 Route::post('/HuyDon/{customers}', [CustomerController::class, 'HuyDon'])->name('HuyDon');
+
                 Route::get('/cart/{customers}', [CustomerController::class, 'cartDetail'])->name('customer-cart');
-                // Route::get('/bill/{customers}', [CustomerController::class, 'cartDetail'])->name('customer-cart');
             });
 
             // ATTRIBUTE
@@ -77,6 +79,9 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/', [AttributeController::class, 'index'])->name('att-list');
             });
 
+            Route::prefix('comments')->group(function () {
+                Route::get('/', [RemarkController::class, 'index'])->name('cmt');
+            });
             //          UPLOAD
         });
 });
@@ -108,7 +113,7 @@ Route::middleware(['auth.login'])
             Route::get('/', [ShopController::class, 'getProduct'])->name('shop');
             Route::get('/detail/{product}', [ShopController::class, 'productDetail'])->name('detail');
             Route::get('/detail', [ShopController::class, 'getProductBottom']);
-            route::post('/comments/{product}',[CommentController::class,'comments'])->name('comments');
+
         });
         Route::prefix('/danh-muc')->group(function () {
             Route::get('/{category}', [ShopController::class, 'getCateDetail'])->name('getCateDetail');
@@ -119,10 +124,12 @@ Route::middleware(['auth.login'])
             Route::get('/bill/{customers}', [CustomerController::class, 'billDetail'])->name('billDetail');
         });
 
+
         Route::get('/lien-he', function () {
             return view('page.contact');
         })->name('contact');
 
+        Route::post('/comments/{product}',[RemarkController::class,'comments'])->name('comments');
         // Gio Hang
         Route::prefix('/gio-hang')->group(function () {
             Route::get('/', [CartController::class, 'showCart'])->name('cart');
@@ -130,7 +137,7 @@ Route::middleware(['auth.login'])
             Route::post('/update-cart', [CartController::class, 'updateCart'])->name('update-cart');
             Route::get('/delete/{id}', [CartController::class, 'deleteCart'])->name('delete-cart');
         });
-        
+
         // thanh toán
 
         Route::prefix('/thanh-toan')->group(function () {
@@ -140,4 +147,3 @@ Route::middleware(['auth.login'])
             Route::post('/order', [CheckoutController::class, 'order'])->name('order');
         });
     });
-

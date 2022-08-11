@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Remark;
+use App\Models\Order;
 use App\Models\Gallery;
+use App\Models\Comment;
 use App\Models\Product;
 class ShopController extends Controller
 {
@@ -20,7 +23,7 @@ class ShopController extends Controller
         ->select('products.*')
         ->orderBy('products.id', 'ASC')->Paginate(6);
         $category = Category::where('active', 1)->get();
-
+        
         return view('page.shop',[
          'products' => $products, 'category' => $category,
         ]);
@@ -37,21 +40,27 @@ class ShopController extends Controller
         ['product'=>$product,'category'=>$category]);
          //lấy ra danh sách các product thuộc 1 cate
     }
-    public function productDetail(Product $product,Gallery $images )
+    public function productDetail(Product $product,Gallery $images,Order $orders )
     {
         $images = Gallery::where('product_id', $product->id)->get();
+        $orders = Order::where('product_id',$product->id)->get();
+        // dd($orders->count());
         $products = Product::with('category')
         ->join('categories', 'products.category_id', '=', 'categories.id')
         ->where('categories.active', '=', 1)
         ->select('products.*')
         ->orderBy('products.id', 'ASC')->Paginate(3);
-        
+        $comments = Remark::select('remarks.*')
+        ->with('products','users')->orderBy('id','DESC')
+        ->where('product_id', '=', $product->id)->get();
         $category = Category::where('active', 1)->get();
         return view('page.product-detail',[
             'products'=> $products,
             'product'=> $product,
             'categories' => $category,
-            'images'=> $images
+            'images'=> $images,
+            'comments'=> $comments,
+            'orders'=> $orders,
         ]);
 
         
