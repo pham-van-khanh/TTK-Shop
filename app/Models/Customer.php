@@ -9,9 +9,15 @@ class Customer extends Model
 {
     use HasFactory;
 
+    public function users()
+    {
+        return $this->belongsTo(User::class);
+        # code...
+    }
     public function orders()
     {
         return $this->hasMany(Order::class,'customer_id','id');
     }
+    
     
 }

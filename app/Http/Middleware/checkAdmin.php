@@ -17,7 +17,13 @@ class checkAdmin
     public function handle(Request $request, Closure $next)
     {
          
+        if (Auth::check() && Auth::user()->role == 1) {
             return $next($request);
+        }   
+        //  Log::alert("Bạn không thể truy cập vào đây");
+        abort(404);
+        //  return redirect()->back();
+            // return $next($request);
         
     }
 }

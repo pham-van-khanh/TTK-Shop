@@ -15,7 +15,7 @@ class CustomerController extends Controller
     {
         $customers = Customer::select('id', 'name', 'email', 'phone', 'address','status')
             ->orderBy('id', 'DESC')
-            ->Paginate(3);
+            ->Paginate(5);
         return view('admin.customers.index', [
             'customers' => $customers,
         ]);

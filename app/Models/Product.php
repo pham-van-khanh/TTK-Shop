@@ -20,12 +20,12 @@ class Product extends Model
         'tag'
     ];
 
-    public function category(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function category()
     {
-        return $this->hasOne(Category::class,
-            'id',
-            'category_id')
-            ->withDefault(['name' => '']);
+        return $this->belongsTo(Category::class,
+            'category_id',
+            'id');
+            // ->withDefault(['name' => '']);
     }
     // public function comments()
     // {
@@ -38,5 +38,11 @@ class Product extends Model
        return $this->hasMany(Product::class,'product_id','id');
     }
 
-
+    public function scopeSearch($query)
+    {
+        if($key = request()->search){
+            $query = $query->where('name','like','%'.$key.'%');
+        }
+        return $query;
+    }
 }

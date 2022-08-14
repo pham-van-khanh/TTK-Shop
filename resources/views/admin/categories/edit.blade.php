@@ -9,13 +9,13 @@
        
     <form action="{{route('category-update', $category->id)}}" method="POST" enctype="multipart/form-data">
        
-       @method('PUT') <br>
+       {{-- @method('PUT') <br> --}}
         @csrf
         @include('admin.alert')
         <div class="form-outline">
-            {{-- @if ($errors->any())
+            @if ($errors->any())
                  <h5 style="color: red"> {{ $errors }}</h5>
-            @endif --}}
+            @endif
         </div>
         <input type="hidden" name="id" value="{{$category->id}}">
         <div class="row mb-4">

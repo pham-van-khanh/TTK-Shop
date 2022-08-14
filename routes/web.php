@@ -34,7 +34,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::post('/add', [CategoryController::class, 'store']);
 
                 Route::get('/edit/{category}', [CategoryController::class, 'edit'])->name('category-edit');
-                Route::PUT('/update/{category}', [CategoryController::class, 'update'])->name('category-update');
+                Route::post('/update/{category}', [CategoryController::class, 'update'])->name('category-update');
 
                 Route::delete('delete/{category}', [CategoryController::class, 'delete'])->name('category-delete');
             });
@@ -100,10 +100,8 @@ Route::middleware('guest')->group(function () {
 
 Route::get('login/logout', [LoginController::class, 'logOut'])->name('logOut');
 
-
 // ================== TRANG KHACH ==============
-Route::middleware(['auth.login'])
-    ->prefix('/')
+Route::prefix('/')
     ->group(function () {
         Route::prefix('/trang-chu')->group(function () {
             Route::get('/', [HomepageController::class, 'getCate'])->name('home-page');
@@ -113,7 +111,6 @@ Route::middleware(['auth.login'])
             Route::get('/', [ShopController::class, 'getProduct'])->name('shop');
             Route::get('/detail/{product}', [ShopController::class, 'productDetail'])->name('detail');
             Route::get('/detail', [ShopController::class, 'getProductBottom']);
-
         });
         Route::prefix('/danh-muc')->group(function () {
             Route::get('/{category}', [ShopController::class, 'getCateDetail'])->name('getCateDetail');
@@ -124,12 +121,11 @@ Route::middleware(['auth.login'])
             Route::get('/bill/{customers}', [CustomerController::class, 'billDetail'])->name('billDetail');
         });
 
-
         Route::get('/lien-he', function () {
             return view('page.contact');
         })->name('contact');
 
-        Route::post('/comments/{product}',[RemarkController::class,'comments'])->name('comments');
+        Route::post('/comments/{product}', [RemarkController::class, 'comments'])->name('comments');
         // Gio Hang
         Route::prefix('/gio-hang')->group(function () {
             Route::get('/', [CartController::class, 'showCart'])->name('cart');

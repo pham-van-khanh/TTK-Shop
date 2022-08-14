@@ -88,7 +88,7 @@
         <div class="form-outline mb-4">
             <label class="form-label" for="form3Example3">Kích Hoạt</label>
             <br>
-            <input type="radio" id="form3Example3" name="active" value="1" /> Public
+            <input type="radio" id="form3Example3" checked name="active" value="1" /> Public
             <input type="radio" id="form3Example3" name="active" value="0" /> Private
         </div>
         <button type="submit" class="btn btn-danger btn-block mb-4">Tạo mới</button>

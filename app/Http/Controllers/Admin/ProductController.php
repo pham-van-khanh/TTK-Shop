@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\Gallery;
 use App\Models\Category;
 use App\Http\Services\Product\ProductAdminService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 use App\Http\Requests\StoreProductRequest;
 
@@ -31,12 +33,13 @@ class ProductController extends Controller
         ->join('categories', 'products.category_id', '=', 'categories.id')
         ->where('categories.active', '=', 1)
         ->select('products.*')
+        ->search()
         ->orderBy('products.id', 'ASC')->Paginate(4);
         return view('admin.products.index',[
          'products' => $products, 
         ]);
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -44,9 +47,11 @@ class ProductController extends Controller
      */
     public function create(Product $product)
     {
+        $category = Category::where('active', 1)->get();
+        // lay ra danh sach category dc active 
         return view('admin.products.add',[
             'products' => $product,
-            'categories' => $this->productService->getCate()
+            'categories' => $category
         ]);
     }
 
@@ -58,9 +63,42 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
-        $this->productService->create($request);
-        return redirect()->back();
+        try {
+            $product = new Product();
+            $product->fill($request->all());
+            if ($product) {
+                if ($product->image != null) {
+                    if ($request->hasFile('image')) {
+                        $image = $request->image;
+                        $imageName = $image->hashName();
+                        $imageName = $request->name . '_' . $imageName;
+                        $product->image = $image->storeAs('images/products', $imageName);
+                        $product->price_old = filter_var($request->price_old, FILTER_SANITIZE_NUMBER_INT);
+                        $product->price_new = filter_var($request->price_new, FILTER_SANITIZE_NUMBER_INT);
+                        $product->save();
+                    }
+                }
+            }
+             $productId =  $product->id;
+            if ($request->hasFile('gallery')) {
+                foreach ($request->gallery as $file) {
+                    $imageNew = new Gallery();
+                    if(isset($file)){
+                        $imageNew->gallery = $file->hashName();
+                        $imageNew->product_id = $productId;
+                        // $imageNew = $file->storeAs('images/products', $imageNew);
+                        $file->move('images/products',$file->hashName());
+                        $imageNew->save();
+                    }
+                }
+            }
+            Session::flash('success', 'Tạo mới thành công');
+            return redirect()->route('product');
+        } catch (\Exception $err) {
+            Session::flash('error', $err->getMessage());
+            return false;
+        }
+        return true;
 
     }
 
@@ -73,9 +111,10 @@ class ProductController extends Controller
     public function show(Product $product)
     {
        
+        $category = Category::where('active', 1)->get();
         return view('admin.products.edit',[
             'product'=> $product,
-            'categories' => $this->productService->getCate()
+            'categories' => $category
         ]);
     }
 
@@ -97,11 +136,29 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(StoreProductRequest $request,Product $product)
+    public function update(Request $request,Product $product)
     {
         //
-        $this->productService->update($request,$product);
-        return redirect()->back();
+        try {
+            $product->fill($request->all());
+            if ($product) {
+                if ($product->image != null) {
+                    if ($request->hasFile('image')) {
+                        $image = $request->image;
+                        $imageName = $image->hashName();
+                        $imageName = $request->name . '_' . $imageName;
+                        $product->image = $image->storeAs('images/product', $imageName);
+                    } 
+                }
+            }
+            $product->save();
+            Session::flash('success', 'Cập Nhật thành công');
+            return redirect()->route('product');
+        } catch (\Exception $err) {
+            Session::flash('error', 'Có lỗi khi cập nhật');
+            return redirect()->back();
+        }
+        return true;
     }
 
     /**
@@ -110,19 +167,19 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $products)
+    public function destroy(Request $request, $id)
     {
-        // $request = Product::destroy($id);
-        // return redirect()->back();
-        // dd($products);
-        if($products){
-            $order = Order::where('product_id', '=', $products)->get();
-            $productIds = $products->pluck('id');
-            Order::whereIn('id', $productIds)->update(['product_id' => 0]); // update các post có id trong mảng
-            $product->delete();
+        $request = Product::destroy($id);
+        return redirect()->back();
+        // // dd($products);
+        // if($products){
+        //     $order = Order::where('product_id', '=', $products)->get();
+        //     $productIds = $products->pluck('id');
+        //     Order::whereIn('id', $productIds)->update(['product_id' => 0]); // update các post có id trong mảng
+        //     $product->delete();
             
-            return redirect()->back();
-           }
+        //     return redirect()->back();
+        //    }
 
         
     }

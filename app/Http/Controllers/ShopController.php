@@ -16,8 +16,6 @@ class ShopController extends Controller
     {
         $products = Product::with('category')
         ->join('categories', 'products.category_id', '=', 'categories.id')
-
-        // ->join('sizes', 'products.size_id', '=', 'sizes.id')
         ->where('categories.active', '=', 1)
         ->where('products.active', '=', 1)
         ->select('products.*')

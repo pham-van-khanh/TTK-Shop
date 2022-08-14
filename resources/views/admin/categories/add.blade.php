@@ -1,5 +1,4 @@
 @extends('admin.admin-master')
-
 @section('title', 'Add Category')
 @section('content-title', 'Add Category')
 @section('danh-muc', 'Add Category')
@@ -30,8 +29,8 @@
         </div>
         <div class="form-outline mb-4">
             <label class="form-label" for="form3Example3">Mô Tả Ngắn</label>
-            <textarea type="text" value="{{ old('description', $category->description) }}" id="form3Example3" name="description" class="form-control" />
-        
+            <textarea type="text"id="form3Example3" name="description" class="form-control" />
+            {{ old('description', $category->description) }}
             </textarea>
             @error('description')
                         <h6 style="color: rgb(255, 0, 0)">{{ $message }} </h6>
@@ -48,7 +47,7 @@
         <div class="form-outline mb-4">
             <label class="form-label" for="form3Example3">Kích Hoạt</label>
             <br>
-            <input type="radio" id="form3Example3" name="active" value="1"  /> Publish
+            <input type="radio" id="form3Example3" checked name="active" value="1"  /> Publish
             <input type="radio" id="form3Example3" name="active" value="0"  /> Private
         </div>
         <button type="submit" class="btn btn-danger btn-block mb-4">Tạo mới</button>

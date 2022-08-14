@@ -63,19 +63,14 @@
                 <div class="border-bottom mb-4 pb-4">
                     <h5 class="font-weight-semi-bold mb-4">Category</h5>
                     <form>
-                        {{-- <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Category</a>
-                            @foreach ($category as $item)
-                                 <div class="dropdown-menu rounded-3 m-0">
-                                <a href="cart.html" style="font-size: 130%" class="dropdown-item">{{$item->name}}</a>  
-                            </div>
-                            @endforeach --}}
+                        
                         @foreach ($category as $item)
                             <div
                                 class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                                 <input type="checkbox" class="custom-control-input" checked id="color-all">
                                 <a href="{{ route('getCateDetail', $item->id) }}"
-                                    class="badge border font-weight-black">{{ $item->name }}</a>
+                                    class="badge border font-weight-black">{{ $item->name }} ( {{$item->products->count()}})</a>
+                                   
                             </div>
                         @endforeach
                     </form>
@@ -129,8 +124,8 @@
                     <div class="col-12 pb-1">
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <form action="">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search by name">
+                                <div class="input-group"> 
+                                    <input type="text" class="form-control" name="search" placeholder="Search by name">
                                     <div class="input-group-append">
                                         <span class="input-group-text bg-transparent text-primary">
                                             <i class="fa fa-search"></i>
