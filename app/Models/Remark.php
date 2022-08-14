@@ -24,4 +24,9 @@ class Remark extends Model
        return $this->belongsTo(Product::class,'product_id','id');
        # code...
    }
+   public function repcomments()
+   {
+    # code...
+        return $this->hasMany(Remark::class);
+   }
 }

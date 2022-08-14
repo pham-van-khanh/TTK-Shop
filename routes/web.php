@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\RemarkController;
+use App\Http\Controllers\Admin\RepcommentController;
 use App\Http\Controllers\Admin\UploadController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\AttributeController;
@@ -126,6 +127,9 @@ Route::prefix('/')
         })->name('contact');
 
         Route::post('/comments/{product}', [RemarkController::class, 'comments'])->name('comments');
+
+        Route::post('/repcomments/{remark}',[RepcommentController::class,'rep'])->name('repcmt');
+        
         // Gio Hang
         Route::prefix('/gio-hang')->group(function () {
             Route::get('/', [CartController::class, 'showCart'])->name('cart');

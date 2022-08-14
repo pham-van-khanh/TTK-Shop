@@ -41,7 +41,7 @@
                         <small class="fas fa-star-half-alt"></small>
                         <small class="far fa-star"></small>
                     </div> --}}
-                    <small class="pt-1"> Đã bán {{$orders->count()}}</small> 
+                    <small class="pt-1"> Đã bán {{ $orders->count() }}</small>
                 </div>
                 <h1>{{ number_format($product->price_new, 0, ',', '.') . ' VNĐ' }}</h1>
                 <h2 class="text-muted ml-2"><del
@@ -104,12 +104,12 @@
                         </div>
                     </form>
                 </div>
-                
 
 
-                <form action="{{route('add-cart')}}" method="post">
-                <div class="d-flex align-items-center mb-4 pt-2">
-                    
+
+                <form action="{{ route('add-cart') }}" method="post">
+                    <div class="d-flex align-items-center mb-4 pt-2">
+
                         <div class="input-group quantity mr-3" style="width: 130px;">
                             <div class="input-group-btn">
                                 <button class="btn btn-primary btn-minus">
@@ -129,9 +129,9 @@
                             <i class="fa fa-shopping-cart mr-1"></i>
                             Add To Cart
                         </button>
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-                    </div> 
-                        </form>
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                    </div>
+                </form>
 
 
 
@@ -179,86 +179,112 @@
                             {{-- @if (Auth::user()) --}}
                             <div class="tab-pane active" id="comments-logout">
                                 @foreach ($comments as $item)
-                                <ul class="media-list">
-                                    <li class="media">
-                                        <a class="pull-left" href="#">
-                                            <img class="media-object img-circle" viewBox="0 0 30 30" width="40"
-                                                height="40" src="{{asset($item->users->avatar)}}" alt="profile">
-                                        </a>
-                                        <div class="media-body">
-                                            <div class="well well-lg">
-                                                <h4 class="media-heading text-uppercase reviews">{{$item->users->name}} </h4>
-                                                <ul class="media-date text-uppercase reviews list-inline">
-                                                    <li class="dd">{{$item->created_at}}</li>
-                                                   
+                                    <ul class="media-list">
+                                        <li class="media">
+                                            <a class="pull-left" href="#">
+                                                <img class="media-object img-circle" viewBox="0 0 30 30" width="40"
+                                                    height="40" src="{{ asset($item->users->avatar) }}"
+                                                    alt="profile">
+                                            </a>
+                                            <div class="media-body">
+                                                <div class="well well-lg">
+                                                    <h4 class="media-heading text-uppercase reviews">
+                                                        {{ $item->users->name }} </h4>
+                                                    <ul class="media-date text-uppercase reviews list-inline">
+                                                        <li class="dd">{{ $item->created_at }}</li>
+
+                                                    </ul>
+                                                    <p class="media-comment">
+                                                        {{ $item->content }}
+                                                    </p>
+                                                </div>
+                                                <ul>
+                                                    <div class="row">
+                                                        <div class="col-md-0">
+                                                            <a class="btn btn-info btn-circle text-uppercase"
+                                                                href="#" id="reply"><span
+                                                                    class="glyphicon glyphicon-share-alt"></span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="col-md-11">
+                                                            <div class="">
+                                                                @if (Auth::user())
+                                                                    <form action="{{ route('repcmt', $item->id) }}"
+                                                                        method="post" class="form-horizontal"
+                                                                        id="commentForm" role="form">
+                                                                        @csrf
+                                                                        <div class="form-group">
+                                                                            <input type="hidden" name="product_id"
+                                                                                value="{{ $product->id }}"
+                                                                                id="">
+                                                                            <div class="col-sm-9">
+                                                                                <textarea class="form-control" name="content" id="addComment" placeholder="Repcoments" rows="3  "></textarea>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <div class="col-sm-2">
+                                                                                <button
+                                                                                    class="btn btn-success btn-circle text-uppercase"
+                                                                                    type="submit"
+                                                                                    id="submitComment"><span
+                                                                                        class="glyphicon glyphicon-send"></span>
+                                                                                    Gửi</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                @else
+                                                                    <div class="tab-pane" id="add-comment">
+                                                                        <a href="{{ route('login') }}">
+                                                                            <button
+                                                                                class="btn btn-danger btn-circle text-uppercase">Bạn
+                                                                                cần đăng
+                                                                                nhập</button>
+                                                                        </a>
+
+                                                                    </div>
+                                                                @endif
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </ul>
-                                                <p class="media-comment">
-                                                   {{$item->content}}
-                                                </p>
-                                                <a class="btn btn-info btn-circle text-uppercase" href="#"
-                                                    id="reply"><span class="glyphicon glyphicon-share-alt"></span>
-                                                    Reply</a>
-                                                <a class="btn btn-warning btn-circle text-uppercase"
-                                                    data-toggle="collapse" href="#replyOne"><span
-                                                        class="glyphicon glyphicon-comment"></span> 2 comments</a>
+                                                <ul>
+                                                    <div class="row">
+                                                        @foreach ($rep as $item)
+                                                            <div class="col-md-12">
+                                                                <div class="well well-sm">
+                                                                    <a class="pull-left" href="#">
+                                                                        <img class="media-object img-circle"
+                                                                            viewBox="0 0 30 3" width="40"
+                                                                            height="40"
+                                                                            src="{{ asset($item->users->avatar) }}"
+                                                                            alt="profile">
+                                                                    </a>
+                                                                    <div class="media-body">
+                                                                        <div class="">
+                                                                            <h4
+                                                                                class="media-heading text-uppercase reviews">
+                                                                                {{ $item->users->name }} </h4>
+                                                                            <ul
+                                                                                class="media-date text-uppercase reviews list-inline">
+                                                                                <li class="dd">{{ $item->created_at }}
+                                                                                </li>
+                                                                            </ul>
+                                                                            <p class="media-comment">
+                                                                                {{ $item->content }}
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                </ul>
                                             </div>
-                                        </div>
-                                        <div class="collapse" id="replyOne">
-                                            <ul class="media-list">
-                                                <li class="media media-replied">
-                                                    <a class="pull-left" href="#">
-                                                        <img class="media-object img-circle"
-                                                            src="https://s3.amazonaws.com/uifaces/faces/twitter/ManikRathee/128.jpg"
-                                                            alt="profile">
-                                                    </a>
-                                                    <div class="media-body">
-                                                        <div class="well well-lg">
-                                                            <h4 class="media-heading text-uppercase reviews"><span
-                                                                    class="glyphicon glyphicon-share-alt"></span> The
-                                                                Hipster</h4>
-                                                            <ul class="media-date text-uppercase reviews list-inline">
-                                                                <li class="dd">22</li>
-                                                                <li class="mm">09</li>
-                                                                <li class="aaaa">2014</li>
-                                                            </ul>
-                                                            <p class="media-comment">
-                                                                Nice job Maria.
-                                                            </p>
-                                                            <a class="btn btn-info btn-circle text-uppercase"
-                                                                href="#" id="reply"><span
-                                                                    class="glyphicon glyphicon-share-alt"></span> Reply</a>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="media media-replied" id="replied">
-                                                    <a class="pull-left" href="#">
-                                                        <img class="media-object img-circle"
-                                                            src="https://pbs.twimg.com/profile_images/442656111636668417/Q_9oP8iZ.jpeg"
-                                                            alt="profile">
-                                                    </a>
-                                                    <div class="media-body">
-                                                        <div class="well well-lg">
-                                                            <h4 class="media-heading text-uppercase reviews"><span
-                                                                    class="glyphicon glyphicon-share-alt"></span> Mary</h4>
-                                                            </h4>
-                                                            <ul class="media-date text-uppercase reviews list-inline">
-                                                                <li class="dd">22</li>
-                                                                <li class="mm">09</li>
-                                                                <li class="aaaa">2014</li>
-                                                            </ul>
-                                                            <p class="media-comment">
-                                                                Thank you Guys!
-                                                            </p>
-                                                            <a class="btn btn-info btn-circle text-uppercase"
-                                                                href="#" id="reply"><span
-                                                                    class="glyphicon glyphicon-share-alt"></span> Reply</a>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
+
+                                        </li>
+                                    </ul>
                                 @endforeach
                             </div>
                             {{-- @endif --}}
@@ -266,8 +292,8 @@
 
                             <div class="tab-pane" id="add-comment">
                                 @if (Auth::user())
-                                    <form action="{{route('comments',$product->id)}}" method="post" class="form-horizontal" id="commentForm"
-                                        role="form">
+                                    <form action="{{ route('comments', $product->id) }}" method="post"
+                                        class="form-horizontal" id="commentForm" role="form">
                                         @csrf
                                         <div class="form-group">
                                             <label for="email" class="col-sm-2 control-label">Comment</label>

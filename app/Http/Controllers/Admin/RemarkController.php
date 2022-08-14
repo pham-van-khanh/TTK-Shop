@@ -13,7 +13,7 @@ class RemarkController extends Controller
     public function comments(Request $request, $product)
     {
         $productId = $product;
-        $Idproduct = Product::find($product);
+       $Idproduct  = Product::find($product);
         $cmt = new Remark();
 
         $cmt->product_id = $productId;

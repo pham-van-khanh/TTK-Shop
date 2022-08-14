@@ -8,6 +8,7 @@ use App\Models\Remark;
 use App\Models\Order;
 use App\Models\Gallery;
 use App\Models\Comment;
+use App\Models\Repcomment;
 use App\Models\Product;
 class ShopController extends Controller
 {
@@ -38,7 +39,7 @@ class ShopController extends Controller
         ['product'=>$product,'category'=>$category]);
          //lấy ra danh sách các product thuộc 1 cate
     }
-    public function productDetail(Product $product,Gallery $images,Order $orders )
+    public function productDetail(Product $product,Gallery $images,Order $orders ,Remark $remark,Repcomment $rep)
     {
         $images = Gallery::where('product_id', $product->id)->get();
         $orders = Order::where('product_id',$product->id)->get();
@@ -48,9 +49,19 @@ class ShopController extends Controller
         ->where('categories.active', '=', 1)
         ->select('products.*')
         ->orderBy('products.id', 'ASC')->Paginate(3);
+
         $comments = Remark::select('remarks.*')
-        ->with('products','users')->orderBy('id','DESC')
-        ->where('product_id', '=', $product->id)->get();
+        ->with('products','users',)->orderBy('id','DESC')
+        ->where('product_id', '=', $product->id)
+        ->get();
+        
+        $rep = Repcomment::select('repcomments.*')
+        ->with('products', 'users','remarks')->orderBy('id','DESC')
+        // ->where('remark_id','=', $remark->id)
+        ->where('product_id', '=', $product->id)
+        ->get();
+            // dd($rep);
+
         $category = Category::where('active', 1)->get();
         return view('page.product-detail',[
             'products'=> $products,
@@ -59,6 +70,7 @@ class ShopController extends Controller
             'images'=> $images,
             'comments'=> $comments,
             'orders'=> $orders,
+            'rep'=> $rep,
         ]);
 
         
@@ -74,12 +86,5 @@ class ShopController extends Controller
           'category' => $category,
         ]);
     }
-    // public function getProductBottom(Product $product)
-    // {
-        
-    //     return view('page.shop',[
-    //         'products' => $products, 'category' => $category,
-    //     ]);
-    //     // lấy ra các sản phẩm
-    // }
+   
 }
