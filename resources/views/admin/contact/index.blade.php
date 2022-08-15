@@ -496,7 +496,7 @@
     </div>
 
 
-
+@include('admin.alert')
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -521,24 +521,13 @@
         </li>
         <li class="nav-item ">
             <a class="nav-link" id="dangxuly-tab" data-toggle="tab" href="#dangxuly" role="tab" aria-controls="dangxuly"
-                aria-selected="true">Đang xử lý</a>
+                aria-selected="true">Đã nhận</a>
         </li>
         <li class="nav-item ">
             <a class="nav-link" id="daxuly-tab" data-toggle="tab" href="#daxuly" role="tab" aria-controls="daxuly"
                 aria-selected="true">Đã xử lý</a>
         </li>
-        <li class="nav-item ">
-            <a class="nav-link" id="thanhcong-tab" data-toggle="tab" href="#thanhcong" role="tab"
-                aria-controls="thanhcong" aria-selected="true">Thành công</a>
-        </li>
-        <li class="nav-item ">
-            <a class="nav-link" id="huydon-tab" data-toggle="tab" href="#huydon" role="tab" aria-controls="huydon"
-                aria-selected="true"> Hủy đơn</a>
-        </li>
-        <li class="nav-item ">
-            <a class="nav-link" id="khachhuydon-tab" data-toggle="tab" href="#khachhuydon" role="tab"
-                aria-controls="khachhuydon" aria-selected="true">Đơn bị hủy</a>
-        </li>
+       
     </ul>
 
 
@@ -555,66 +544,55 @@
 
                 <table class="table align-items-center mb-0">
                     <thead>
-                        <tr>
+                         <tr>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Phone</th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Address
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Subject
+                            </th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Message
                             </th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($customers as $index => $item)
-                            <tr>
-                                <td>
-                                  {{$index+1}},  {{ $item->name }}
-                                </td>
-                                <td>
-                                    {{ $item->email }}
-                                </td>
-                                <td>
-                                    {{ $item->phone }}
-                                </td>
-                                <td>
-                                    {{ $item->address }}
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-light btn-sm">
-                                        @if ($item->status == 0)
-                                            <b>Đang xử lý</b>
-                                        @elseif($item->status == 1)
-                                            <div style="color:rgb(246, 168, 60)"> <b>Đã xử lý</b></div>
-                                        @elseif($item->status == 2)
-                                            <div style="color:rgb(168, 222, 52)"> <b>Đang vận chuyển</b></div>
-                                        @elseif($item->status == 3)
-                                            <div style="color:green"> <b>Thành công</b></div>
-                                        @elseif($item->status == 4)
-                                            <div style="color:rgb(252, 0, 8)"> <b>Hủy đơn</b></div>
-                                        @elseif($item->status == 5)
-                                            <div style="color:rgb(255, 4, 4)"> <b> Khách hàng đã hủy đơn hàng</b></div>
-                                        @endif
-                                    </button>
-                                </td>
-
-                                <td class="align-middle">
-                                    <a href="{{ route('customer-cart', $item->id) }}">
-                                        <button class="btn btn-warning" style="font-size:9px"href="javascript:;"
-                                            class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                                            data-original-title="Edit user">
-
-                                            Xem chi tiết
-                                        </button>
-                                    </a>
-                                </td>
-                            </tr>
+                        @foreach ($contact as $index => $item)
+                        
+                                <tr>
+                                    <td>
+                                       {{$index+1}}. {{ $item->name }}
+                                    </td>
+                                    <td>
+                                        {{ $item->email }}
+                                    </td>
+                                    <td>
+                                        {{ $item->subject }}
+                                    </td>
+                                    <td>
+                                        {{ $item->message }}
+                                    </td>
+                                    <td>
+                                        
+                                            @if ($item->status == 0)
+                                               <form action="{{route('changeSTTcontact',$item->id)}}" method="post">
+                                                @csrf
+                                               <button  class="btn btn-light btn-sm" type="submit"> <b>Đã gửi</b></button>
+                                            </form>
+                                                @elseif ($item->status == 1)
+                                                <div style="color:rgb(6, 135, 60)"> <b>Đã xử lý</b></div>
+                                            @endif
+                                       
+                                    </td>
+    
+    
+                                </tr>
+                            
                         @endforeach
-
+    
                     </tbody>
                 </table>
             </div>
-            <div>{{ $customers->links() }}</div>
+            <div>{{ $contact->links() }}</div>
 
         </div>
         <div class="tab-pane fade" id="dangxuly" role="tabpanel" aria-labelledby="dangxuly-tab">
@@ -622,58 +600,53 @@
 
                 <table class="table align-items-center mb-0">
                     <thead>
-                        <tr>
+                         <tr>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Phone</th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Address
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Subject
+                            </th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Message
                             </th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($customers as $index => $item)
+                        @foreach ($contact as $index => $item)
                             @if ($item->status == 0)
                                 <tr>
                                     <td>
-                                      {{$index+1}},  {{ $item->name }}
+                                       {{$index+1}}. {{ $item->name }}
                                     </td>
                                     <td>
                                         {{ $item->email }}
                                     </td>
                                     <td>
-                                        {{ $item->phone }}
+                                        {{ $item->subject }}
                                     </td>
                                     <td>
-                                        {{ $item->address }}
+                                        {{ $item->message }}
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-light btn-sm">
+                                        {{-- <button type="button" class="btn btn-light btn-sm"> --}}
                                             @if ($item->status == 0)
-                                                <b>Đang xử lý</b>
+                                            <form action="{{route('changeSTTcontact',$item->id)}}" method="post">
+                                                @csrf
+                                               <button  class="btn btn-light btn-sm" type="submit"> <b>Đã gửi</b></button>
+                                                
                                             @endif
-                                        </button>
+                                        {{-- </button> --}}
                                     </td>
-
-                                    <td class="align-middle">
-                                        <a href="{{ route('customer-cart', $item->id) }}">
-                                            <button class="btn btn-warning" style="font-size:9px"href="javascript:;"
-                                                class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                                                data-original-title="Edit user">
-
-                                                Xem chi tiết
-                                            </button>
-                                        </a>
-                                    </td>
+    
+    
                                 </tr>
                             @endif
                         @endforeach
-
+    
                     </tbody>
                 </table>
             </div>
-            <div>{{ $customers->links() }}</div>
+            <div>{{ $contact->links() }}</div>
 
         </div>
         <div class="tab-pane fade" id="daxuly" role="tabpanel" aria-labelledby="daxuly-tab">
@@ -681,240 +654,52 @@
 
                 <table class="table align-items-center mb-0">
                     <thead>
-                        <tr>
+                         <tr>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Phone</th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Address
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Subject
                             </th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Message
                             </th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($customers as $index => $item)
+                        @foreach ($contact as $index => $item)
                             @if ($item->status == 1)
                                 <tr>
                                     <td>
-                                      {{$index+1}},  {{ $item->name }}
+                                       {{$index+1}}. {{ $item->name }}
                                     </td>
                                     <td>
                                         {{ $item->email }}
                                     </td>
                                     <td>
-                                        {{ $item->phone }}
+                                        {{ $item->subject }}
                                     </td>
                                     <td>
-                                        {{ $item->address }}
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-light btn-sm">
-                                            @if ($item->status ==  1)
-                                                <div style="color:rgb(246, 168, 60)"> <b>Đã xử lý</b></div>
-                                            @endif
-                                        </button>
-                                    </td>
-
-                                    <td class="align-middle">
-                                        <a href="{{ route('customer-cart', $item->id) }}">
-                                            <button class="btn btn-warning" style="font-size:9px"href="javascript:;"
-                                                class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                                                data-original-title="Edit user">
-
-                                                Xem chi tiết
-                                            </button>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endif
-                        @endforeach
-
-                    </tbody>
-                </table>
-                <div>{{ $customers->links() }}</div>
-            </div>
-        </div>
-        <div class="tab-pane fade" id="thanhcong" role="tabpanel" aria-labelledby="thanhcong-tab">
-            <div class="row">
-
-                <table class="table align-items-center mb-0">
-                    <thead>
-                        <tr>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Phone</th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Address
-                            </th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status
-                            </th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($customers as $index => $item)
-                            @if ($item->status == 3)
-                                <tr>
-                                    <td>
-                                      {{$index+1}},  {{ $item->name }}
-                                    </td>
-                                    <td>
-                                        {{ $item->email }}
-                                    </td>
-                                    <td>
-                                        {{ $item->phone }}
-                                    </td>
-                                    <td>
-                                        {{ $item->address }}
+                                        {{ $item->message }}
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-light btn-sm">
-                                            @if ($item->status == 3)
-                                                <div style="color:green"> <b>Thành công</b></div>
+                                            @if ($item->status == 1)
+                                            <div style="color:rgb(6, 135, 60)"> <b>Đã xử lý</b></div>
                                             @endif
                                         </button>
                                     </td>
-
-                                    <td class="align-middle">
-                                        <a href="{{ route('customer-cart', $item->id) }}">
-                                            <button class="btn btn-warning" style="font-size:9px"href="javascript:;"
-                                                class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                                                data-original-title="Edit user">
-
-                                                Xem chi tiết
-                                            </button>
-                                        </a>
-                                    </td>
+    
+    
                                 </tr>
                             @endif
                         @endforeach
-
+    
                     </tbody>
                 </table>
+                <div>{{ $contact->links() }}</div>
             </div>
-            <div>{{ $customers->links() }}</div>
-
         </div>
-        <div class="tab-pane fade" id="huydon" role="tabpanel" aria-labelledby="huydon-tab">
-            <div class="row">
-
-                <table class="table align-items-center mb-0">
-                    <thead>
-                        <tr>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Phone</th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Address
-                            </th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status
-                            </th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($customers as $index => $item)
-                            @if ($item->status == 4)
-                                <tr>
-                                    <td>
-                                      {{$index+1}},  {{ $item->name }}
-                                    </td>
-                                    <td>
-                                        {{ $item->email }}
-                                    </td>
-                                    <td>
-                                        {{ $item->phone }}
-                                    </td>
-                                    <td>
-                                        {{ $item->address }}
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-light btn-sm">
-                                            @if ($item->status == 4)
-                                                <div style="color:rgb(252, 0, 8)"> <b>Hủy đơn</b></div>
-                                            @endif
-                                        </button>
-                                    </td>
-
-                                    <td class="align-middle">
-                                        <a href="{{ route('customer-cart', $item->id) }}">
-                                            <button class="btn btn-warning" style="font-size:9px"href="javascript:;"
-                                                class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                                                data-original-title="Edit user">
-
-                                                Xem chi tiết
-                                            </button>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endif
-                        @endforeach
-
-                    </tbody>
-                </table>
-            </div>
-            <div>{{ $customers->links() }}</div>
-
-        </div>
-        <div class="tab-pane fade" id="khachhuydon" role="tabpanel" aria-labelledby="khachhuydon-tab">
-            <div class="row">
-
-                <table class="table align-items-center mb-0">
-                    <thead>
-                        <tr>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Phone</th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Address
-                            </th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status
-                            </th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($customers as $index => $item)
-                            @if ($item->status == 5)
-                                <tr>
-                                    <td>
-                                      {{$index+1}},  {{ $item->name }}
-                                    </td>
-                                    <td>
-                                        {{ $item->email }}
-                                    </td>
-                                    <td>
-                                        {{ $item->phone }}
-                                    </td>
-                                    <td>
-                                        {{ $item->address }}
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-light btn-sm">
-                                            @if ($item->status == 5)
-                                                <div style="color:rgb(255, 4, 4)"> <b> Khách hàng đã hủy đơn hàng</b>
-                                                </div>
-                                            @endif
-                                        </button>
-                                    </td>
-
-                                    <td class="align-middle">
-                                        <a href="{{ route('customer-cart', $item->id) }}">
-                                            <button class="btn btn-warning" style="font-size:9px"href="javascript:;"
-                                                class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                                                data-original-title="Edit user">
-
-                                                Xem chi tiết
-                                            </button>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endif
-                        @endforeach
-
-                    </tbody>
-                </table>
-            </div>
-            <div>{{ $customers->links() }}</div>
-        </div>
+        
     </div>
 
 

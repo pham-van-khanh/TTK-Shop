@@ -34,13 +34,7 @@
             <div class="col-lg-5 pb-5">
                 <h1 class="font-weight-semi-bold">{{ $product->name }}</h1>
                 <div class="d-flex mb-3">
-                    {{-- <div class="text-primary mr-2">
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star-half-alt"></small>
-                        <small class="far fa-star"></small>
-                    </div> --}}
+                    
                     <small class="pt-1"> Đã bán {{ $orders->count() }}</small>
                 </div>
                 <h1>{{ number_format($product->price_new, 0, ',', '.') . ' VNĐ' }}</h1>
@@ -109,7 +103,6 @@
 
                 <form action="{{ route('add-cart') }}" method="post">
                     <div class="d-flex align-items-center mb-4 pt-2">
-
                         <div class="input-group quantity mr-3" style="width: 130px;">
                             <div class="input-group-btn">
                                 <button class="btn btn-primary btn-minus">
@@ -132,7 +125,7 @@
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                     </div>
                 </form>
-
+                {{--  gửi lên serve số lượng và id sản phẩm --}}
 
 
                 <div class="d-flex pt-2">

@@ -14,8 +14,9 @@ class CartController extends Controller
     protected $handleCart;
         public function __construct(HandleCart $handleCart)
         {
-            $this->handleCart = $handleCart;
+            $this->handleCart = $handleCart; // khai báo hàm này
         }
+
         public function addToCart(Request $request)
         {
             $result = $this->handleCart->handleAddToCart($request);
@@ -32,9 +33,9 @@ class CartController extends Controller
         //    Session::forget('carts');
         $carts = Session::get('carts');
         if (empty($carts)) {
-           $carts= [];
+           $carts = [];
          }
-        $productId = array_keys($carts);
+        $productId = array_keys($carts); //trả về 1 tập hợp có mảng xác định là $carts
         $productsCart =  Product::select('id','name','price_new','image')
             ->where('products.active',1)
             ->whereIn('id',$productId)
@@ -47,14 +48,14 @@ class CartController extends Controller
             'carts'=>Session::get('carts')
         ]
         );
+     } //show ra giỏ hàng 
 
-     }
      public function updateCart(Request $request)
      {
         Session::put('carts',$request->input('num_product'));
          return redirect()->route('cart');
 
-     }
+     } //update số lượng
      public function deleteCart($id = 0)
      {
         // lấy mảng ra
@@ -66,6 +67,6 @@ class CartController extends Controller
         Session::flash('success','Xóa sản phẩm thành công');
         # code...
         return redirect('/gio-hang');
-     }
+     } // xóa khỏi giỏ hàng
 
 }

@@ -14,13 +14,15 @@ use Illuminate\Support\Str;
 class CategoryController extends Controller
 {
     //
-    protected $categoryService;
-    public function __construct(CategoryService $categoryService)
-    {
-        # code...
-        $this->categoryService = $categoryService;
-    }
+    // protected $categoryService;
+    // public function __construct(CategoryService $categoryService)
+    // {
+    //     # code...
+    //     $this->categoryService = $categoryService;
+    // }
 
+
+    
 
     public function index()
     {
@@ -28,17 +30,19 @@ class CategoryController extends Controller
         $catePaginate = Category::select('id', 'name', 'image', 'description', 'active')
             ->paginate(3);
         return view('admin.categories.index',['category'=> $catePaginate]);
+        // lấy ra các bản ghi của Category
     }
     public function create(Category $category)
     {
         $this->data['errorMsg'] =' Thêm lỗi ';
         return view('admin.categories.add',$this->data,compact('category'));
+        // gọi đến file add.blade  
     }
     public function store(StorePostRequest $request)
     {
 
-        $category = new Category();
-        $category->fill($request->all());
+        $category = new Category(); // tạo ra 1 class mới  
+        $category->fill($request->all()); // fill tất cả các request
 
         if ($request->hasFile('image')) {
             $image = $request->image;

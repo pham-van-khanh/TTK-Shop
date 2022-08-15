@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\RepcommentController;
 use App\Http\Controllers\Admin\UploadController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\AttributeController;
+use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\Admin\CartController;
@@ -66,7 +67,7 @@ Route::middleware(['auth'])->group(function () {
             Route::prefix('customer')->group(function () {
                 Route::get('/', [CustomerController::class, 'index'])->name('customers');
 
-                Route::post('/changeStt/{customers}', [CustomerController::class, 'cancelOrd'])->name('changeOrdStt');
+               
                 Route::post('/DaXuLy/{customers}', [CustomerController::class, 'DaXuLy'])->name('DaXuLy');
                 Route::post('/DangVanChuyen/{customers}', [CustomerController::class, 'DangVanChuyen'])->name('DangVanChuyen');
                 Route::post('/ThanhCong/{customers}', [CustomerController::class, 'ThanhCong'])->name('ThanhCong');
@@ -79,9 +80,15 @@ Route::middleware(['auth'])->group(function () {
             Route::prefix('attribute')->group(function () {
                 Route::get('/', [AttributeController::class, 'index'])->name('att-list');
             });
-
+            // Comment
             Route::prefix('comments')->group(function () {
                 Route::get('/', [RemarkController::class, 'index'])->name('cmt');
+            });
+            // Contact
+            Route::prefix('/contact')->group(function () {
+                Route::get('/', [ContactController::class, 'index'])->name('contact-list');
+                Route::post('changeSTTcontact/{contacts}',[ContactController::class,'changeSTTcontact'])->name('changeSTTcontact');
+                
             });
             //          UPLOAD
         });
@@ -113,21 +120,19 @@ Route::prefix('/')
             Route::get('/detail/{product}', [ShopController::class, 'productDetail'])->name('detail');
             Route::get('/detail', [ShopController::class, 'getProductBottom']);
         });
+        // danh muc san pham
         Route::prefix('/danh-muc')->group(function () {
             Route::get('/{category}', [ShopController::class, 'getCateDetail'])->name('getCateDetail');
             Route::get('/', [ShopController::class, 'getCate'])->name('getCate');
         });
+        // thong tin nguoi dung
         Route::prefix('information')->group(function () {
             Route::get('/', [CustomerController::class, 'getUserDetail'])->name('user-detail');
             Route::get('/bill/{customers}', [CustomerController::class, 'billDetail'])->name('billDetail');
         });
 
-        Route::get('/lien-he', function () {
-            return view('page.contact');
-        })->name('contact');
-
+        // Comment va repcomment
         Route::post('/comments/{product}', [RemarkController::class, 'comments'])->name('comments');
-
         Route::post('/repcomments/{remark}',[RepcommentController::class,'rep'])->name('repcmt');
         
         // Gio Hang
@@ -138,6 +143,13 @@ Route::prefix('/')
             Route::get('/delete/{id}', [CartController::class, 'deleteCart'])->name('delete-cart');
         });
 
+        // Lieen he
+        Route::prefix('/lien-he')->group(function () {
+            Route::get('/', [ContactController::class, 'contact'])->name('contact');
+            Route::post('/contact', [ContactController::class, 'addContact'])->name('add-contact');
+
+        });
+
         // thanh toán
 
         Route::prefix('/thanh-toan')->group(function () {
@@ -146,4 +158,6 @@ Route::prefix('/')
             Route::post('/addCustomer', [CheckoutController::class, 'addCustomer'])->name('addCustomer');
             Route::post('/order', [CheckoutController::class, 'order'])->name('order');
         });
+        // thay doi trang thai cua 
+        Route::post('/changeStt/{customers}', [CustomerController::class, 'cancelOrd'])->name('changeOrdStt');
     });

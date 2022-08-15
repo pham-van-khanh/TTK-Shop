@@ -1,3 +1,3 @@
 <h3>
-    Bạn có một đơn hàng mới từ TTK-Shop
+   Cám ơn bạn đã quan tâm tới TTK-Shop
 </h3>

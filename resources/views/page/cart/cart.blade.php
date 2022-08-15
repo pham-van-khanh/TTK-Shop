@@ -45,7 +45,8 @@
                                                 <input type="text" name="num_product[{{ $item->id }}]"
                                                     style="font-size: 10px"
                                                     class="form-control form-control-sm bg-secondary text-center"
-                                                    value="{{ $carts[$item->id] }}">
+                                                    value="{{ $carts[$item->id] }}"> 
+                                                    {{-- lấy ra số lượng sp theo từng id của sản phẩm đã lấy ra --}}
                                                 <div class="input-group-btn">
                                                     <button style="font-size: 14px" class="btn btn-sm btn-primary btn-plus">
                                                         <i class="fa fa-plus"></i>
@@ -58,7 +59,7 @@
                                             {{ number_format($price, 0, ',', '.') }}
                                         </td>
                                         <td class="align-middle">
-                                               <a href="{{ route('delete-cart',$item->id) }}"> <i class="fa fa-times"></i></a>
+                                            <a href="{{ route('delete-cart', $item->id) }}"> <i class="fa fa-times"></i></a>
                                         </td>
 
 
@@ -67,7 +68,7 @@
                             </tbody>
                         </table>
                         <br>
-                        
+
 
                         <div class="input-group">
 
@@ -83,31 +84,17 @@
                     </div>
 
                     <div class="col-lg-4">
-                        {{-- <form class="mb-5" action="">
-                        <div class="input-group">
-                            <input type="text" class="form-control p-4" placeholder="Coupon Code">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary">Apply Coupon</button>
-                            </div>
-                        </div>
-                    </form> --}}
                         <div class="card border-secondary mb-5">
                             <div class="card-header bg-secondary border-0">
                                 <h4 class="font-weight-semi-bold m-0">Cart Summary</h4>
                             </div>
-                            {{-- <div class="card-body">
-                            <div class="d-flex justify-content-between">
-                                <h6 class="font-weight-medium">Shipping</h6>
-                                <h6 class="font-weight-medium">150.000</h6>
-                            </div>
-                        </div> --}}
                             <div class="card-footer border-secondary bg-transparent">
                                 <div class="d-flex justify-content-between mt-2">
                                     <h5 class="font-weight-bold">Total</h5>
                                     <h5 class="font-weight-bold">{{ number_format($totalPrice, 0, ',', '.') }}</h5>
                                 </div>
-                                    <a class="btn btn-block btn-primary my-3 py-3" 
-                                    href="{{route('check-out')}}"> Thanh Toán </a>
+                                <a class="btn btn-block btn-primary my-3 py-3" href="{{ route('check-out') }}"> Thanh Toán
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -161,7 +148,6 @@
     });
 </script>
 <script>
-
     $('.btn-number').click(function(e) {
         e.preventDefault();
 
