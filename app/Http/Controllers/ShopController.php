@@ -22,7 +22,7 @@ class ShopController extends Controller
         ->select('products.*')
         ->orderBy('products.id', 'ASC')->Paginate(6);
         $category = Category::where('active', 1)->get();
-        
+        // dd($products);
         return view('page.shop',[
          'products' => $products, 'category' => $category,
         ]);

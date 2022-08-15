@@ -36,6 +36,7 @@ class CheckoutController extends Controller
                 'carts' => Session::get('carts'),
             ]);
         }
+        // hieenr thi ra all sp co trong gio hang
     }
     public function addCustomer(CustomerRequest $request)
     {

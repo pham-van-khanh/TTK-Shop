@@ -5,8 +5,15 @@
 @section('content')
     <div>
     </div>
-    @include('admin.alert') 
+    @include('admin.alert')
     <div class="card-body px-0 pb-2">
+        <form action="">
+            <div style="width:250px" class="input-group input-group-outline">
+                <label class="form-label">Search here...</label>
+                <input type="text" name="search" class="form-control">
+            </div>
+            {{-- end search --}}
+        </form>
         <div class="table-responsive p-0">
             <table class="table align-items-center mb-0">
                 <thead>
@@ -18,9 +25,9 @@
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Image</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Active</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                             <a class="btn btn-primary" style="font-size:10px" href="{{ route('product-add') }}"> Add
-                                Products</a> 
-                </th>
+                            <a class="btn btn-primary" style="font-size:10px" href="{{ route('product-add') }}"> Add
+                                Products</a>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,32 +44,30 @@
 
                             </td>
                             <td>
-                                    {{$item->category->name}}
+                                {{ $item->category->name }}
                             </td>
                             <td>
-                                <img src="{{asset($item->image)}}" width="100" alt="">
+                                <img src="{{ asset($item->image) }}" width="100" alt="">
                             </td>
                             <td>
-                                
-                                <form action="{{route('product-status', $item->id)}}" method="POST"> 
+
+                                <form action="{{ route('product-status', $item->id) }}" method="POST">
                                     @if ($item->active == 1)
-                                    <button class="btn btn-light"  style="font-size:11px"href="javascript:;" 
-                                    class="text-secondary font-weight-bold text-xs" 
-                                    data-toggle="tooltip" 
-                                    data-original-title="Edit user"> Publish
-                                      </button>
-                                      @else 
-                                      <button class="btn btn-dark"  style="font-size:11px"href="javascript:;" 
-                                    class="text-secondary font-weight-bold text-xs" 
-                                    data-toggle="tooltip" 
-                                    data-original-title="Edit user"> Private
-                                      </button>
+                                        <button class="btn btn-light" style="font-size:11px"href="javascript:;"
+                                            class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
+                                            data-original-title="Edit user"> Publish
+                                        </button>
+                                    @else
+                                        <button class="btn btn-dark" style="font-size:11px"href="javascript:;"
+                                            class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
+                                            data-original-title="Edit user"> Private
+                                        </button>
                                     @endif
-                                      
-                                 @csrf
-                                </form>  
+
+                                    @csrf
+                                </form>
                             </td>
-                            
+
                             <td class="align-middle">
                                 <a href="{{ route('product-edit', $item->id) }}">
                                     <button class="btn btn-warning" style="font-size:9px"href="javascript:;"

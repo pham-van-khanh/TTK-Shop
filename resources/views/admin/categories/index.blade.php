@@ -7,6 +7,15 @@
     </div>
 
 @include('admin.alert')
+<br>
+
+<form action="">
+    <div style="width:250px" class="input-group input-group-outline">
+        <label class="form-label">Search here...</label>
+        <input type="text" name="search" class="form-control">
+    </div>
+    {{-- end search --}}
+</form>
     <div class="card-body px-0 pb-2">
         <div class="table-responsive p-0">
             <table class="table align-items-center mb-0">

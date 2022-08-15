@@ -119,6 +119,7 @@ Route::prefix('/')
             Route::get('/', [ShopController::class, 'getProduct'])->name('shop');
             Route::get('/detail/{product}', [ShopController::class, 'productDetail'])->name('detail');
             Route::get('/detail', [ShopController::class, 'getProductBottom']);
+            
         });
         // danh muc san pham
         Route::prefix('/danh-muc')->group(function () {

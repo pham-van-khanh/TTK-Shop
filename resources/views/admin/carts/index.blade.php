@@ -31,7 +31,7 @@
                     @elseif($customers->status == 5)
                         <div style="color:rgb(255, 4, 4)"> <b> Khách hàng đã hủy đơn hàng</b></div>
                     @endif
-                @if ($customers->status == 4 || $customers->status == 5 )
+                @if ($customers->status == 4 || $customers->status == 5 || $customers->status == 3)
                 @else
                     <br>
                     Thay đổi trạng thái:

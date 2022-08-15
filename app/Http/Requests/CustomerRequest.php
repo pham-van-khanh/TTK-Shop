@@ -41,7 +41,8 @@ class CustomerRequest extends FormRequest
             'phone.required'=> 'Số điện thoại không được để trống',
             'address.required'=> 'Địa chỉ không được để trống',
             'phone.regex' => 'Số điện thoại không được đúng định dạng',
-            'note.required'=> 'Bạn có ghi chú gì không  ?'
+            'note.required'=> 'Bạn có ghi chú gì không  ?',
+            'phone.min'=> 'Số điện thoại phải có 10 chữ số  ?'
         ];
     }
 }

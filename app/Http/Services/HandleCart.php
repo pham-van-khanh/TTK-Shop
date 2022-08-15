@@ -25,6 +25,7 @@ class HandleCart
             ]);
             return true;
         }
+        // dd($carts)
         // nếu null thì sẽ put vào session để lưu trữ id và quantity
         $exists = Arr::exists($carts, $product_id);
         // dùng exitst để lấy ra $product_id 

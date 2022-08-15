@@ -14,24 +14,36 @@
                 @csrf
                 <div class="control-group">
                     <input type="text" class="form-control" name="name" placeholder="Your Name"
-                        required="required" data-validation-required-message="Please enter your name" />
+                       />
                     <p class="help-block text-danger"></p>
+                    @error('name')
+                    <h6 style="color: rgb(255, 0, 0)">{{ $message }} </h6>
+                    @enderror
                 </div>
                 <div class="control-group">
                     <input type="email" class="form-control" name="email" placeholder="Your Email"
-                        required="required" data-validation-required-message="Please enter your email" />
+                        />
                     <p class="help-block text-danger"></p>
+                    @error('email')
+                    <h6 style="color: rgb(255, 0, 0)">{{ $message }} </h6>
+                    @enderror
                 </div>
                 <div class="control-group">
                     <input type="text" class="form-control" name="subject" placeholder="Subject"
-                        required="required" data-validation-required-message="Please enter a subject" />
+                       />
                     <p class="help-block text-danger"></p>
+                    @error('subject')
+                    <h6 style="color: rgb(255, 0, 0)">{{ $message }} </h6>
+                @enderror
                 </div>
                 <div class="control-group">
                     <textarea class="form-control" rows="6" name="message" placeholder="Message"
-                        required="required"
-                        data-validation-required-message="Please enter your message"></textarea>
+                        
+                       ></textarea>
                     <p class="help-block text-danger"></p>
+                    @error('message')
+                    <h6 style="color: rgb(255, 0, 0)">{{ $message }} </h6>
+                @enderror
                 </div>
                 <div>
                     <button class="btn btn-primary py-2 px-4" type="submit" id="sendMessageButton">Send

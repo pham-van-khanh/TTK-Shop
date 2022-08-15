@@ -37,11 +37,11 @@ class Product extends Model
     }
     
 
-    public function scopeSearch($query)
-    {
-        if($key = request()->search){
-            $query = $query->where('name','like','%'.$key.'%');
-        }
-        return $query;
-    }
+    // public function scopeSearch($query)
+    // {
+    //     if($key = request()->search){
+    //         $query = $query->where('name','like','%'.$key.'%');
+    //     }
+    //     return $query;
+    // }
 }

@@ -29,7 +29,7 @@
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>Số điện thoại</label>
-                                <input class="form-control" name="phone" type="text" placeholder="0987 654 321">
+                                <input class="form-control" name="phone"  type="text" placeholder="0987 654 321">
                                 @error('phone')
                                    <h5 class="text-danger"> {{$message}} </h5>
                                @enderror

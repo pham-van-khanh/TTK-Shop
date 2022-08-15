@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 use App\Models\Contact;
 use App\Jobs\PayEmail;
-
+use App\Http\Requests\ContactRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -14,7 +14,7 @@ class ContactController extends Controller
    {
     return view('page.contact');
    }
-   public function addContact(Request $request,Contact $contact)
+   public function addContact(ContactRequest $request,Contact $contact)
    {
     $contact = new Contact;
     $contact->fill($request->all());

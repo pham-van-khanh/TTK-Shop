@@ -22,12 +22,13 @@ class CategoryController extends Controller
     // }
 
 
-    
+
 
     public function index()
     {
 
         $catePaginate = Category::select('id', 'name', 'image', 'description', 'active')
+            ->search()
             ->paginate(3);
         return view('admin.categories.index',['category'=> $catePaginate]);
         // lấy ra các bản ghi của Category
@@ -36,19 +37,24 @@ class CategoryController extends Controller
     {
         $this->data['errorMsg'] =' Thêm lỗi ';
         return view('admin.categories.add',$this->data,compact('category'));
-        // gọi đến file add.blade  
+        // gọi đến file add.blade
     }
     public function store(StorePostRequest $request)
     {
 
-        $category = new Category(); // tạo ra 1 class mới  
+        $category = new Category(); // tạo ra 1 class mới
         $category->fill($request->all()); // fill tất cả các request
 
         if ($request->hasFile('image')) {
             $image = $request->image;
             $imageName = $image->hashName();
             $imageName = $request->name . '_' . $imageName;
+//            luu file vao trong bo nho
+            // lấy đường dẫn file vừa gán vào     cho category
             $category->image = $image->storeAs('images/category', $imageName);
+//          lưu vào thư mục storeage/app/img/cate
+//            muốn chạy được ảnh thì cần link vào thư mục public => vào file config/filesystems.php
+
         } else {
             $category->image = '';
         }
@@ -59,7 +65,7 @@ class CategoryController extends Controller
 
     }
     public function edit(Category $category)
-    {   
+    {
         return view('admin.categories.edit', [
             'category' => $category
         ]);
@@ -70,7 +76,7 @@ class CategoryController extends Controller
     {
         try {
             $category = Category::find($category);
-            $category->fill($request->all());   
+            $category->fill($request->all());
             if ($category) {
                 if ($category->image != null) {
                     if ($request->hasFile('image')) {

@@ -70,7 +70,7 @@ class LoginController extends Controller
             Session::flash('error', 'Password Confirm không chính xác');
             return redirect()->back();
         }
-        Auth::user($users);
+        Auth::login($users);
         return redirect()->route('home-page');
     }
 
