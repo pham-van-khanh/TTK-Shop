@@ -117,12 +117,13 @@
                                 </button>
                             </div>
                         </div>
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
                         @csrf
                         <button type="submit" class="btn btn-primary px-3">
                             <i class="fa fa-shopping-cart mr-1"></i>
                             Add To Cart
                         </button>
-                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        
                     </div>
                 </form>
                 {{--  gửi lên serve số lượng và id sản phẩm --}}

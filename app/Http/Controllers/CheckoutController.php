@@ -51,7 +51,9 @@ class CheckoutController extends Controller
         $data['note'] = $request->note;
         $data['status'] = 0;
         $customer_id = DB::table('customers')->insertGetId($data);
+
         PayEmail::dispatch($data['email'])->delay(now()->addSeconds(10));
+        
         Session::put('customer_id', $customer_id);
         if (empty(Auth::user())) {
             Session::flash('error', 'Bạn cần phải đăng nhập ');
