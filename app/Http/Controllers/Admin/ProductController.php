@@ -21,25 +21,26 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    protected  $productService;
-     public function __construct(ProductAdminService $productService)
-{
-    $this->productService = $productService;
-}
+    protected $productService;
+    public function __construct(ProductAdminService $productService)
+    {
+        $this->productService = $productService;
+    }
 
     public function index()
     {
         $products = Product::with('category')
-        ->join('categories', 'products.category_id', '=', 'categories.id')
-        ->where('categories.active', '=', 1)
-        ->select('products.*')
-        // ->search()
-        ->orderBy('products.id', 'ASC')->Paginate(4);
-        return view('admin.products.index',[
-         'products' => $products, 
+            ->join('categories', 'products.category_id', '=', 'categories.id')
+            ->where('categories.active', '=', 1)
+            ->select('products.*')
+            // ->search()
+            ->orderBy('products.id', 'ASC')
+            ->Paginate(4);
+        return view('admin.products.index', [
+            'products' => $products,
         ]);
     }
-    
+
     /**
      * Show the form for creating a new resource.
      *
@@ -48,10 +49,10 @@ class ProductController extends Controller
     public function create(Product $product)
     {
         $category = Category::where('active', 1)->get();
-        // lay ra danh sach category dc active 
-        return view('admin.products.add',[
+        // lay ra danh sach category dc active
+        return view('admin.products.add', [
             'products' => $product,
-            'categories' => $category
+            'categories' => $category,
         ]);
     }
 
@@ -66,6 +67,9 @@ class ProductController extends Controller
         try {
             $product = new Product();
             $product->fill($request->all());
+            if ($product->price_new < $product->price_old) {
+                Session::flash('error', 'Giá ko hợp lệ');
+            }
             if ($product) {
                 if ($product->image != null) {
                     if ($request->hasFile('image')) {
@@ -79,15 +83,15 @@ class ProductController extends Controller
                     }
                 }
             }
-             $productId =  $product->id;
+            $productId = $product->id;
             if ($request->hasFile('gallery')) {
                 foreach ($request->gallery as $file) {
                     $imageNew = new Gallery();
-                    if(isset($file)){
+                    if (isset($file)) {
                         $imageNew->gallery = $file->hashName();
                         $imageNew->product_id = $productId;
                         // $imageNew = $file->storeAs('images/products', $imageNew);
-                        $file->move('images/products',$file->hashName());
+                        $file->move('images/products', $file->hashName());
                         $imageNew->save();
                     }
                 }
@@ -99,7 +103,6 @@ class ProductController extends Controller
             return false;
         }
         return true;
-
     }
 
     /**
@@ -110,11 +113,10 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-       
         $category = Category::where('active', 1)->get();
-        return view('admin.products.edit',[
-            'product'=> $product,
-            'categories' => $category
+        return view('admin.products.edit', [
+            'product' => $product,
+            'categories' => $category,
         ]);
     }
 
@@ -136,7 +138,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request,Product $product)
+    public function update(Request $request, Product $product)
     {
         //
         try {
@@ -148,7 +150,7 @@ class ProductController extends Controller
                         $imageName = $image->hashName();
                         $imageName = $request->name . '_' . $imageName;
                         $product->image = $image->storeAs('images/product', $imageName);
-                    } 
+                    }
                 }
             }
             $product->save();
@@ -177,11 +179,9 @@ class ProductController extends Controller
         //     $productIds = $products->pluck('id');
         //     Order::whereIn('id', $productIds)->update(['product_id' => 0]); // update các post có id trong mảng
         //     $product->delete();
-            
+
         //     return redirect()->back();
         //    }
-
-        
     }
 
     // public function delete(Request $request,Category $category)
@@ -199,12 +199,11 @@ class ProductController extends Controller
     {
         # code...
         $product = Product::find($product);
-        if($product->active == 1){
+        if ($product->active == 1) {
             $product->active = 0;
-        }else {
+        } else {
             # code...
             $product->active = 1;
-
         }
         $product->save();
         return redirect()->route('product');

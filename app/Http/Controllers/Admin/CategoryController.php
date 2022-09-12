@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Order;
 use Illuminate\Support\Facades\Session;
 
 use App\Models\Product;

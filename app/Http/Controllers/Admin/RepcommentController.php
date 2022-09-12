@@ -29,11 +29,19 @@ class RepcommentController extends Controller
     {
         $rep = Repcomment::select('repcomments.*')
             ->with('products', 'users','remarks')
-            ->where('remark_id',$remark->id)
+            // ->where('remark_id',$remark->id)
             ->orderBy('id', 'DESC')
             ->get();
         return view('admin.comments.index', [
             'rep' => $rep,
         ]);
+        
+    }
+
+    public function cmtDetail(Remark $remark)
+    {
+        
+        $remark = Remark::find($remark);
+        
     }
 }

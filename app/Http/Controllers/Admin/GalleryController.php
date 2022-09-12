@@ -17,7 +17,7 @@ class GalleryController extends Controller
         $prd_id = $product;
         return view('admin.gallries.add')->with(compact('prd_id'));
         
-    }
+    }   
     public function store(Request $request)
     {
         $gallery = new Gallery();
